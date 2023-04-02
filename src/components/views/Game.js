@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
+import {useEffect} from 'react'; //api,
+import { handleError} from 'helpers/api'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory, useParams} from 'react-router-dom';
@@ -28,7 +28,7 @@ const Game = () => {
   // keep its value throughout render cycles.
   // a component can have as many state variables as you like.
   // more information can be found under https://reactjs.org/docs/hooks-state.html
-  const [hostId, setHostId] = useState(null);
+  //const [hostId, setHostId] = useState(null);
   const {gameId} = useParams();
 
   /*const logout = () => {

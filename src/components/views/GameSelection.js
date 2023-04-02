@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+//import {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 // import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
@@ -9,7 +9,6 @@ import "styles/views/Main.scss";
 
 const GameSelection = () => {
     const history = useHistory();
-    const [users, setUsers] = useState(null);
 
     const createGame = async (gameMode) => {
 
