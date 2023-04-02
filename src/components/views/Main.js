@@ -51,6 +51,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 80}}
+                            onClick={() => history.push('/game_selection')}
                         >
                             Create Game
                         </Button>

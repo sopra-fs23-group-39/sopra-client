@@ -6,6 +6,9 @@ import MainRouter from "components/routing/routers/MainRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Profile from "components/views/Profile";
+import GameSelection from "components/views/GameSelection";
+import {GameSelectionGuard} from "components/routing/routeProtectors/GameSelectionGuard";
+import Game from "../../views/Game";
 
 /**
  * Main router of your application.
@@ -35,6 +38,16 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/profile/:id">
           <Profile/>
+        </Route>
+        <Route exact path="/game_selection">
+          <GameSelectionGuard>
+            <GameSelection/>
+          </GameSelectionGuard>
+        </Route>
+        <Route exact path="/game/:gameId">
+          <GameSelectionGuard>
+            <Game/>
+          </GameSelectionGuard>
         </Route>
         <Route exact path="/main">
           <div></div>
