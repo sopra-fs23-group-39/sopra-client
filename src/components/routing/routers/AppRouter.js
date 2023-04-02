@@ -5,6 +5,7 @@ import {MainGuard} from "components/routing/routeProtectors/MainGuard";
 import MainRouter from "components/routing/routers/MainRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
+import Register from "components/views/Register";
 import Profile from "components/views/Profile";
 
 /**
@@ -29,6 +30,11 @@ const AppRouter = () => {
           <LoginGuard>
             <Login/>
           </LoginGuard>
+        </Route>
+        <Route exact path="/register">
+            <LoginGuard>
+                <Register />
+            </LoginGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/main"/>
