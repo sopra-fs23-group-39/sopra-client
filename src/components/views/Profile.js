@@ -39,10 +39,10 @@ const Profile = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     // eslint-disable-next-line
-    const [disabled, setDisabled] = useState(true);
+    const [notVisible, setNotVisible] = useState(true);
 
     useEffect(() => {
-        let userId = !!params.id ? parseInt(params.id) : -1;
+        let userId = params.id ? parseInt(params.id) : -1;
 
         async function fetchData() {
             try {
@@ -50,7 +50,7 @@ const Profile = () => {
 
                 setUser(response.data);
                 setIsLoading(false)
-                setDisabled(sessionStorage.getItem('token') !== response.data.token)
+                setNotVisible(localStorage.getItem('token') !== response.data.token)
 
                 console.log('request to:', response.request.responseURL);
                 console.log('status code:', response.status);
@@ -72,7 +72,7 @@ const Profile = () => {
         try {
             history.push(`/changes/${user.id}`)
         } catch (error) {
-            alert(`Something went wrong during returning to ChangeCredentials page: \n${handleError(error)}`);
+            alert(`Something went wrong during going to ChangeCredentials page: \n${handleError(error)}`);
         }
     };
 
@@ -111,11 +111,12 @@ const Profile = () => {
                             value={user.totalPoints}
                         />
                         <div className="dashboard button-container">
-                            <Button
-                                width="100%"
-                                onClick={() => goChangeCredentials(user)}>
-                                CHANGE CREDENTIALS
-                            </Button>
+
+                                <Button
+                                    onClick={() => goChangeCredentials()}>
+                                    CHANGE CREDENTIALS
+                                </Button>
+
                             <Button
                                 width="100%"
                                 onClick={() => goBack()}>
