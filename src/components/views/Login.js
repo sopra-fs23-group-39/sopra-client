@@ -6,6 +6,7 @@ import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
+//import {doRegistration} from "Register.js"
 
 /*
 It is possible to add multiple components inside a single file,
@@ -36,28 +37,43 @@ FormField.propTypes = {
 };
 
 const Login = props => {
-  const history = useHistory();
-  const [password, setPassword] = useState(null);
-  const [username, setUsername] = useState(null);
 
+  
+  const history = useHistory();
+  
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  
+  
   const doLogin = async () => {
     try {
       const requestBody = JSON.stringify({username, password});
-      const response = await api.post('/users', requestBody);
+      
+      
+      const response = await api.post('/login', requestBody);
 
-      // Get the returned user and update a new object.
+
+
+      // Check if userdata is the same like from an available user
+      
       const user = new User(response.data);
+    
+      
 
       // Store the token into the local storage.
       localStorage.setItem('token', user.token);
-      localStorage.setItem('currentUserId', user.id);
+    
 
       // Login successfully worked --> navigate to the route /game in the GameRouter
-      history.push(`/main`);
+      history.push(`/game`);
     } catch (error) {
       alert(`Something went wrong during the login: \n${handleError(error)}`);
     }
   };
+
+  const goToRegistration = async () => {
+    history.push(`/register`)
+  }
 
   return (
     <BaseContainer>
@@ -68,18 +84,27 @@ const Login = props => {
             value={username}
             onChange={un => setUsername(un)}
           />
+         
           <FormField
-            label="Name"
+            label="password"
             value={password}
-            onChange={n => setPassword(n)}
+            onChange= { p => setPassword(p)}
           />
+          
           <div className="login button-container">
             <Button
-              disabled={!username || !password}
               width="100%"
               onClick={() => doLogin()}
             >
               Login
+            </Button>
+          </div>
+          <div>
+            <Button
+              width="100%"
+              onClick={() => goToRegistration()}
+            >
+              Register
             </Button>
           </div>
         </div>
