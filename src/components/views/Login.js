@@ -102,6 +102,7 @@ const Login = props => {
           <div>
             <Button
               width="100%"
+              style={{marginTop: 20}}
               onClick={() => goToRegistration()}
             >
               Register
