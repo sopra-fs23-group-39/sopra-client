@@ -8,8 +8,12 @@ import Login from "components/views/Login";
 import Register from "components/views/Register";
 import Profile from "components/views/Profile";
 import GameSelection from "components/views/GameSelection";
+import JoinGame from "components/views/JoinGame";
 import {GameSelectionGuard} from "components/routing/routeProtectors/GameSelectionGuard";
 import Game from "../../views/Game";
+import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
+import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
+import Leaderboard from "components/views/Leaderboard";
 
 /**
  * Main router of your application.
@@ -45,6 +49,16 @@ const AppRouter = () => {
         <Route exact path="/profile/:id">
           <Profile/>
         </Route>
+        <Route exact path="/join">
+          <JoinGameGuard>
+            <JoinGame/>
+          </JoinGameGuard>
+        </Route>
+        <Route exact path="/leaderboard">
+          <LeaderboardGuard>
+            <Leaderboard/>
+          </LeaderboardGuard>
+        </Route>
         <Route exact path="/game_selection">
           <GameSelectionGuard>
             <GameSelection/>
@@ -63,7 +77,4 @@ const AppRouter = () => {
   );
 };
 
-/*
-* Don't forget to export your component!
- */
 export default AppRouter;

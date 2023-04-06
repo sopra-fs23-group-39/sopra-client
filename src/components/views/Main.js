@@ -1,10 +1,8 @@
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
-// import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-// import PropTypes from "prop-types";
 import "styles/views/Main.scss";
 
 const Main = () => {
@@ -60,6 +58,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
+                            onClick={() => history.push("/join")}
                         >
                             Join Game
                         </Button>
@@ -68,6 +67,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
+                            onClick={() => history.push("/leaderboard")}
                         >
                             Leaderboard
                         </Button>
