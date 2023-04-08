@@ -50,7 +50,7 @@ const Profile = () => {
 
                 setUser(response.data);
                 setIsLoading(false)
-                setNotVisible(localStorage.getItem('token') !== response.data.token)
+                setNotVisible(localStorage.getItem('id') !== response.data.id)
 
                 console.log('request to:', response.request.responseURL);
                 console.log('status code:', response.status);

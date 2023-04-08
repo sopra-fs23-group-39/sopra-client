@@ -10,11 +10,10 @@ const Main = () => {
     const [users, setUsers] = useState(null);
 
     const logout = async () => {
-        localStorage.removeItem('token');
-        history.push('/login');
-        /*
+        console.log("id")
+        console.log(localStorage.getItem("id"))
         try {
-            // await api.post('/users/logout', localStorage.getItem('id'))
+            await api.post('/users/logout', localStorage.getItem('id'))
             localStorage.removeItem('id');
             history.push('/login');
         } catch (error) {
@@ -22,7 +21,7 @@ const Main = () => {
             history.push('/login');
             alert(`Something went wrong during logout: \n${handleError(error)}`);
         }
-         */
+
     }
 
     useEffect(() => {
