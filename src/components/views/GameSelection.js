@@ -6,15 +6,18 @@ import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 // import PropTypes from "prop-types";
 import "styles/views/Main.scss";
+import {useState} from "react";
 
 const GameSelection = () => {
     const history = useHistory();
+    const [sliderValue, setSliderValue] = useState(5);
+
 
     const createGame = async (gameMode) => {
 
         try {
             const hostId = localStorage.getItem('currentUserId');
-            const requestBody = JSON.stringify({hostId, gameMode: gameMode});
+            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;
@@ -32,6 +35,10 @@ const GameSelection = () => {
             alert("Something went wrong while fetching the game info! See the console for details.");
         }
     }
+    const handleSliderChange = (event) => {
+        setSliderValue(event.target.value);
+    };
+
 
     return (
         <BaseContainer>
@@ -74,10 +81,31 @@ const GameSelection = () => {
                             Mixed
                         </Button>
                     </div>
+                    <div className ="Slider">
+                        <div>
+                            <h1>Amount of questions:</h1>
+                            <div style = {{display: 'flex', justifyContent: 'space-between'}}>
+                                <p>5</p>
+                                <p>20</p>
+                            </div>
+                            <div style = {{display: 'flex', justifyContent: 'center'}}>
+                                <output>{sliderValue}</output>
+                                <input
+                                    type ="range"
+                                    min = "5"
+                                    max = "20"
+                                    step = "1"
+                                    value = {sliderValue}
+                                    onChange = {handleSliderChange}
+                                    style = {{width : '100%'}}
+                                />
+                            </div>
+                        </div>
+                    </div>
                     <div className="Back to main page button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 350}}
+                            style={{marginTop: 150}}
                             onClick={() => history.push('/main')}
                         >
                             Cancel
