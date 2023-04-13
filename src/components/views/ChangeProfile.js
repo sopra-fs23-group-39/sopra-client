@@ -36,7 +36,7 @@ FormField.propTypes = {
 
 const ChangeProfile = () => {
     const history = useHistory();
-    const [user, setUser] = useState(new User);
+    const [user, setUser] = useState(new User());
     // const [username, setUsername] = useState(null);
     // const [password, setPassword] = useState(null);
     // const [repeatPassword, setRepeatPassword] = useState(null);
@@ -66,7 +66,7 @@ const ChangeProfile = () => {
         }
 
         fetchData();
-    }, [params.id]);
+    }, [id]);
 
     function handleUsernameChanged (event) {
         const {name, value} = event.target
@@ -95,7 +95,7 @@ const ChangeProfile = () => {
         }))
     }
 
-    const doSavePassword = async () => {
+    const doSavePassword = async (user) => {
         try {
             const requestBody = JSON.stringify({...user});
             await api.put(`/users/${id}`, requestBody);
