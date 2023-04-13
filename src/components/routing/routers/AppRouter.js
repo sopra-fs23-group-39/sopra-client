@@ -7,6 +7,7 @@ import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
 import Profile from "components/views/Profile";
+import ChangeProfile from "../../views/ChangeProfile";
 import GameSelection from "components/views/GameSelection";
 import JoinGame from "components/views/JoinGame";
 import {GameSelectionGuard} from "components/routing/routeProtectors/GameSelectionGuard";
@@ -48,6 +49,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/profile/:id">
           <Profile/>
+        </Route>
+        <Route exact path="/changes/:id">
+          <ChangeProfile />
         </Route>
         <Route exact path="/join">
           <JoinGameGuard>

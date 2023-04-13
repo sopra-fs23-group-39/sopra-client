@@ -38,19 +38,17 @@ const Profile = () => {
     const params = useParams();
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    // eslint-disable-next-line
-    const [notVisible, setNotVisible] = useState(true);
+    // const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        let userId = params.id ? parseInt(params.id) : -1;
 
         async function fetchData() {
             try {
-                const response = await api.get(`/users/${userId}`);
+                const response = await api.get(`/users/${params.id}`);
 
                 setUser(response.data);
                 setIsLoading(false)
-                setNotVisible(localStorage.getItem('id') !== response.data.id)
+                // setVisible(localStorage.getItem('token') === response.data.token)
 
                 console.log('request to:', response.request.responseURL);
                 console.log('status code:', response.status);
@@ -70,7 +68,7 @@ const Profile = () => {
 
     const goChangeCredentials = async () => {
         try {
-            history.push(`/changes/${user.id}`)
+            history.push(`/changes/${params.id}`)
         } catch (error) {
             alert(`Something went wrong during going to ChangeCredentials page: \n${handleError(error)}`);
         }
@@ -89,7 +87,7 @@ const Profile = () => {
             {isLoading ? <Spinner/> :
                 <div className="dashboard container">
                     <div className="dashboard form">
-                        <div className="dashboard title">Profile</div>
+                        <h1 style={{textAlign: "center", color: "#DEB522", marginBottom: 100}}>Profile</h1>
                         <FormField
                             label="username:"
                             value={user.username}
@@ -111,8 +109,8 @@ const Profile = () => {
                             value={user.totalPoints}
                         />
                         <div className="dashboard button-container">
-
                                 <Button
+                                    style={{marginTop: 200}}
                                     onClick={() => goChangeCredentials()}>
                                     CHANGE CREDENTIALS
                                 </Button>
