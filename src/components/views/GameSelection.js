@@ -102,10 +102,18 @@ const GameSelection = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="Create Game button-container">
+                        <Button
+                            width="100%"
+                            style={{marginTop: 110}}
+                            onClick={() => history.push('/waiting_room_owner')}
+                        >
+                            Create Game
+                        </Button>
+                    </div>
                     <div className="Back to main page button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 150}}
                             onClick={() => history.push('/main')}
                         >
                             Cancel

@@ -16,6 +16,14 @@ const JoinGame = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 350}}
+                            onClick={() => history.push("/waiting_room_participant")}
+                        >
+                            join game
+                        </Button>
+                    </div>
+                    <div className="join button-container">
+                        <Button
+                            width="100%"
                             onClick={() => history.push("/main")}
                         >
                             Back

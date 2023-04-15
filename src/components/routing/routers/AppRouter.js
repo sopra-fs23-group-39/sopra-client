@@ -15,6 +15,9 @@ import Game from "../../views/Game";
 import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
 import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
 import Leaderboard from "components/views/Leaderboard";
+import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
+import WaitingRoomOwner from "../../views/WaitingRoomOwner";
+import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 
 /**
  * Main router of your application.
@@ -58,6 +61,11 @@ const AppRouter = () => {
             <JoinGame/>
           </JoinGameGuard>
         </Route>
+        <Route exact path="/waiting_room_participant">
+          <WaitingRoomGuard>
+            <WaitingRoomParticipant/>
+          </WaitingRoomGuard>
+        </Route>
         <Route exact path="/leaderboard">
           <LeaderboardGuard>
             <Leaderboard/>
@@ -67,6 +75,11 @@ const AppRouter = () => {
           <GameSelectionGuard>
             <GameSelection/>
           </GameSelectionGuard>
+        </Route>
+        <Route exact path="/waiting_room_owner">
+          <WaitingRoomGuard>
+            <WaitingRoomOwner/>
+          </WaitingRoomGuard>
         </Route>
         <Route exact path="/game/:gameId">
           <GameSelectionGuard>
