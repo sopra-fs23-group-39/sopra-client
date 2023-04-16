@@ -16,7 +16,8 @@ const GameSelection = () => {
     const createGame = async (gameMode) => {
 
         try {
-            const hostId = localStorage.getItem('currentUserId');
+            const hostId = localStorage.getItem('id');
+            console.log(hostId);
             const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue});
             const response = await api.post('/game', requestBody);
             console.log(response.data);

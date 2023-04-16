@@ -1,5 +1,5 @@
-import {useEffect} from 'react'; //api,
-import { handleError} from 'helpers/api'; //api,
+import {useEffect, useState} from 'react'; //api,
+import { api, handleError} from 'helpers/api'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory, useParams} from 'react-router-dom';
@@ -22,6 +22,8 @@ Player.propTypes = {
 const Game = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
+  const [playerList, setPlayerList] = useState(null);
+
 
   // define a state variable (using the state hook).
   // if this variable changes, the component will re-render, but the variable will
@@ -30,6 +32,34 @@ const Game = () => {
   // more information can be found under https://reactjs.org/docs/hooks-state.html
   //const [hostId, setHostId] = useState(null);
   const {gameId} = useParams();
+  /*useEffect(() => {
+    async function connectWithSmallDelay() {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      const socket = new WebSocket(`ws://localhost:8080/game/${gameId}`);
+      socket.addEventListener("open", () =>{
+        console.log("Connection to waiting room successful");
+      });
+      socket.onmessage = function(event) {
+        const socketPlayerList = JSON.parse(event.data);
+        socket.send("Hello server");
+        setPlayerList(socketPlayerList);
+      }
+
+      socket.addEventListener("close", () => {
+        console.log("WebSocket connection closed.");
+      });
+
+      socket.addEventListener("error", (event) => {
+        console.error("WebSocket error:", event);
+      });
+      return () => {
+        socket.close();
+      }
+    }
+    connectWithSmallDelay();
+
+  })*/
+
 
   /*const logout = () => {
     localStorage.removeItem('token');
@@ -44,25 +74,10 @@ const Game = () => {
     // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
     async function fetchData() {
       try {
-        /*const response = await api.get(`/game/${gameId}`);
+        const response = await api.get(`/game/${gameId}`);
+        setPlayerList(response.data);
+        console.log(response.data);
 
-        // delays continuous execution of an async operation for 1 second.
-        // This is just a fake async call, so that the spinner can be displayed
-        // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Get the returned users and update the state.
-        setHostId(response.data.hostId);
-
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log('request to:', response.request.responseURL);
-        console.log('status code:', response.status);
-        console.log('status text:', response.statusText);
-        console.log('requested data:', response.data);
-
-        // See here to get more data.
-        console.log(response);*/
       } catch (error) {
         console.error(`Something went wrong while fetching the game info: \n${handleError(error)}`);
         console.error("Details:", error);
@@ -71,7 +86,7 @@ const Game = () => {
     }
 
     fetchData();
-  }, []);
+  }, [gameId]);
 
   let content = <Spinner/>;
 
@@ -79,6 +94,20 @@ const Game = () => {
     content = (
       <div className="game">
         <h1> Game ID: {gameId} </h1>
+          <div>
+              {playerList ? (
+                  <div>
+                      <h2>Host:</h2>
+                      <p key={playerList[0].id}>{playerList[0].username}</p>
+                      <h2>Players:</h2>
+                      {playerList.slice(1).map((player) => (
+                          <p key={player.id}>{player.username}</p>
+                      ))}
+                  </div>
+              ) : (
+                  <p>Loading player list...</p>
+              )}
+          </div>
         <Button
           width="100%"
           onClick={() => history.push('/main')}
