@@ -7,7 +7,7 @@ import "styles/views/WaitingRoom.scss";
 
 const WaitingRoomOwner = () => {
     const history = useHistory();
-    const [users, setUsers] = useState(null);
+    const [setUsers] = useState(null);
 
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const WaitingRoomOwner = () => {
         }
 
         fetchData();
-    }, []);
+    }, [setUsers]);
 
     return (
         <BaseContainer>
