@@ -76,7 +76,7 @@ const GameSelection = () => {
                     <div className="mixed button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 20}}
+                            style={{marginTop: 20, marginBottom: 20}}
                             onClick={() => createGame('MIXED')}
                         >
                             Mixed
@@ -84,7 +84,7 @@ const GameSelection = () => {
                     </div>
                     <div className ="Slider">
                         <div>
-                            <h1>Amount of questions:</h1>
+                            <h3 style={{textAlign: "center"}}>Amount of questions:</h3>
                             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                 <p>5</p>
                                 <p>20</p>
