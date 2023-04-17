@@ -11,6 +11,7 @@ import {useState} from "react";
 const GameSelection = () => {
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
+    const [TimerValue, setTimerValue] = useState(5);
 
 
     const createGame = async (gameMode) => {
@@ -38,6 +39,10 @@ const GameSelection = () => {
     }
     const handleSliderChange = (event) => {
         setSliderValue(event.target.value);
+    };
+
+    const handleTimerChange = (event) =>{
+        setTimerValue(event.target.value);
     };
 
 
@@ -84,7 +89,7 @@ const GameSelection = () => {
                     </div>
                     <div className ="Slider">
                         <div>
-                            <h3 style={{textAlign: "center"}}>Amount of questions:</h3>
+                            <h3 style={{textAlign: "center",marginBottom: 0}}>Amount of questions:</h3>
                             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                 <p>5</p>
                                 <p>20</p>
@@ -103,10 +108,31 @@ const GameSelection = () => {
                             </div>
                         </div>
                     </div>
+                    <div className ="Time Selection Slider">
+                        <div>
+                            <h3 style={{textAlign: "center",marginTop: 10, marginBottom:0}}>Timer:</h3>
+                            <div style = {{display: 'flex', justifyContent: 'space-between'}}>
+                                 <p>5s</p>
+                                 <p>60s</p>
+                            </div>
+                            <div style = {{display: 'flex', justifyContent: 'center'}}>
+                                <output>{TimerValue}</output>
+                                <input
+                                    type ="range"
+                                    min = "5"
+                                    max = "60"
+                                    step = "5"
+                                    value = {TimerValue}
+                                    onChange = {handleTimerChange}
+                                    style = {{width : '100%'}}
+                                />
+                            </div>
+                        </div>
+                    </div>
                     <div className="Create Game button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 110}}
+                            style={{marginTop: 40}}
                             onClick={() => history.push('/waiting_room_owner')}
                         >
                             Create Game
@@ -115,6 +141,7 @@ const GameSelection = () => {
                     <div className="Back to main page button-container">
                         <Button
                             width="100%"
+                            style = {{marginTop:0}}
                             onClick={() => history.push('/main')}
                         >
                             Cancel
