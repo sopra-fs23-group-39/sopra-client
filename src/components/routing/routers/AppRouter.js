@@ -15,6 +15,7 @@ import Game from "../../views/Game";
 import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
 import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
 import Leaderboard from "components/views/Leaderboard";
+import GameTest from "../../views/GameTest";
 import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
 import WaitingRoomOwner from "../../views/WaitingRoomOwner";
 import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
@@ -88,6 +89,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/main">
           <div></div>
+        </Route>
+        <Route exact path="/gameTest">
+          <GameTest />
         </Route>
       </Switch>
     </BrowserRouter>
