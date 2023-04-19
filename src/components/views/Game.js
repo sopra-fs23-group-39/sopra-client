@@ -42,7 +42,7 @@ const Game = () => {
       stompClient.subscribe(`/topic/game/${gameId}`, (message) =>{
         const players = JSON.parse(message.body);
         setPlayerList(players);
-      })
+      });
       stompClient.send(`/app/game/${gameId}`, {}, '');
     });
     return () => {
