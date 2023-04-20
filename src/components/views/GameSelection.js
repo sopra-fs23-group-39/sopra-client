@@ -11,11 +11,10 @@ import {useState} from "react";
 const GameSelection = () => {
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
-    let gameMode = "";
+    let gameMode = "POSTER";
 
 
     const createGame = async (gameMode) => {
-
         try {
             console.log(gameMode)
             const hostId = localStorage.getItem('id');
