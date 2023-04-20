@@ -50,6 +50,7 @@ const Profile = () => {
                 setIsLoading(false)
                 // setVisible(localStorage.getItem('token') === response.data.token)
 
+                console.log(response.data)
                 console.log('request to:', response.request.responseURL);
                 console.log('status code:', response.status);
                 console.log('status text:', response.statusText);
