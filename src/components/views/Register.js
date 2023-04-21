@@ -69,7 +69,7 @@ const Register = props => {
             onChange={un => setUsername(un)}
           />
           <FormField
-            label="Name"
+            label="Password"
             value={password}
             onChange={n => setPassword(n)}
           />
