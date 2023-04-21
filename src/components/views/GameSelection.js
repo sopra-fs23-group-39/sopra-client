@@ -11,11 +11,12 @@ import {useState} from "react";
 const GameSelection = () => {
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
+    let gameMode = "POSTER";
 
 
     const createGame = async (gameMode) => {
-
         try {
+            console.log(gameMode)
             const hostId = localStorage.getItem('id');
             console.log(hostId);
             const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue});
@@ -50,7 +51,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 80}}
-                            onClick={() => createGame('TRAILER')}
+                            onClick={() => gameMode = "TRAILER"}
                         >
                             Movie Trailers
                         </Button>
@@ -59,7 +60,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
-                            onClick={() => createGame("POSTER")}
+                            onClick={() => gameMode = "POSTER"}
                         >
                             Movie Posters
                         </Button>
@@ -68,7 +69,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
-                            onClick={() => createGame("ACTOR")}
+                            onClick={() => gameMode = "ACTOR"}
                         >
                             Actors
                         </Button>
@@ -77,7 +78,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20, marginBottom: 20}}
-                            onClick={() => createGame('MIXED')}
+                            onClick={() => gameMode = "MIXED"}
                         >
                             Mixed
                         </Button>
@@ -107,7 +108,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 110}}
-                            onClick={() => history.push('/waiting_room_owner')}
+                            onClick={() => createGame(gameMode)}
                         >
                             Create Game
                         </Button>
