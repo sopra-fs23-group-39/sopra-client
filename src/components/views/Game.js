@@ -39,7 +39,7 @@ const Game = () => {
     const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`, null, {
       transports: ['xhr-polling', 'jsonp-polling']
     });
-    const stompClient = Stomp.over(socket);
+    const stompClient = Stomp.over(() => socket);
 
     stompClient.connect({}, ()=> {
       stompClient.subscribe(`/topic/game/${gameId}`, (message) =>{
