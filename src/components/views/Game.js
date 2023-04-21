@@ -35,7 +35,8 @@ const Game = () => {
 
   const {gameId} = useParams();
   useEffect(() => {
-    const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+    // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+    const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`);
     const stompClient = Stomp.over(socket);
 
     stompClient.connect({}, ()=> {
