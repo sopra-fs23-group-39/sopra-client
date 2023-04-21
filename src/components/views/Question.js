@@ -8,12 +8,11 @@ import {useHistory, useParams} from "react-router-dom";
 function Question() {
     const {gameId} = useParams();
     const [question, setQuestion] = useState({});
+    console.log("Object right at the beginning of the component");
     console.log(question);
     const [disabled, setDisabled] = useState(false);
 
-    const [userId, setUserId] = useState(localStorage.getItem("id"));
-    // const [answer, setAnswer] = useState("");
-    // const [correctAnswer, setCorrectAnswer] = useState("");
+    const userId = localStorage.getItem("id");
 
     const [buttonColors, setButtonColors] = useState({
         but1: "#DEB522",
@@ -27,7 +26,7 @@ function Question() {
 
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        //const socket = new SockJS(`https://localhost:8080/game/${gameId}/question`);
         const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/question`);
         let stompClient = Stomp.over(socket);
 
@@ -37,6 +36,7 @@ function Question() {
             stompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
                 const parsedQuestion = JSON.parse(receivedQuestion.body);
                 setQuestion(parsedQuestion);
+                console.log("Object inside useEffect game/gameId/question (subscribe):")
                 console.log(question);
             });
             // "back address"
@@ -46,13 +46,13 @@ function Question() {
         return () => {
             stompClient.disconnect();
         };
-    }, [gameId])  // [] is needed here so that useEffect is called when the component is mounted (not after)
+    }, [gameId]);  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
 
     const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        // const socket = new SockJS(`https://localhost:8080/game/${gameId}/answer`);
         const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/answer`);
         const client = Stomp.over(socket);
 
@@ -84,11 +84,38 @@ function Question() {
         });
 
         stompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
-        console.log("Answer is sent");
+        console.log("Answer is sent, object inside handleClick:");
+        console.log(answerToSend)
     }
 
+    useEffect(() => {
+        let correctButtonId;
+        if (question.correctAnswer === question.answer1) {
+            correctButtonId = "but1";
+        } else if (question.correctAnswer === question.answer2) {
+            correctButtonId = "but2";
+        } else if (question.correctAnswer === question.answer3) {
+            correctButtonId = "but3"
+        } else if (question.correctAnswer === question.answer4) {
+            correctButtonId = "but4";
+        }
 
-    //This hook is to automatically route to the next page (page
+        console.log("correctAnswer:", question.correctAnswer);
+        console.log("correctButtonId:", correctButtonId);
+
+        const timeoutId = setTimeout(() => {
+            setDisabled(true);
+            setButtonColors({
+                ...buttonColors,
+                [correctButtonId]: "green"
+            });
+        }, 20000);
+
+        return () => clearTimeout(timeoutId);
+    }, []);
+
+
+    //This hook is to automatically route to the next page
     useEffect(() => {
         timeoutRef.current = setTimeout(() => {
             history.push(`/game/${gameId}/standings`);
@@ -98,7 +125,7 @@ function Question() {
         return () => {
             clearTimeout(timeoutRef.current);
         };
-    }, [history]);
+    }, [history, gameId]);
 
 
     return (
