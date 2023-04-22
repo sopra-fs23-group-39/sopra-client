@@ -28,6 +28,7 @@ const Game = () => {
     // const [game, setGame] = useState(null);
     const [gameMode, setGameMode] = useState(null);
     const [questionAmount, setAmountOfQuestions] = useState(null);
+    const [timer, setTimer] = useState(null);
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -47,17 +48,14 @@ const Game = () => {
                 console.log(response.data)
                 setGameMode(response.data.gameMode)
                 setAmountOfQuestions(response.data.questionAmount)
-
-
+                setTimer(response.data.timer)
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
                 console.error(error);
                 alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
             }
         }
-
         fetchData();
-
 
         // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`, null, {
@@ -76,8 +74,6 @@ const Game = () => {
         return () => {
             stompClient.disconnect();
         };
-
-
     }, [gameId]);
 
     let content = <Spinner/>;
@@ -90,7 +86,7 @@ const Game = () => {
                     <div/>
                     <div>Theme: {gameMode}</div>
                     <div>Number of questions: {questionAmount}</div>
-                    <div>Time to answer question: </div>
+                    <div>Time to answer question: {timer}</div>
                 </div>
                 <div>
                     {playerList ? (
