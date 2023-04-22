@@ -7,11 +7,9 @@ import "styles/views/Main.scss";
 
 const Main = () => {
     const history = useHistory();
-    const [users, setUsers] = useState(null);
+    const [currentId, setCurrentId] = useState(null);
 
     const logout = async () => {
-        console.log("id")
-        console.log(localStorage.getItem("id"))
         try {
             await api.post('/users/logout', localStorage.getItem('id'))
             localStorage.removeItem('id');
@@ -21,22 +19,14 @@ const Main = () => {
             history.push('/login');
             alert(`Something went wrong during logout: \n${handleError(error)}`);
         }
-
     }
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await api.get('/users');
-                setUsers(response.data);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the users! See the console for details.");
-            }
+        try {
+            setCurrentId(localStorage.getItem("id"))
+        } catch (error) {
+            alert(`Something went wrong while getting the user id: \n${handleError(error)}`);
         }
-
-        fetchData();
     }, []);
 
     return (
@@ -75,7 +65,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
-                            onClick={() => history.push("/profile/" + users[0].id)}
+                            onClick={() => history.push("/profile/" + currentId)}
                         >
                             Profile
                         </Button>

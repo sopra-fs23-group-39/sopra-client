@@ -22,6 +22,16 @@ Player.propTypes = {
 };
 
 const Game = () => {
+
+    const startGame = async () => {
+        try {
+            history.push(`/game/${gameId}/question`);
+        } catch (error) {
+            alert(`Something went wrong during navigation: \n${handleError(error)}`);
+        }
+    };
+
+
     // use react-router-dom's hook to access the history
     const history = useHistory();
     const [playerList, setPlayerList] = useState(null);
@@ -38,7 +48,6 @@ const Game = () => {
     //const [hostId, setHostId] = useState(null);
 
     const {gameId} = useParams();
-
 
     useEffect(() => {
         async function fetchData() {
@@ -58,9 +67,12 @@ const Game = () => {
         fetchData();
 
         // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`, null, {
             transports: ['xhr-polling', 'jsonp-polling']
         });
+
+
         const stompClient = Stomp.over(() => socket);
 
         stompClient.connect({}, () => {
@@ -104,7 +116,7 @@ const Game = () => {
                 </div>
                 <Button
                     width="100%"
-                    onClick={() => console.log("start game")}
+                    onClick={() => startGame()}
                 >
                     Start Game
                 </Button>
