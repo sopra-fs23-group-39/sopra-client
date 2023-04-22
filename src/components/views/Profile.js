@@ -50,7 +50,6 @@ const Profile = () => {
                 setIsLoading(false)
                 // setVisible(localStorage.getItem('token') === response.data.token)
 
-                console.log(response.data)
                 console.log('request to:', response.request.responseURL);
                 console.log('status code:', response.status);
                 console.log('status text:', response.statusText);
@@ -111,6 +110,7 @@ const Profile = () => {
                         />
                         <div className="dashboard button-container">
                                 <Button
+                                    disabled={String(user.id) !== localStorage.getItem('id')}
                                     style={{marginTop: 200}}
                                     onClick={() => goChangeCredentials()}>
                                     CHANGE CREDENTIALS

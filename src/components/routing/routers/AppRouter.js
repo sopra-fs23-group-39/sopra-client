@@ -17,7 +17,6 @@ import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGu
 import Leaderboard from "components/views/Leaderboard";
 import Question from "../../views/Question";
 import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
-import WaitingRoomOwner from "../../views/WaitingRoomOwner";
 import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 
 /**
@@ -76,11 +75,6 @@ const AppRouter = () => {
           <GameSelectionGuard>
             <GameSelection/>
           </GameSelectionGuard>
-        </Route>
-        <Route exact path="/waiting_room_owner">
-          <WaitingRoomGuard>
-            <WaitingRoomOwner/>
-          </WaitingRoomGuard>
         </Route>
         <Route exact path="/game/:gameId">
           <GameSelectionGuard>
