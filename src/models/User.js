@@ -11,6 +11,7 @@ class User {
     this.rank = null;
     this.numberGames = null;
     this.totalPoints = null;
+    this.currentPoints = null;
     Object.assign(this, data);
   }
 }

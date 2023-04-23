@@ -1,6 +1,6 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-// import {GameGuard} from "components/routing/routeProtectors/GameGuard";
-// import GameRouter from "components/routing/routers/GameRouter";
+//import {GameGuard} from "components/routing/routeProtectors/GameGuard";
+//import GameRouter from "components/routing/routers/GameRouter";
 import {MainGuard} from "components/routing/routeProtectors/MainGuard";
 import MainRouter from "components/routing/routers/MainRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
@@ -15,6 +15,9 @@ import Game from "../../views/Game";
 import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
 import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
 import Leaderboard from "components/views/Leaderboard";
+import Question from "../../views/Question";
+import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
+import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 
 /**
  * Main router of your application.
@@ -58,6 +61,11 @@ const AppRouter = () => {
             <JoinGame/>
           </JoinGameGuard>
         </Route>
+        <Route exact path="/waiting_room_participant">
+          <WaitingRoomGuard>
+            <WaitingRoomParticipant/>
+          </WaitingRoomGuard>
+        </Route>
         <Route exact path="/leaderboard">
           <LeaderboardGuard>
             <Leaderboard/>
@@ -75,6 +83,12 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/main">
           <div></div>
+        </Route>
+        <Route exact path="/game/:gameId/question">
+          <Question />
+        </Route>
+        <Route exact path='/game/:gameId/standings'>
+          Standings
         </Route>
       </Switch>
     </BrowserRouter>

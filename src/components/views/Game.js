@@ -1,99 +1,141 @@
-import {useEffect} from 'react'; //api,
-import { handleError} from 'helpers/api'; //api,
+import {useEffect, useState} from 'react'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory, useParams} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
+import {Stomp} from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import {api, handleError} from "../../helpers/api";
 
 const Player = ({user}) => (
-  <div className="player container">
-    <div className="player username">{user.username}</div>
-    <div className="player name">{user.name}</div>
-    <div className="player id">id: {user.id}</div>
-  </div>
+    <div className="player container">
+        <div className="player username">{user.username}</div>
+        <div className="player name">{user.name}</div>
+        <div className="player id">id: {user.id}</div>
+    </div>
 );
 
 Player.propTypes = {
-  user: PropTypes.object
+    user: PropTypes.object
 };
 
 const Game = () => {
-  // use react-router-dom's hook to access the history
-  const history = useHistory();
 
-  // define a state variable (using the state hook).
-  // if this variable changes, the component will re-render, but the variable will
-  // keep its value throughout render cycles.
-  // a component can have as many state variables as you like.
-  // more information can be found under https://reactjs.org/docs/hooks-state.html
-  //const [hostId, setHostId] = useState(null);
-  const {gameId} = useParams();
+    const startGame = async () => {
+        try {
+            history.push(`/game/${gameId}/question`);
+        } catch (error) {
+            alert(`Something went wrong during navigation: \n${handleError(error)}`);
+        }
+    };
 
-  /*const logout = () => {
-    localStorage.removeItem('token');
-    history.push('/login');
-  }*/
 
-  // the effect hook can be used to react to change in your component.
-  // in this case, the effect hook is only run once, the first time the component is mounted
-  // this can be achieved by leaving the second argument an empty array.
-  // for more information on the effect hook, please see https://reactjs.org/docs/hooks-effect.html
-  useEffect(() => {
-    // effect callbacks are synchronous to prevent race conditions. So we put the async function inside:
-    async function fetchData() {
-      try {
-        /*const response = await api.get(`/game/${gameId}`);
+    // use react-router-dom's hook to access the history
+    const history = useHistory();
+    const [playerList, setPlayerList] = useState(null);
+    // const [game, setGame] = useState(null);
+    const [gameMode, setGameMode] = useState(null);
+    const [questionAmount, setAmountOfQuestions] = useState(null);
+    const [timer, setTimer] = useState(null);
 
-        // delays continuous execution of an async operation for 1 second.
-        // This is just a fake async call, so that the spinner can be displayed
-        // feel free to remove it :)
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    // define a state variable (using the state hook).
+    // if this variable changes, the component will re-render, but the variable will
+    // keep its value throughout render cycles.
+    // a component can have as many state variables as you like.
+    // more information can be found under https://reactjs.org/docs/hooks-state.html
+    //const [hostId, setHostId] = useState(null);
 
-        // Get the returned users and update the state.
-        setHostId(response.data.hostId);
+    const {gameId} = useParams();
 
-        // This is just some data for you to see what is available.
-        // Feel free to remove it.
-        console.log('request to:', response.request.responseURL);
-        console.log('status code:', response.status);
-        console.log('status text:', response.statusText);
-        console.log('requested data:', response.data);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await api.get(`/game/${gameId}/settings`);
+                // setGame(response.data);
+                console.log(response.data)
+                setGameMode(response.data.gameMode)
+                setAmountOfQuestions(response.data.questionAmount)
+                setTimer(response.data.timer)
+            } catch (error) {
+                console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+                console.error(error);
+                alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+            }
+        }
+        fetchData();
 
-        // See here to get more data.
-        console.log(response);*/
-      } catch (error) {
-        console.error(`Something went wrong while fetching the game info: \n${handleError(error)}`);
-        console.error("Details:", error);
-        alert("Something went wrong while fetching the game info! See the console for details.");
-      }
+        const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+
+        /*const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`, null, {
+            transports: ['xhr-polling', 'jsonp-polling']
+        });*/
+
+
+        const stompClient = Stomp.over(() => socket);
+
+        stompClient.connect({}, () => {
+            stompClient.subscribe(`/topic/game/${gameId}`, (message) => {
+                const players = JSON.parse(message.body);
+                setPlayerList(players);
+            })
+            stompClient.send(`/app/game/${gameId}`, {}, '');
+        });
+
+        return () => {
+            stompClient.disconnect();
+        };
+    }, [gameId]);
+
+    let content = <Spinner/>;
+
+    if (gameId) {
+        content = (
+            <div className="game">
+                <h2> Waiting Room </h2>
+                <div>Game ID: {gameId}
+                    <div/>
+                    <div>Theme: {gameMode}</div>
+                    <div>Number of questions: {questionAmount}</div>
+                    <div>Time to answer question: {timer}</div>
+                </div>
+                <div>
+                    {playerList ? (
+                        <div>
+                            <h2>Host:</h2>
+                            <p key={playerList[0].id}>{playerList[0].username}</p>
+                            <h2>Players:</h2>
+                            {playerList.slice(1).map((player) => (
+                                <p key={player.id}>{player.username}</p>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>Loading player list...</p>
+                    )}
+                </div>
+                <Button
+                    width="100%"
+                    onClick={() => startGame()}
+                >
+                    Start Game
+                </Button>
+                <Button
+                    width="100%"
+                    style={{marginTop: 20}}
+                    onClick={() => history.push('/main')}
+                >
+                    Quit
+                </Button>
+            </div>
+        );
     }
 
-    fetchData();
-  }, []);
-
-  let content = <Spinner/>;
-
-  if (gameId) {
-    content = (
-      <div className="game">
-        <h1> Game ID: {gameId} </h1>
-        <Button
-          width="100%"
-          onClick={() => history.push('/main')}
-        >
-          Back
-        </Button>
-      </div>
+    return (
+        <BaseContainer className="game container">
+            {content}
+        </BaseContainer>
     );
-  }
-
-  return (
-    <BaseContainer className="game container">
-      {content}
-    </BaseContainer>
-  );
 }
 
 export default Game;

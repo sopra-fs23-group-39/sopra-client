@@ -11,13 +11,16 @@ import {useState} from "react";
 const GameSelection = () => {
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
+    let gameMode = "POSTER";
+    const [TimerValue, setTimerValue] = useState(5);
 
 
     const createGame = async (gameMode) => {
-
         try {
-            const hostId = localStorage.getItem('currentUserId');
-            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue});
+            console.log(gameMode)
+            const hostId = localStorage.getItem('id');
+            console.log(hostId);
+            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;
@@ -39,6 +42,10 @@ const GameSelection = () => {
         setSliderValue(event.target.value);
     };
 
+    const handleTimerChange = (event) =>{
+        setTimerValue(event.target.value);
+    };
+
 
     return (
         <BaseContainer>
@@ -49,7 +56,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 80}}
-                            onClick={() => createGame('TRAILER')}
+                            onClick={() => gameMode = "TRAILER"}
                         >
                             Movie Trailers
                         </Button>
@@ -58,7 +65,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
-                            onClick={() => createGame("POSTER")}
+                            onClick={() => gameMode = "POSTER"}
                         >
                             Movie Posters
                         </Button>
@@ -67,7 +74,7 @@ const GameSelection = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 20}}
-                            onClick={() => createGame("ACTOR")}
+                            onClick={() => gameMode = "ACTOR"}
                         >
                             Actors
                         </Button>
@@ -75,15 +82,15 @@ const GameSelection = () => {
                     <div className="mixed button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 20}}
-                            onClick={() => createGame('MIXED')}
+                            style={{marginTop: 20, marginBottom: 20}}
+                            onClick={() => gameMode = "MIXED"}
                         >
                             Mixed
                         </Button>
                     </div>
                     <div className ="Slider">
                         <div>
-                            <h1>Amount of questions:</h1>
+                            <h3 style={{textAlign: "center",marginBottom: 0}}>Amount of questions:</h3>
                             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                 <p>5</p>
                                 <p>20</p>
@@ -102,10 +109,40 @@ const GameSelection = () => {
                             </div>
                         </div>
                     </div>
+                    <div className ="Time Selection Slider">
+                        <div>
+                            <h3 style={{textAlign: "center",marginTop: 10, marginBottom:0}}>Timer:</h3>
+                            <div style = {{display: 'flex', justifyContent: 'space-between'}}>
+                                 <p>5s</p>
+                                 <p>60s</p>
+                            </div>
+                            <div style = {{display: 'flex', justifyContent: 'center'}}>
+                                <output>{TimerValue}</output>
+                                <input
+                                    type ="range"
+                                    min = "5"
+                                    max = "60"
+                                    step = "5"
+                                    value = {TimerValue}
+                                    onChange = {handleTimerChange}
+                                    style = {{width : '100%'}}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="Create Game button-container">
+                        <Button
+                            width="100%"
+                            style={{marginTop: 40}}
+                            onClick={() => createGame(gameMode)}
+                        >
+                            Create Game
+                        </Button>
+                    </div>
                     <div className="Back to main page button-container">
                         <Button
                             width="100%"
-                            style={{marginTop: 150}}
+                            style = {{marginTop:0}}
                             onClick={() => history.push('/main')}
                         >
                             Cancel
