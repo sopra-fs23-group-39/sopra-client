@@ -18,6 +18,8 @@ import Leaderboard from "components/views/Leaderboard";
 import Question from "../../views/Question";
 import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
 import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
+import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
+import {QuestionGuard} from "../routeProtectors/QuestionGuard";
 
 /**
  * Main router of your application.
@@ -51,11 +53,15 @@ const AppRouter = () => {
           <Redirect to="/main"/>
         </Route>
         <Route exact path="/profile/:id">
-          <Profile/>
+          <MainGuard>
+            <Profile />
+          </MainGuard>
         </Route>
-        <Route exact path="/changes/:id">
-          <ChangeProfile />
-        </Route>
+        <Route exact path="/changes/:id" render={(props) => (
+            <ChangeProfileGuard {...props}>
+              <ChangeProfile />
+            </ChangeProfileGuard>
+          )} />
         <Route exact path="/join">
           <JoinGameGuard>
             <JoinGame/>
@@ -81,12 +87,11 @@ const AppRouter = () => {
             <Game/>
           </GameSelectionGuard>
         </Route>
-        <Route exact path="/main">
-          <div></div>
-        </Route>
-        <Route exact path="/game/:gameId/question">
-          <Question />
-        </Route>
+        <Route exact path="/game/:gameId/question" render={(props) => (
+            <QuestionGuard {...props}>
+              <Question />
+            </QuestionGuard>
+        )} />
         <Route exact path='/game/:gameId/standings'>
           Standings
         </Route>
