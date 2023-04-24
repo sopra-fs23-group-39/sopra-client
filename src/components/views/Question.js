@@ -88,31 +88,32 @@ function Question() {
         console.log(answerToSend)
     }
 
-    useEffect(() => {
-        let correctButtonId;
-        if (question.correctAnswer === question.answer1) {
-            correctButtonId = "but1";
-        } else if (question.correctAnswer === question.answer2) {
-            correctButtonId = "but2";
-        } else if (question.correctAnswer === question.answer3) {
-            correctButtonId = "but3"
-        } else if (question.correctAnswer === question.answer4) {
-            correctButtonId = "but4";
-        }
-
-        console.log("correctAnswer:", question.correctAnswer);
-        console.log("correctButtonId:", correctButtonId);
-
-        const timeoutId = setTimeout(() => {
-            setDisabled(true);
-            setButtonColors({
-                ...buttonColors,
-                [correctButtonId]: "green"
-            });
-        }, 20000);
-
-        return () => clearTimeout(timeoutId);
-    }, []);
+    // This hook is to make the correct answer green
+    // useEffect(() => {
+    //     let correctButtonId;
+    //     if (question.correctAnswer === question.answer1) {
+    //         correctButtonId = "but1";
+    //     } else if (question.correctAnswer === question.answer2) {
+    //         correctButtonId = "but2";
+    //     } else if (question.correctAnswer === question.answer3) {
+    //         correctButtonId = "but3"
+    //     } else if (question.correctAnswer === question.answer4) {
+    //         correctButtonId = "but4";
+    //     }
+    //
+    //     console.log("correctAnswer:", question.correctAnswer);
+    //     console.log("correctButtonId:", correctButtonId);
+    //
+    //     const timeoutId = setTimeout(() => {
+    //         setDisabled(true);
+    //         setButtonColors({
+    //             ...buttonColors,
+    //             [correctButtonId]: "green"
+    //         });
+    //     }, 20000);
+    //
+    //     return () => clearTimeout(timeoutId);
+    // }, []);
 
 
     //This hook is to automatically route to the next page
@@ -135,12 +136,12 @@ function Question() {
                 <h2 style={{textAlign: "center", color: "#DEB522", marginBottom: 10}}>{question.questionText}</h2>
                 <img src={question.questionLink} className="image"  alt="MoviePicture"/>
                 <div className="dashboard button-container">
-                    <Button
-                        style={{marginTop: 10}}
-                        disabled={true}
-                        >
-                        {question.correctAnswer}
-                    </Button>
+                    {/*<Button*/}
+                    {/*    style={{marginTop: 10}}*/}
+                    {/*    disabled={true}*/}
+                    {/*    >*/}
+                    {/*    {question.correctAnswer}*/}
+                    {/*</Button>*/}
                     <Button
                         style={{backgroundColor: buttonColors.but1}}
                         width="100%"
