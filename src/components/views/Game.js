@@ -71,7 +71,7 @@ const Game = () => {
         const socket = new SockJS(`ws://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
-        const stompClient = Stomp.over(() => socket);
+        const stompClient = Stomp.over(socket);
 
         stompClient.connect({}, () => {
             stompClient.subscribe(`/topic/game/${gameId}`, (message) => {
