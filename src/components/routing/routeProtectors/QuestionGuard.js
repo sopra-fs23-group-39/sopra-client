@@ -44,9 +44,10 @@ export const QuestionGuard = props => {
 
     // Just to check what it prints out
     if (players) {
-        players.map(player => {
+        players.map(player =>  {
             console.log(player.id);
             console.log(typeof player.id);
+            return null;
         });
     }
 

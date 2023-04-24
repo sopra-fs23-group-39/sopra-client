@@ -46,7 +46,7 @@ function Question() {
         return () => {
             stompClient.disconnect();
         };
-    }, [gameId]);  // [] is needed here so that useEffect is called when the component is mounted (not after)
+    });  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
 
     const [stompClient, setStompClient] = useState(null);
@@ -66,7 +66,7 @@ function Question() {
                 stompClient.disconnect();
             }
         };
-    }, [gameId]);
+    }, [gameId, stompClient]);
 
     function handleClick(chosenAnswer, buttonId) {
         const header = { 'content-type': 'application/json' };
@@ -112,7 +112,7 @@ function Question() {
         }, 20000);
 
         return () => clearTimeout(timeoutId);
-    }, []);
+    });
 
 
     //This hook is to automatically route to the next page
