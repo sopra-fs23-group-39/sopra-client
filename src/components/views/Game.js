@@ -68,9 +68,7 @@ const Game = () => {
 
         // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}`, null, {
-            transports: ['xhr-polling', 'jsonp-polling']
-        });
+        const socket = new SockJS(`ws://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
         const stompClient = Stomp.over(() => socket);
@@ -80,7 +78,6 @@ const Game = () => {
                 const players = JSON.parse(message.body);
                 setPlayerList(players);
             })
-            stompClient.send(`/app/game/${gameId}`, {}, '');
         });
 
         return () => {
