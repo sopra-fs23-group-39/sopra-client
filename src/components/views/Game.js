@@ -69,7 +69,7 @@ const Game = () => {
 
         // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
         const stompClient = Stomp.over(() => socket);
