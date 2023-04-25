@@ -23,13 +23,7 @@ Player.propTypes = {
 
 const Game = () => {
 
-    const startGame = async () => {
-        try {
-            history.push(`/game/${gameId}/question`);
-        } catch (error) {
-            alert(`Something went wrong during navigation: \n${handleError(error)}`);
-        }
-    };
+
 
 
     // use react-router-dom's hook to access the history
@@ -39,6 +33,7 @@ const Game = () => {
     const [gameMode, setGameMode] = useState(null);
     const [questionAmount, setAmountOfQuestions] = useState(null);
     const [timer, setTimer] = useState(null);
+    const [stompClient, setStompClient] = useState(null)
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -48,6 +43,25 @@ const Game = () => {
     //const [hostId, setHostId] = useState(null);
 
     const {gameId} = useParams();
+    const startGame = async () => {
+        if(stompClient && stompClient.connected){
+            stompClient.send(`/app/game/${gameId}`, {}, "START");
+        } else {
+            //idk put error and kick or smth
+        }
+
+
+    };
+    const quickTest = async () => {
+        if(stompClient && stompClient.connected){
+            console.log("send?")
+
+        } else {
+            //idk put error and kick or smth
+        }
+
+
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -67,20 +81,28 @@ const Game = () => {
 
         fetchData();
 
-        // const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+        const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
         const stompClient = Stomp.over(() => socket);
+        setStompClient(stompClient);
 
         stompClient.connect({}, () => {
             stompClient.subscribe(`/topic/game/${gameId}`, (message) => {
-                //console.log(message);
+                if(message.body == "game started."){
+                    history.push(`/game/${gameId}/question`);
+                }
+                console.log(message);
                 const players = JSON.parse(message.body);
                 setPlayerList(players);
+                console.log("host id" + playerList[0].id);
+                console.log(localStorage.getItem("id"))
             })
-            stompClient.send(`/app/game/${gameId}`, {}, "");
+            console.log("before sending CONNECT");
+            stompClient.send(`/app/game/${gameId}`, {}, "idkman");
+            console.log("after sending CONNECT");
         });
 
         return () => {
@@ -117,6 +139,8 @@ const Game = () => {
                 <Button
                     width="100%"
                     onClick={() => startGame()}
+                    //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
+                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
                 >
                     Start Game
                 </Button>
