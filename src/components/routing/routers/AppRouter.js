@@ -20,6 +20,7 @@ import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
 import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
+import Standings from "../../views/Standings";
 
 /**
  * Main router of your application.
@@ -93,7 +94,7 @@ const AppRouter = () => {
             </QuestionGuard>
         )} />
         <Route exact path='/game/:gameId/standings'>
-          Standings
+          <Standings />
         </Route>
       </Switch>
     </BrowserRouter>

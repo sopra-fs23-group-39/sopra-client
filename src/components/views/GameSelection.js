@@ -1,18 +1,23 @@
-//import {useState} from 'react';
 import {api, handleError} from 'helpers/api';
-// import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
-// import PropTypes from "prop-types";
 import "styles/views/Main.scss";
 import {useState} from "react";
 
 const GameSelection = () => {
+    const color = "#DEB522";
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
-    let gameMode = "POSTER";
+    const [gameMode, setGameMode] = useState("POSTER");
     const [TimerValue, setTimerValue] = useState(5);
+    const [disabled, setDisabled] = useState(false);
+    const [buttonColors, setButtonColors] = useState({
+        but1: color,
+        but2: color,
+        but3: color,
+        but4: color
+    });
 
 
     const createGame = async (gameMode) => {
@@ -30,14 +35,22 @@ const GameSelection = () => {
             console.log('status text:', response.statusText);
             console.log('requested data:', response.data);
 
-            // See here to get more data.
-            console.log(response);
         } catch (error) {
-            console.error(`Something went wrong while fetching the game info: \n${handleError(error)}`);
+            console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
             console.error("Details:", error);
-            alert("Something went wrong while fetching the game info! See the console for details.");
+            alert("Something went wrong while creating the game! See the console for details.");
         }
     }
+
+    function handleMode(mode, buttonId) {
+        setDisabled(true);
+        setGameMode(mode);
+        setButtonColors({
+            ...buttonColors,
+            [buttonId]: "yellow"
+        });
+    }
+
     const handleSliderChange = (event) => {
         setSliderValue(event.target.value);
     };
@@ -52,45 +65,50 @@ const GameSelection = () => {
             <div className="gameSelection container" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%"}}>
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
-                    <div className="Movie Trailers button-container">
-                        <Button
-                            width="100%"
-                            style={{marginTop: 80}}
-                            onClick={() => gameMode = "TRAILER"}
-                        >
-                            Movie Trailers
-                        </Button>
-                    </div>
+                    <h3 style={{textAlign: "center", marginTop: 40}}>Game theme:</h3>
+                    {/*<div className="Movie Trailers button-container">*/}
+                    {/*    <Button*/}
+                    {/*        disabled={disabled}*/}
+                    {/*        width="100%"*/}
+                    {/*        style={{marginTop: 10, backgroundColor: buttonColors.but1}}*/}
+                    {/*        onClick={() => handleMode("TRAILER", "but1")}*/}
+                    {/*    >*/}
+                    {/*        Movie Trailers*/}
+                    {/*    </Button>*/}
+                    {/*</div>*/}
                     <div className="Movie Posters button-container">
                         <Button
+                            disabled={disabled}
                             width="100%"
-                            style={{marginTop: 20}}
-                            onClick={() => gameMode = "POSTER"}
+                            style={{marginTop: 20, backgroundColor: buttonColors.but2}}
+                            onClick={() => handleMode("POSTER", "but2")}
                         >
-                            Movie Posters
+                            Movie Scenes
                         </Button>
                     </div>
                     <div className="Actors button-container">
                         <Button
+                            disabled={disabled}
                             width="100%"
-                            style={{marginTop: 20}}
-                            onClick={() => gameMode = "ACTOR"}
+                            style={{marginTop: 20, backgroundColor: buttonColors.but3}}
+                            onClick={() => handleMode("ACTOR", "but3")}
                         >
-                            Actors
+                            Actors' Pictures
                         </Button>
                     </div>
                     <div className="mixed button-container">
                         <Button
+                            disabled={disabled}
                             width="100%"
-                            style={{marginTop: 20, marginBottom: 20}}
-                            onClick={() => gameMode = "MIXED"}
+                            style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but4}}
+                            onClick={() => handleMode("MIXED", "but4")}
                         >
                             Mixed
                         </Button>
                     </div>
                     <div className ="Slider">
                         <div>
-                            <h3 style={{textAlign: "center",marginBottom: 0}}>Amount of questions:</h3>
+                            <h3 style={{textAlign: "center", marginBottom: 0}}>Number of questions:</h3>
                             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                 <p>5</p>
                                 <p>20</p>
@@ -111,7 +129,7 @@ const GameSelection = () => {
                     </div>
                     <div className ="Time Selection Slider">
                         <div>
-                            <h3 style={{textAlign: "center",marginTop: 10, marginBottom:0}}>Timer:</h3>
+                            <h3 style={{textAlign: "center", marginTop: 10, marginBottom: 0}}>Timer (seconds per question):</h3>
                             <div style = {{display: 'flex', justifyContent: 'space-between'}}>
                                  <p>5s</p>
                                  <p>60s</p>
@@ -136,7 +154,7 @@ const GameSelection = () => {
                             style={{marginTop: 40}}
                             onClick={() => createGame(gameMode)}
                         >
-                            Create Game
+                            CREATE GAME
                         </Button>
                     </div>
                     <div className="Back to main page button-container">
@@ -145,7 +163,7 @@ const GameSelection = () => {
                             style = {{marginTop:0}}
                             onClick={() => history.push('/main')}
                         >
-                            Cancel
+                            CANCEL
                         </Button>
                     </div>
                 </div>
