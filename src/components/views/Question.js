@@ -5,8 +5,8 @@ import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-
-function Question() {
+import {Game}  from "../views/Game.js";
+const Question = () => {
     const {gameId} = useParams();
     const [question, setQuestion] = useState({});
     const [gameMode, setGameMode] = useState(null);
@@ -54,9 +54,9 @@ function Question() {
     const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
-        console.log("am i even in here?")
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
