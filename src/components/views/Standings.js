@@ -110,7 +110,7 @@ function Standings() {
                 <ol>
                     {totalRanking.map((player) => (
                       <li key={player.id}>
-                          {player.username} - {player.totalPoints}
+                          {player.username} - {player.totalPointsCurrentGame}
                       </li>
                     ))}
                 </ol>
