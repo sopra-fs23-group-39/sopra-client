@@ -7,7 +7,6 @@ import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import {Game}  from "../views/Game.js";
 const Question = () => {
-    const {gameId} = useParams();
 
     const color = "#DEB522";
     const [question, setQuestion] = useState({});
@@ -52,9 +51,9 @@ const Question = () => {
     const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
 
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
