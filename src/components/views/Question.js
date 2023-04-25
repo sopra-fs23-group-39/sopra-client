@@ -1,13 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
+import {api, handleError} from "../../helpers/api";
 
 function Question() {
     const {gameId} = useParams();
     const [question, setQuestion] = useState({});
+    const [gameMode, setGameMode] = useState(null);
     console.log("Object right at the beginning of the component");
     console.log(question);
     const [disabled, setDisabled] = useState(false);
@@ -26,8 +28,8 @@ function Question() {
 
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        // const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/question`);
+        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/question`);
         let stompClient = Stomp.over(socket);
 
         stompClient.connect({}, () => {
@@ -52,8 +54,8 @@ function Question() {
     const [stompClient, setStompClient] = useState(null);
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
-        // const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/answer`);
+        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/answer`);
         const client = Stomp.over(socket);
 
         client.connect({}, () => {
@@ -69,7 +71,7 @@ function Question() {
     }, [gameId]);
 
     function handleClick(chosenAnswer, buttonId) {
-        const header = { 'content-type': 'application/json' };
+        const header = {'content-type': 'application/json'};
         const answerToSend = JSON.stringify({
             gameId,
             userId,
@@ -115,6 +117,22 @@ function Question() {
     //     return () => clearTimeout(timeoutId);
     // }, []);
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await api.get(`/game/${gameId}/settings`);
+                console.log(response.data)
+                setGameMode(response.data.gameMode)
+            } catch (error) {
+                console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+                console.error(error);
+                alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+            }
+        }
+
+        fetchData();
+    }, []);
+
 
     //This hook is to automatically route to the next page
     useEffect(() => {
@@ -129,12 +147,28 @@ function Question() {
     }, [history, gameId]);
 
 
+    let imageDisplay = null;
+
+    if (gameMode === "ACTOR" || gameMode === "MIXED"){
+        imageDisplay = (
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
+                <img src={question.questionLink} className="image" alt="MoviePicture" style={{width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
+            </div>
+        );
+    } else if (gameMode === "POSTER"){
+        imageDisplay = (
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
+                <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
+            </div>
+        );
+    }
+
     return (
         <div className="dashboard container">
             <div className="dashboard form">
                 <h1 style={{textAlign: "center", color: "#DEB522", marginBottom: 10}}>Question</h1>
                 <h2 style={{textAlign: "center", color: "#DEB522", marginBottom: 10}}>{question.questionText}</h2>
-                <img src={question.questionLink} className="image"  alt="MoviePicture"/>
+                {imageDisplay}
                 <div className="dashboard button-container">
                     {/*<Button*/}
                     {/*    style={{marginTop: 10}}*/}
@@ -147,7 +181,7 @@ function Question() {
                         width="100%"
                         disabled={disabled}
                         onClick={() => handleClick(question.answer1, "but1")}
-                        >
+                    >
                         {question.answer1}
                     </Button>
                     <Button
@@ -181,6 +215,3 @@ function Question() {
 }
 
 export default Question;
-
-
-
