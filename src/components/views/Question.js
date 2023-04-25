@@ -73,7 +73,7 @@ function Question() {
         const answerToSend = JSON.stringify({
             gameId,
             userId,
-            answer: chosenAnswer,
+            usersAnswer: chosenAnswer,
             correctAnswer: question.correctAnswer,
             time: new Date(),
             questionTime: question.creationTime
