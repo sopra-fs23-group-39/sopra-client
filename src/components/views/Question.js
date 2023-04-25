@@ -28,9 +28,9 @@ function Question() {
 
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/question`);
-        let stompClient = Stomp.over(socket);
+        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+        let stompClient = Stomp.over(() => socket);
 
         stompClient.connect({}, () => {
             console.log('WebSocket connection established.');
@@ -55,8 +55,9 @@ function Question() {
 
     useEffect(() => {
         // const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
-        const socket = new SockJS(`https://sopra-fs23-group-39-server.oa.r.appspot.com:8080/game/${gameId}/answer`);
-        const client = Stomp.over(socket);
+        console.log("am i even in here?")
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
             console.log('WebSocket connection established.');
