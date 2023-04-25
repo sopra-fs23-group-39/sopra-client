@@ -6,21 +6,17 @@ import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 
 function Question() {
-    const {gameId} = useParams();
+    const color = "#DEB522";
     const [question, setQuestion] = useState({});
-    console.log("Object right at the beginning of the component");
-    console.log(question);
     const [disabled, setDisabled] = useState(false);
-
     const userId = localStorage.getItem("id");
-
     const [buttonColors, setButtonColors] = useState({
-        but1: "#DEB522",
-        but2: "#DEB522",
-        but3: "#DEB522",
-        but4: "#DEB522"
+        but1: color,
+        but2: color,
+        but3: color,
+        but4: color
     });
-
+    const {gameId} = useParams();
     const history = useHistory();
     const timeoutRef = useRef(null);
 
@@ -68,6 +64,7 @@ function Question() {
         };
     }, [gameId]);
 
+
     function handleClick(chosenAnswer, buttonId) {
         const header = { 'content-type': 'application/json' };
         const answerToSend = JSON.stringify({
@@ -88,32 +85,30 @@ function Question() {
         console.log(answerToSend)
     }
 
-    // This hook is to make the correct answer green
-    // useEffect(() => {
-    //     let correctButtonId;
-    //     if (question.correctAnswer === question.answer1) {
-    //         correctButtonId = "but1";
-    //     } else if (question.correctAnswer === question.answer2) {
-    //         correctButtonId = "but2";
-    //     } else if (question.correctAnswer === question.answer3) {
-    //         correctButtonId = "but3"
-    //     } else if (question.correctAnswer === question.answer4) {
-    //         correctButtonId = "but4";
-    //     }
-    //
-    //     console.log("correctAnswer:", question.correctAnswer);
-    //     console.log("correctButtonId:", correctButtonId);
-    //
-    //     const timeoutId = setTimeout(() => {
-    //         setDisabled(true);
-    //         setButtonColors({
-    //             ...buttonColors,
-    //             [correctButtonId]: "green"
-    //         });
-    //     }, 20000);
-    //
-    //     return () => clearTimeout(timeoutId);
-    // }, []);
+
+    //This hook is to make the correct answer green
+    useEffect(() => {
+        let correctButtonId;
+        if (question.correctAnswer === question.answer1) {
+            correctButtonId = "but1";
+        } else if (question.correctAnswer === question.answer2) {
+            correctButtonId = "but2";
+        } else if (question.correctAnswer === question.answer3) {
+            correctButtonId = "but3"
+        } else if (question.correctAnswer === question.answer4) {
+            correctButtonId = "but4";
+        }
+
+        const timeoutId = setTimeout(() => {
+            setDisabled(true);
+            setButtonColors({
+                ...buttonColors,
+                [correctButtonId]: "green"
+            });
+        }, 20000);
+
+        return () => clearTimeout(timeoutId);
+    });
 
 
     //This hook is to automatically route to the next page
@@ -132,8 +127,8 @@ function Question() {
     return (
         <div className="dashboard container">
             <div className="dashboard form">
-                <h1 style={{textAlign: "center", color: "#DEB522", marginBottom: 10}}>Question</h1>
-                <h2 style={{textAlign: "center", color: "#DEB522", marginBottom: 10}}>{question.questionText}</h2>
+                <h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Question</h1>
+                <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
                 <img src={question.questionLink} className="image"  alt="MoviePicture"/>
                 <div className="dashboard button-container">
                     {/*<Button*/}
