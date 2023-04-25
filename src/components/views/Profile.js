@@ -106,7 +106,7 @@ const Profile = () => {
                         />
                         <FormField
                             label="total number of points:"
-                            value={user.totalPoints}
+                            value={user.totalPointsCurrentGame}
                         />
                         <div className="dashboard button-container">
                                 <Button

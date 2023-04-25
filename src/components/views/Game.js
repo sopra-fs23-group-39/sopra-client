@@ -64,6 +64,7 @@ const Game = () => {
                 alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
             }
         }
+
         fetchData();
 
         const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
