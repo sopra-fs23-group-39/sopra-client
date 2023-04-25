@@ -35,8 +35,8 @@ function Standings() {
             try {
                 const response = await api.get(`/game/${gameId}/totalRanking`);
                 setTotalRanking(response.data);
-                console.log("Fetched totalRanking:");
-                console.log(response.data);
+                /*console.log("Fetched totalRanking:");
+                console.log(response.data);*/
             } catch (error) {
                 alert(`Something went wrong while fetching the total ranking: \n${handleError(error)}`);
             }
@@ -52,12 +52,14 @@ function Standings() {
             const response = await api.get(`/game/${gameId}/settings`);
             setQuestionAmount(response.data.questionAmount);
             setCurrentRound(response.data.currentRound);
-            console.log('request to:', response.request.responseURL);
+            console.log(response.data.currentRound);
+            console.log(response.data.questionAmount);
+            /*console.log('request to:', response.request.responseURL);
             console.log('status code:', response.status);
             console.log('status text:', response.statusText);
             console.log('requested data:', response.data);
             console.log("Game settings:")
-            console.log(response);
+            console.log(response);*/
 
         } catch (error) {
             console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
@@ -69,17 +71,17 @@ function Standings() {
     fetchData();
 }, []);
 
-    useEffect(() => {
+    useEffect(async () => {
         try {
-            //let path = '/main';
-            if (questionAmount !== currentRound) {
+            const response = await api.get(`/game/${gameId}/settings`);
+            if (response.data.questionAmount === response.data.currentRound) {
                 timeoutRef.current = setTimeout(() => {
-                    history.push(`/game/${gameId}/question`);
-                }, 60000);
+                    history.push(`/game/${gameId}/winner`);
+                }, 6000);
             } else {
                 timeoutRef.current = setTimeout(() => {
-                    history.push("/main");
-                }, 60000);
+                    history.push(`/game/${gameId}/question`);
+                }, 6000);
             }
         } catch (error) {
             alert(`Something went wrong during game navigation: \n${handleError(error)}`);

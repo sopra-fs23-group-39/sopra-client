@@ -21,6 +21,7 @@ import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
 import Standings from "../../views/Standings";
+import Winner from "components/views/Winner";
 
 /**
  * Main router of your application.
@@ -95,6 +96,9 @@ const AppRouter = () => {
         )} />
         <Route exact path='/game/:gameId/standings'>
           <Standings />
+        </Route>
+        <Route exact path='/game/:gameId/winner'>
+          <Winner />
         </Route>
       </Switch>
     </BrowserRouter>
