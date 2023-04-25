@@ -99,10 +99,9 @@ const Login = props => {
               Login
             </Button>
           </div>
-          <div>
+          <div className="login button-container">
             <Button
               width="100%"
-              style={{marginTop: 20}}
               onClick={() => goToRegistration()}
             >
               Register
