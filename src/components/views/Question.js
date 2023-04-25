@@ -75,7 +75,8 @@ function Question() {
             userId,
             answer: chosenAnswer,
             correctAnswer: question.correctAnswer,
-            time: new Date()
+            time: new Date(),
+            questionTime: question.creationTime
         });
         setDisabled(true);
         setButtonColors({
