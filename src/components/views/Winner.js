@@ -4,6 +4,7 @@ import BaseContainer from 'components/ui/BaseContainer';
 import { useEffect, useState, useRef } from "react";
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
+import {useSelector} from "react-redux";
 
 
 const Winner = () => {

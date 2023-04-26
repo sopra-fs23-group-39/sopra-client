@@ -1,13 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Main.scss";
+import React from 'react';
+import {useSelector} from "react-redux";
+
 
 const Main = () => {
     const history = useHistory();
     const [currentId, setCurrentId] = useState(null);
+    const gameStompClient = useSelector(state => state.gameStompClient);
+    const gameId = useSelector(state => state.gameId);
+
 
     const logout = async () => {
         try {
@@ -24,8 +30,16 @@ const Main = () => {
     useEffect(() => {
         try {
             setCurrentId(localStorage.getItem("id"))
+            api.put('/game/resetIfBackOnMain', localStorage.getItem('id'));
+
         } catch (error) {
             alert(`Something went wrong while getting the user id: \n${handleError(error)}`);
+        }
+        console.log(gameStompClient);
+        if (gameStompClient && gameStompClient.connected){
+            const playerId = localStorage.getItem('id');
+            gameStompClient.send(`/app/game/${gameId}`, {}, `DISCONNECT ${playerId}`);
+            gameStompClient.disconnect();
         }
     }, []);
 
