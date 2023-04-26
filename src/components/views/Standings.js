@@ -94,9 +94,9 @@ function Standings() {
 
     return (
         <BaseContainer>
-            <div className="correct Answer">
+            <div className="standings container">
+            <div className="standings form">
                 <h1>Standings:</h1>
-             </div>
              <div className="This rounds ranking">
                 <h1>This round's ranking:</h1>
                 <ol>
@@ -117,6 +117,8 @@ function Standings() {
                     ))}
                 </ol>
             </div>
+            </div>
+            </div>`
         </BaseContainer>
     );
 }

@@ -37,6 +37,8 @@ const Winner = () => {
     };
     return (
         <BaseContainer>
+            <div className="winner container">
+                <div className="winner form">
             <div>
                 {winner && (
                     <h1>
@@ -47,11 +49,14 @@ const Winner = () => {
             <div className="main button-container">
             <Button
               width="100%"
+              style = {{marginTop: 550}}
               onClick={() => goToMain()}
             >
               Go to Main Page
             </Button>
           </div>
+        </div>
+            </div>
         </BaseContainer>
     );
 
