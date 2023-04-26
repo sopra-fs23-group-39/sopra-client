@@ -8,6 +8,8 @@ import "styles/views/Game.scss";
 import {Stomp} from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import {api, handleError} from "../../helpers/api";
+import  { useDispatch} from "react-redux";
+import {setGameStompClient, setGameId} from "../../gameSlice";
 
 const Player = ({user}) => (
     <div className="player container">
@@ -22,7 +24,7 @@ Player.propTypes = {
 };
 
 const Game = () => {
-
+    const dispatch = useDispatch();
 
 
 
@@ -33,7 +35,7 @@ const Game = () => {
     const [gameMode, setGameMode] = useState(null);
     const [questionAmount, setAmountOfQuestions] = useState(null);
     const [timer, setTimer] = useState(null);
-    const [stompClient, setStompClient] = useState(null)
+    const [gameStompClient, setGameStompClientLocal] = useState(null)
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -44,8 +46,8 @@ const Game = () => {
 
     const {gameId} = useParams();
     const startGame = async () => {
-        if(stompClient && stompClient.connected){
-            stompClient.send(`/app/game/${gameId}`, {}, "START");
+        if(gameStompClient && gameStompClient.connected){
+            gameStompClient.send(`/app/game/${gameId}`, {}, "START");
         } else {
             //idk put error and kick or smth
         }
@@ -53,7 +55,7 @@ const Game = () => {
 
     };
     const quickTest = async () => {
-        if(stompClient && stompClient.connected){
+        if(gameStompClient && gameStompClient.connected){
             console.log("send?")
 
         } else {
@@ -62,7 +64,9 @@ const Game = () => {
 
 
     };
-
+    function getGameStompClient() {
+        return gameStompClient;
+    }
     useEffect(() => {
         async function fetchData() {
             try {
@@ -86,11 +90,14 @@ const Game = () => {
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
-        const stompClient = Stomp.over(() => socket);
-        setStompClient(stompClient);
+        const gameStompClient = Stomp.over(() => socket);
 
-        stompClient.connect({}, () => {
-            stompClient.subscribe(`/topic/game/${gameId}`, (message) => {
+        setGameStompClientLocal(gameStompClient);
+        dispatch(setGameStompClient(gameStompClient));
+        dispatch(setGameId(gameId));
+
+        gameStompClient.connect({}, () => {
+            gameStompClient.subscribe(`/topic/game/${gameId}`, (message) => {
                 if(message.body == "game started."){
                     history.push(`/game/${gameId}/question`);
                 }
@@ -101,14 +108,15 @@ const Game = () => {
                 console.log(localStorage.getItem("id"))
             })
             console.log("before sending CONNECT");
-            stompClient.send(`/app/game/${gameId}`, {}, "idkman");
+            gameStompClient.send(`/app/game/${gameId}`, {}, "SUBSCRIBE");
             console.log("after sending CONNECT");
         });
 
-        return () => {
-            stompClient.disconnect();
-        };
-    }, [gameId]);
+        /*return () => {
+            gameStompClient.disconnect();
+        };*/
+
+    }, [dispatch, gameId]);
 
     let content = <Spinner/>;
 
@@ -163,3 +171,5 @@ const Game = () => {
 }
 
 export default Game;
+
+

@@ -5,7 +5,7 @@ import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import {Game}  from "../views/Game.js";
+import {useSelector} from "react-redux";
 const Question = () => {
 
     const color = "#DEB522";
@@ -22,33 +22,34 @@ const Question = () => {
     const {gameId} = useParams();
     const history = useHistory();
     const timeoutRef = useRef(null);
+    const gameStompClient = useSelector(state => state.gameStompClient);
 
 
     useEffect(() => {
         //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
-        let stompClient = Stomp.over(() => socket);
+        let questionStompClient = Stomp.over(() => socket);
 
-        stompClient.connect({}, () => {
+        questionStompClient.connect({}, () => {
             console.log('WebSocket connection established.');
             // "front address"
-            stompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
+            questionStompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
                 const parsedQuestion = JSON.parse(receivedQuestion.body);
                 setQuestion(parsedQuestion);
                 console.log("Object inside useEffect game/gameId/question (subscribe):")
                 console.log(question);
             });
             // "back address"
-            stompClient.send(`/app/game/${gameId}/question`, {}, 'Question received!');
+            questionStompClient.send(`/app/game/${gameId}/question`, {}, 'Question received!');
         });
 
         return () => {
-            stompClient.disconnect();
+            questionStompClient.disconnect();
         };
     }, [gameId]);  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
 
-    const [stompClient, setStompClient] = useState(null);
+    const [answerStompClient, setAnswerStompClient] = useState(null);
 
     useEffect(() => {
         //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
@@ -58,12 +59,12 @@ const Question = () => {
 
         client.connect({}, () => {
             console.log('WebSocket connection established.');
-            setStompClient(client);
+            setAnswerStompClient(client);
         });
 
         return () => {
-            if (stompClient && stompClient.connected) {
-                stompClient.disconnect();
+            if (answerStompClient && answerStompClient.connected) {
+                answerStompClient.disconnect();
             }
         };
     }, [gameId]);
@@ -85,7 +86,7 @@ const Question = () => {
             [buttonId]: "yellow"
         });
 
-        stompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
+        answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
         console.log("Answer is sent, object inside handleClick:");
         console.log(answerToSend)
     }
@@ -143,6 +144,7 @@ const Question = () => {
             clearTimeout(timeoutRef.current);
         };
     }, [history, gameId]);
+
 
 
     let imageDisplay = null;
