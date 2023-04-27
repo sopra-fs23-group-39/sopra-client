@@ -42,18 +42,10 @@ export const QuestionGuard = props => {
         }
     }, [players, userId]);
 
-    // Just to check what it prints out
-    // if (players) {
-    //     players.map(player => {
-    //         console.log(player.id);
-    //         console.log(typeof player.id);
-    //     });
-    // }
-
     console.log(isInGame);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
 
     if (isInGame) {

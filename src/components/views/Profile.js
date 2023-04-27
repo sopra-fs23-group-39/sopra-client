@@ -106,8 +106,9 @@ const Profile = () => {
                         />
                         <FormField
                             label="total number of points:"
-                            value={user.totalPointsCurrentGame}
+                            value={user.totalPointsAllGames}
                         />
+
                         <div className="dashboard button-container">
                                 <Button
                                     disabled={String(user.id) !== localStorage.getItem('id')}
