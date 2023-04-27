@@ -29,6 +29,8 @@ const Question = () => {
     const [gameDataFetched, setGameDataFetched] = useState(false);
     const [answerStompClient, setAnswerStompClient] = useState(null);
     const [chosenButtonId, setChosenButtonId] = useState(null);
+    const [hostId, setHostId] = useState(null);
+    const [hostConnected, setHostConnected] = useState(false);
 
 
     useEffect(() => {
@@ -42,18 +44,47 @@ const Question = () => {
             questionStompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
                 const parsedQuestion = JSON.parse(receivedQuestion.body);
                 setQuestion(parsedQuestion);
-                console.log("Object inside useEffect game/gameId/question (subscribe):")
                 console.log(question);
+                setHostConnected(true);
             });
             // "back address"
             questionStompClient.send(`/app/game/${gameId}/question`, {}, 'Question received!');
         });
-
+        socket.onclose= () => {
+            questionStompClient.send(`/app/game/${gameId}/question/disconnect`, {}, '');
+        }
         return () => {
             questionStompClient.disconnect();
         };
-    }, [gameId]);  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
+    }, []);  // [] is needed here so that useEffect is called when the component is mounted (not after)
+
+    /*useEffect(() => {
+        if(hostId != localStorage.getItem('id')){
+            const socket = new SockJS(`http://localhost:8080/game/${gameId}/question/non-host`);
+            let nonHostStompClient = Stomp.over(() => socket);
+            nonHostStompClient.connect({}, () => {
+                console.log('WebSocket connection established.');
+                // "front address"
+                nonHostStompClient.subscribe(`/topic/game/${gameId}/question/non-host`, (message) => {
+                    if(message.body == "HOSTREADY"){
+                        console.log("host ready")
+                        setHostConnected(true);
+                        nonHostStompClient.send(`/app/game/${gameId}/question/non-host`, {}, 'ready now');
+                    }
+                    if(hostConnected && message.body != "HOSTREADY"){
+                        console.log("getting question as host is here now")
+                        const parsedQuestion = JSON.parse(message.body);
+                        setQuestion(parsedQuestion);
+                        console.log("Object inside useEffect game/gameId/question/non-host (subscribe):")
+                        console.log(question);
+                        nonHostStompClient.send(`/app/game/${gameId}/question/non-host`, {}, 'Question received!');
+                    }
+                });
+                // "back address"
+            });
+        }
+    },[gameDataFetched,hostConnected])*/
 
 
 
@@ -111,6 +142,7 @@ const Question = () => {
                 setGameMode(response.data.gameMode)
                 setTimer(response.data.timer * 1000);
                 setOtherTimer(response.data.timer * 1000);
+                setHostId(response.data.hostId);
                 console.log(response.data.timer);
                 console.log(timer);
                 setGameDataFetched(true);
