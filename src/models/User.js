@@ -8,7 +8,7 @@ class User {
     this.password = null;
     this.token = null;
     this.status = null;
-    this.rank = null;
+    this.userRank = null;
     this.numberGames = null;
     this.totalPointsCurrentGame = null;
     this.currentPoints = null;

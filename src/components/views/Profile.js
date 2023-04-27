@@ -98,7 +98,7 @@ const Profile = () => {
                         />
                         <FormField
                             label="current rank:"
-                            value={user.rank}
+                            value={user.userRank}
                         />
                         <FormField
                             label="total number of games:"

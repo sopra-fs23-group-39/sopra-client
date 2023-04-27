@@ -54,7 +54,7 @@ const Leaderboard = () => {
     let content = null;
 
     if (users) {
-        users.sort((a, b) => (a.rank - b.rank));
+        users.sort((a, b) => (a.userRank - b.userRank));
         content = (
             <div className="leaderboard">
                 <ul className="player-list">
