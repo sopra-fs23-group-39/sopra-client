@@ -6,6 +6,7 @@ import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import {useSelector} from "react-redux";
+import {current} from "@reduxjs/toolkit";
 const Question = () => {
 
     const color = "#DEB522";
@@ -22,7 +23,11 @@ const Question = () => {
     const {gameId} = useParams();
     const history = useHistory();
     const timeoutRef = useRef(null);
+    const unmountTimeOutRef = useRef(null);
+    const [timer, setTimer] = useState(null);
+    const [otherTimer, setOtherTimer] = useState(null);
     const gameStompClient = useSelector(state => state.gameStompClient);
+    const [gameDataFetched, setGameDataFetched] = useState(false);
 
 
     useEffect(() => {
@@ -93,7 +98,33 @@ const Question = () => {
 
 
     //This hook is to make the correct answer green
+
+
     useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await api.get(`/game/${gameId}/settings`);
+                console.log(response.data)
+                setGameMode(response.data.gameMode)
+                setTimer(response.data.timer * 1000);
+                setOtherTimer(response.data.timer * 1000);
+                console.log(response.data.timer);
+                console.log(timer);
+                setGameDataFetched(true);
+            } catch (error) {
+                console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+                console.error(error);
+                alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
+            }
+        }
+
+        fetchData();
+    },[gameId]);
+
+    useEffect(()=>{
+        if(!gameDataFetched){
+            return;
+        }
         let correctButtonId;
         if (question.correctAnswer === question.answer1) {
             correctButtonId = "but1";
@@ -105,45 +136,39 @@ const Question = () => {
             correctButtonId = "but4";
         }
 
-        const timeoutId = setTimeout(() => {
+
+        timeoutRef.current = setTimeout(() => {
+            console.log(timer);
+            console.log("disabling")
             setDisabled(true);
+            console.log("disabled now")
+            console.log(disabled)
             setButtonColors({
                 ...buttonColors,
                 [correctButtonId]: "green"
             });
-        }, 20000);
+        }, timer);
+        unmountTimeOutRef.current = setTimeout(() => {
+            history.push(`/game/${gameId}/standings`);
+        }, otherTimer + 10000);
+        return () => {
+            clearTimeout(timeoutRef.current);
+            clearTimeout(unmountTimeOutRef.current);
+        };
+    },[gameDataFetched, timer, otherTimer, question]);
 
-        return () => clearTimeout(timeoutId);
-    });
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await api.get(`/game/${gameId}/settings`);
-                console.log(response.data)
-                setGameMode(response.data.gameMode)
-            } catch (error) {
-                console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
-                console.error(error);
-                alert(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
-            }
-        }
 
-        fetchData();
-    }, []);
+
+
+
+
+        // Clean up the timeout when the component unmounts
+
 
 
     //This hook is to automatically route to the next page
-    useEffect(() => {
-        timeoutRef.current = setTimeout(() => {
-            history.push(`/game/${gameId}/standings`);
-        }, 30000);
 
-        // Clean up the timeout when the component unmounts
-        return () => {
-            clearTimeout(timeoutRef.current);
-        };
-    }, [history, gameId]);
 
 
 
