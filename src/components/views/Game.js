@@ -36,7 +36,7 @@ const Game = () => {
     const [questionAmount, setAmountOfQuestions] = useState(null);
     const [timer, setTimer] = useState(null);
     const [gameStompClient, setGameStompClientLocal] = useState(null)
-     const [disabled, setDisabled] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
