@@ -111,20 +111,16 @@ const Game = () => {
             console.log("after sending CONNECT");
         });
 
-        /*return () => {
-            gameStompClient.disconnect();
-        };*/
-
     }, [dispatch, gameId]);
 
     let content = <Spinner/>;
 
     if (gameId) {
         content = (
-            <div className="game">
+            <div className="game container">
+                <div className="game form">
                 <h2> Waiting Room </h2>
                 <div>Game ID: {gameId}
-                    <div/>
                     <div>Theme: {gameMode}</div>
                     <div>Number of questions: {questionAmount}</div>
                     <div>Time to answer question: {timer}</div>
@@ -160,11 +156,12 @@ const Game = () => {
                     Quit
                 </Button>
             </div>
+        </div>
         );
     }
 
     return (
-        <BaseContainer className="game container">
+        <BaseContainer>
             {content}
         </BaseContainer>
     );
