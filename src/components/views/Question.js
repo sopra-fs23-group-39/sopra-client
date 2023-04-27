@@ -193,7 +193,7 @@ const Question = () => {
             <div className="dashboard form">
                 <h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Question</h1>
                 <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
-                {imageDisplay}
+                    {imageDisplay}
                 <div className="dashboard button-container">
                     {/*<Button*/}
                     {/*    style={{marginTop: 10}}*/}

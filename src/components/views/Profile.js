@@ -112,7 +112,7 @@ const Profile = () => {
                         <div className="dashboard button-container">
                                 <Button
                                     disabled={String(user.id) !== localStorage.getItem('id')}
-                                    style={{marginTop: 200}}
+                                    style={{marginTop: 150}}
                                     onClick={() => goChangeCredentials()}>
                                     CHANGE CREDENTIALS
                                 </Button>

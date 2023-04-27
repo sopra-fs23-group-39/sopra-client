@@ -112,20 +112,16 @@ const Game = () => {
             console.log("after sending CONNECT");
         });
 
-        /*return () => {
-            gameStompClient.disconnect();
-        };*/
-
     }, [dispatch, gameId]);
 
     let content = <Spinner/>;
 
     if (gameId) {
         content = (
-            <div className="game">
+            <div className="game container">
+                <div className="game form">
                 <h2> Waiting Room </h2>
                 <div>Game ID: {gameId}
-                    <div/>
                     <div>Theme: {gameMode}</div>
                     <div>Number of questions: {questionAmount}</div>
                     <div>Time to answer question: {timer}</div>
@@ -148,7 +144,7 @@ const Game = () => {
                     width="100%"
                     onClick={() => startGame()}
                     //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
+                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block', marginTop: 300 }}
                 >
                     Start Game
                 </Button>
@@ -160,11 +156,12 @@ const Game = () => {
                     Quit
                 </Button>
             </div>
+        </div>
         );
     }
 
     return (
-        <BaseContainer className="game container">
+        <BaseContainer>
             {content}
         </BaseContainer>
     );
