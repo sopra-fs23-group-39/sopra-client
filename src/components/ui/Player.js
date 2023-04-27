@@ -13,7 +13,7 @@ const Player = ({user}) => {
 
     return (
         <div className="player container">
-            <div className="player rank">rank: {user.rank}</div>
+            <div className="player rank">rank: {user.userRank}</div>
             <div className="player leaderboardname" onClick={() => rerouteToUser(user)}>{user.username} </div>
         </div>)
 }
