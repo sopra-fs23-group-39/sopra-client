@@ -5,8 +5,7 @@ import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import {useSelector} from "react-redux";
-import {current} from "@reduxjs/toolkit";
+
 const Question = () => {
 
     const color = "#DEB522";
@@ -28,13 +27,13 @@ const Question = () => {
     const [otherTimer, setOtherTimer] = useState(null);
     const [buttonClicked, setButtonClicked] = useState(false);
     const [gameDataFetched, setGameDataFetched] = useState(false);
-
-    const local = true;
+    const [answerStompClient, setAnswerStompClient] = useState(null);
+    const [chosenButtonId, setChosenButtonId] = useState(null);
 
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
         let questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
@@ -56,12 +55,12 @@ const Question = () => {
     }, [gameId]);  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
 
-    const [answerStompClient, setAnswerStompClient] = useState(null);
+
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -79,6 +78,7 @@ const Question = () => {
 
     function handleClick(chosenAnswer, buttonId) {
         setButtonClicked(true);
+        setChosenButtonId(buttonId);
         const header = {'content-type': 'application/json'};
         const answerToSend = JSON.stringify({
             gameId,
@@ -144,10 +144,19 @@ const Question = () => {
             console.log(timer);
             setDisabled(true);
             console.log(disabled)
-
+            console.log("were we here?")
+            console.log(chosenButtonId);
+            if(chosenButtonId == null) {
+                setButtonColors({
+                    ...buttonColors,
+                    [correctButtonId]: "green"
+                });
+            }
             setButtonColors({
                 ...buttonColors,
+                [chosenButtonId]: "red",
                 [correctButtonId]: "green"
+
             });
         }, timer);
         unmountTimeOutRef.current = setTimeout(() => {
@@ -157,13 +166,13 @@ const Question = () => {
             clearTimeout(timeoutRef.current);
             clearTimeout(unmountTimeOutRef.current);
         };
-    },[gameDataFetched, timer, otherTimer, question]);
+    },[gameDataFetched, timer, otherTimer, question, chosenButtonId]);
     useEffect( () => {
         if(disabled && !buttonClicked && answerStompClient){
             handleClick("DEFAULT", "but0");
         }
 
-    }, [disabled, answerStompClient, buttonClicked])
+    }, [disabled, buttonClicked, chosenButtonId])
 
 
 

@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
@@ -41,7 +41,7 @@ const Main = () => {
             gameStompClient.send(`/app/game/${gameId}`, {}, `DISCONNECT ${playerId}`);
             gameStompClient.disconnect();
         }
-    }, []);
+    }, [gameId]);
 
     return (
         <BaseContainer>

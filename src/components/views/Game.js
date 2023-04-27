@@ -66,9 +66,6 @@ const Game = () => {
 
 
     };
-    function getGameStompClient() {
-        return gameStompClient;
-    }
     useEffect(() => {
         async function fetchData() {
             try {
@@ -87,9 +84,9 @@ const Game = () => {
 
         fetchData();
 
-        //const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+        const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
         const gameStompClient = Stomp.over(() => socket);
