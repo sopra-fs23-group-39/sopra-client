@@ -26,8 +26,10 @@ const Question = () => {
     const unmountTimeOutRef = useRef(null);
     const [timer, setTimer] = useState(null);
     const [otherTimer, setOtherTimer] = useState(null);
-    const gameStompClient = useSelector(state => state.gameStompClient);
+    const [buttonClicked, setButtonClicked] = useState(false);
     const [gameDataFetched, setGameDataFetched] = useState(false);
+
+    const local = true;
 
 
     useEffect(() => {
@@ -76,6 +78,7 @@ const Question = () => {
 
 
     function handleClick(chosenAnswer, buttonId) {
+        setButtonClicked(true);
         const header = {'content-type': 'application/json'};
         const answerToSend = JSON.stringify({
             gameId,
@@ -139,10 +142,9 @@ const Question = () => {
 
         timeoutRef.current = setTimeout(() => {
             console.log(timer);
-            console.log("disabling")
             setDisabled(true);
-            console.log("disabled now")
             console.log(disabled)
+
             setButtonColors({
                 ...buttonColors,
                 [correctButtonId]: "green"
@@ -156,6 +158,12 @@ const Question = () => {
             clearTimeout(unmountTimeOutRef.current);
         };
     },[gameDataFetched, timer, otherTimer, question]);
+    useEffect( () => {
+        if(disabled && !buttonClicked && answerStompClient){
+            handleClick("DEFAULT", "but0");
+        }
+
+    }, [disabled, answerStompClient, buttonClicked])
 
 
 
