@@ -36,6 +36,7 @@ const Game = () => {
     const [questionAmount, setAmountOfQuestions] = useState(null);
     const [timer, setTimer] = useState(null);
     const [gameStompClient, setGameStompClientLocal] = useState(null)
+     const [disabled, setDisabled] = useState(false);
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -48,6 +49,7 @@ const Game = () => {
     const startGame = async () => {
         if(gameStompClient && gameStompClient.connected){
             gameStompClient.send(`/app/game/${gameId}`, {}, "START");
+            setDisabled(true);
         } else {
             //idk put error and kick or smth
         }
@@ -149,6 +151,7 @@ const Game = () => {
                     onClick={() => startGame()}
                     //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
                     style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
+                    disabled = {disabled}
                 >
                     Start Game
                 </Button>
