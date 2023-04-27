@@ -40,24 +40,27 @@ const Winner = () => {
         <BaseContainer>
             <div className="winner container">
                 <div className="winner form">
-                    <div>
-                        {winner && (
-                            <h1>The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!</h1>
-                         )}
-                    </div>
-                    <div className="main button-container">
-                        <Button
-                          width="100%"
-                          style = {{marginTop: 550}}
-                          onClick={() => goToMain()}
-                        >
-                          Go to Main Page
-                        </Button>
-                    </div>
-                </div>
+            <div>
+                {winner && (
+                    <h1>
+                        The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!
+                    </h1>
+                 )}
+            </div>
+            <div className="main button-container">
+            <Button
+              width="100%"
+              style = {{marginTop: 550}}
+              onClick={() => goToMain()}
+            >
+              Go to Main Page
+            </Button>
+          </div>
+        </div>
             </div>
         </BaseContainer>
     );
+
 }
 
 

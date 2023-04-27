@@ -62,7 +62,7 @@ const GameSelection = () => {
 
     return (
         <BaseContainer>
-            <div className="main container" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%"}}>
+            <div className="gameSelection container" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%"}}>
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
                     <h3 style={{textAlign: "center", marginTop: 40}}>Game theme:</h3>

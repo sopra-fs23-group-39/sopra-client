@@ -45,7 +45,7 @@ const Main = () => {
 
     return (
         <BaseContainer>
-            <div className="main container">
+            <div className="profile container">
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
                     <div className="profile button-container">

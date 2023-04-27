@@ -161,7 +161,7 @@ const ChangeProfile = () => {
                             SAVE PASSWORD
                         </Button>
                         <Button
-                            style={{marginTop: 190}}
+                            style={{marginTop: 250}}
                             onClick={() => goBack()}>
                             BACK
                         </Button>

@@ -7,9 +7,6 @@
     /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
-    background-image: url(https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cq_auto:eco%2Cw_1240/MTc0NDMzMjEyMTYyOTA5NTQ0/best-mindfuck-movies.webp);
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   &.form {
     display: flex;
