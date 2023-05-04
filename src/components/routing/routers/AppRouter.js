@@ -22,6 +22,8 @@ import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
 import Standings from "../../views/Standings";
 import Winner from "components/views/Winner";
+import {GameFormatGuard} from "../routeProtectors/GameFormatGuard";
+import GameFormat from "../../views/GameFormat";
 
 /**
  * Main router of your application.
@@ -78,6 +80,11 @@ const AppRouter = () => {
           <LeaderboardGuard>
             <Leaderboard/>
           </LeaderboardGuard>
+        </Route>
+        <Route exact path="/game_format">
+          <GameFormatGuard>
+            <GameFormat/>
+          </GameFormatGuard>
         </Route>
         <Route exact path="/game_selection">
           <GameSelectionGuard>

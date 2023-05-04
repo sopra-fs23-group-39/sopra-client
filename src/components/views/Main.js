@@ -52,7 +52,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 80}}
-                            onClick={() => history.push('/game_selection')}
+                            onClick={() => history.push('/game_format')}
                         >
                             Create Game
                         </Button>

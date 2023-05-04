@@ -12,6 +12,7 @@ const GameSelection = () => {
     const [gameMode, setGameMode] = useState("POSTER");
     const [TimerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
+    const [gameFormat] = useState("CUSTOM");
     const [buttonColors, setButtonColors] = useState({
         but1: color,
         but2: color,
@@ -25,7 +26,7 @@ const GameSelection = () => {
             console.log(gameMode)
             const hostId = localStorage.getItem('id');
             console.log(hostId);
-            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue});
+            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue, gameFormat: gameFormat});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;

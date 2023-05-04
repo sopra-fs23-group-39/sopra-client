@@ -108,11 +108,19 @@ const Profile = () => {
                             label="total number of points:"
                             value={user.totalPointsAllGames}
                         />
+                        <FormField
+                            label="current blitz rank:"
+                            value={user.blitzRank}
+                        />
+                        <FormField
+                            label="total number of Blitz points:"
+                            value={user.totalBlitzPointsAllGames}
+                        />
 
                         <div className="dashboard button-container">
                                 <Button
                                     disabled={String(user.id) !== localStorage.getItem('id')}
-                                    style={{marginTop: 150}}
+                                    style={{marginTop: 20}}
                                     onClick={() => goChangeCredentials()}>
                                     CHANGE CREDENTIALS
                                 </Button>
