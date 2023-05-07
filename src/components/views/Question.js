@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+/*import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
@@ -201,13 +201,9 @@ const Question = () => {
             });
             setDisplayTimer(5);
         }, timer);
-<<<<<<< HEAD
         unmountTimeOutRef.current = setTimeout(() => {
             history.push(`/game/${gameId}/standings`);
         }, otherTimer + 1000);
-=======
-
->>>>>>> origin/main-copy
         return () => {
             clearTimeout(timeoutRef.current);
         };

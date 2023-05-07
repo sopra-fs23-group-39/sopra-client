@@ -1,12 +1,13 @@
-import React, {useEffect, useState, useRef} from 'react';
+/*import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
+import {host} from "sockjs-client/lib/location";
 
-const Question = () => {
+const RapidQuestion = () => {
 
     const color = "#DEB522";
     const [question, setQuestion] = useState({});
@@ -28,13 +29,15 @@ const Question = () => {
     const [buttonClicked, setButtonClicked] = useState(false);
     const [gameDataFetched, setGameDataFetched] = useState(false);
     const [answerStompClient, setAnswerStompClient] = useState(null);
-    const [chosenButtonId, setChosenButtonId] = useState(null);
+    //const [chosenButtonId, setChosenButtonId] = useState(null);
+    const chosenButtonId = useRef(null);
     const [hostId, setHostId] = useState(null);
     const [hostConnected, setHostConnected] = useState(false);
+    const [displayTimer, setDisplayTimer] = useState(60);
 
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
         let questionStompClient = Stomp.over(() => socket);
 
@@ -42,10 +45,16 @@ const Question = () => {
             console.log('WebSocket connection established.');
             // "front address"
             questionStompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
-                const parsedQuestion = JSON.parse(receivedQuestion.body);
-                setQuestion(parsedQuestion);
-                console.log(question);
-                setHostConnected(true);
+                if(receivedQuestion.body === "Waiting for players..."){
+                    console.log("waiting for players");
+                } else {
+                    console.log(receivedQuestion);
+                    const parsedQuestion = JSON.parse(receivedQuestion.body);
+                    setQuestion(parsedQuestion);
+                    console.log(question);
+                    setHostConnected(true);
+
+                }
             });
             // "back address"
             questionStompClient.send(`/app/game/${gameId}/question`, {}, 'Question received!');
@@ -109,7 +118,8 @@ const Question = () => {
 
     function handleClick(chosenAnswer, buttonId) {
         setButtonClicked(true);
-        setChosenButtonId(buttonId);
+        //setChosenButtonId(buttonId);
+        chosenButtonId.current = buttonId;
         const header = {'content-type': 'application/json'};
         const answerToSend = JSON.stringify({
             gameId,
@@ -156,6 +166,8 @@ const Question = () => {
         fetchData();
     },[gameId]);
 
+
+
     useEffect(()=>{
         if(!gameDataFetched){
             return;
@@ -170,8 +182,6 @@ const Question = () => {
         } else if (question.correctAnswer === question.answer4) {
             correctButtonId = "but4";
         }
-
-
         timeoutRef.current = setTimeout(() => {
             console.log(timer);
             setDisabled(true);
@@ -186,25 +196,39 @@ const Question = () => {
             }
             setButtonColors({
                 ...buttonColors,
-                [chosenButtonId]: "red",
+                [chosenButtonId.current]: "red",
                 [correctButtonId]: "green"
-
             });
+            setDisplayTimer(5);
         }, timer);
+
         unmountTimeOutRef.current = setTimeout(() => {
             history.push(`/game/${gameId}/standings`);
         }, otherTimer + 1000);
         return () => {
             clearTimeout(timeoutRef.current);
-            clearTimeout(unmountTimeOutRef.current);
         };
-    },[gameDataFetched, timer, otherTimer, question, chosenButtonId]);
+    },[gameDataFetched, timer, otherTimer, question]);
+
     useEffect( () => {
         if(disabled && !buttonClicked && answerStompClient){
             handleClick("DEFAULT", "but0");
         }
 
-    }, [disabled, buttonClicked, chosenButtonId])
+    }, [disabled, buttonClicked, chosenButtonId, hostConnected])
+    useEffect(()=> {
+        setDisplayTimer(timer/1000);
+        const intervalId = setInterval (() => {
+            setDisplayTimer(displayTimer => displayTimer -1);
+        }, 1000);
+        unmountTimeOutRef.current = setTimeout(() => {
+            history.push(`/game/${gameId}/standings`);
+        }, timer + 5000);
+        return () => {
+            clearInterval(intervalId);
+            clearTimeout(unmountTimeOutRef.current);
+        };
+    },[hostConnected])
 
 
 
@@ -237,76 +261,60 @@ const Question = () => {
         );
     }
 
-    useEffect(async () => {
-            try {
-                const response = await api.get(`/game/${gameId}/settings`);
-                if (response.data.questionAmount === response.data.currentRound) {
-                    timeoutRef.current = setTimeout(() => {
-                        history.push(`/game/${gameId}/winner`);
-                    }, 6000);
-                } else {
-                    timeoutRef.current = setTimeout(() => {
-                        history.push(`/game/${gameId}/question`);
-                    }, 6000);
-                }
-            } catch (error) {
-                alert(`Something went wrong during game navigation: \n${handleError(error)}`);
-            }
-
-            // return () => {
-            //     clearTimeout(timeoutRef.current);
-            // };
-        }, [history, gameId]);
-
     return (
         <div className="dashboard container">
             <div className="dashboard form">
-                <h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Question</h1>
-                <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
+                {hostConnected ? (
+                    <div>
+                        <h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Question</h1>
+                        <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
+                        <h3 style={{textAlign: "center", color: color, marginBottom: 10}}> Question timer: {displayTimer}</h3>
                     {imageDisplay}
-                <div className="dashboard button-container">
+                        <div className="dashboard button-container">
                     {/*<Button*/}
                     {/*    style={{marginTop: 10}}*/}
                     {/*    disabled={true}*/}
                     {/*    >*/}
                     {/*    {question.correctAnswer}*/}
                     {/*</Button>*/}
-                    <Button
+                        <Button
                         style={{backgroundColor: buttonColors.but1}}
                         width="100%"
                         disabled={disabled}
                         onClick={() => handleClick(question.answer1, "but1")}
-                    >
-                        {question.answer1}
-                    </Button>
-                    <Button
+                        >
+                    {question.answer1}
+                        </Button>
+                        <Button
                         style={{backgroundColor: buttonColors.but2}}
                         width="100%"
                         disabled={disabled}
                         onClick={() => handleClick(question.answer2, "but2")}
-                    >
-                        {question.answer2}
-                    </Button>
-                    <Button
+                        >
+                    {question.answer2}
+                        </Button>
+                        <Button
                         style={{backgroundColor: buttonColors.but3}}
                         width="100%"
                         disabled={disabled}
                         onClick={() => handleClick(question.answer3, "but3")}
-                    >
-                        {question.answer3}
-                    </Button>
-                    <Button
+                        >
+                    {question.answer3}
+                        </Button>
+                        <Button
                         style={{backgroundColor: buttonColors.but4}}
                         width="100%"
                         disabled={disabled}
                         onClick={() => handleClick(question.answer4, "but4")}
-                    >
-                        {question.answer4}
-                    </Button>
-                </div>
+                        >
+                    {question.answer4}
+                        </Button>
+                        </div>
+                    </div>) : (<h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Waiting for players...</h1>)}
+
             </div>
         </div>
     );
 }
 
-export default Question;
+export default RapidQuestion;

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'; //api,
+/*import {useEffect, useState} from 'react'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
 import {useHistory, useParams} from 'react-router-dom';
@@ -23,7 +23,7 @@ Player.propTypes = {
     user: PropTypes.object
 };
 
-const Game = () => {
+const RaPidGame = () => {
     const dispatch = useDispatch();
 
 
@@ -48,7 +48,7 @@ const Game = () => {
     const {gameId} = useParams();
     const startGame = async () => {
         if(gameStompClient && gameStompClient.connected){
-            gameStompClient.send(`/app/game/${gameId}`, {}, "START");
+            gameStompClient.send(`/app/gamerapid/${gameId}`, {}, "START");
             setDisabled(true);
         } else {
             //idk put error and kick or smth
@@ -73,7 +73,7 @@ const Game = () => {
                 // setGame(response.data);
                 console.log(response.data)
                 setGameMode(response.data.gameMode)
-                //setAmountOfQuestions(response.data.questionAmount)
+                setAmountOfQuestions(response.data.questionAmount)
                 setTimer(response.data.timer)
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
@@ -84,9 +84,9 @@ const Game = () => {
 
         fetchData();
 
-        const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+        // const socket = new SockJS(`http:localhost:8080/gamerapid/${gameId}`);
 
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
 
         const gameStompClient = Stomp.over(() => socket);
@@ -122,13 +122,17 @@ const Game = () => {
                 <h2> Waiting Room </h2>
                 <div>Game ID: {gameId}
                     <div>Theme: {gameMode}</div>
-                    <div>Time to answer questions: {timer}</div>
+                    <div>Game time: {timer}</div>
+                </div>
+                <div>
+                     <h2>Player:</h2>
+                     <p key={playerList[0].id}>{playerList[0].username}</p>
                 </div>
                 <Button
                     width="100%"
                     onClick={() => startGame()}
                     //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-                    style={{marginTop:20/*,. display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}*/}}
+                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
                     disabled = {disabled}
                 >
                     Start Game
@@ -152,6 +156,6 @@ const Game = () => {
     );
 }
 
-export default Game;
+export default RaPidGame;
 
 
