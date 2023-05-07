@@ -63,6 +63,7 @@ const GameFormat = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 40}}
+                            onClick={() => history.push('/rapid_selection')}
                         >
                             Rapid
                         </Button>
