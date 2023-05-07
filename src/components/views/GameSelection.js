@@ -66,16 +66,16 @@ const GameSelection = () => {
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
                     <h3 style={{textAlign: "center", marginTop: 40}}>Game theme:</h3>
-                    {/*<div className="Movie Trailers button-container">*/}
-                    {/*    <Button*/}
-                    {/*        disabled={disabled}*/}
-                    {/*        width="100%"*/}
-                    {/*        style={{marginTop: 10, backgroundColor: buttonColors.but1}}*/}
-                    {/*        onClick={() => handleMode("TRAILER", "but1")}*/}
-                    {/*    >*/}
-                    {/*        Movie Trailers*/}
-                    {/*    </Button>*/}
-                    {/*</div>*/}
+                    <div className="Movie Trailers button-container">
+                        <Button
+                            disabled={disabled}
+                            width="100%"
+                            style={{marginTop: 10, backgroundColor: buttonColors.but1}}
+                            onClick={() => handleMode("SHOWS", "but1")}
+                        >
+                            TV SERIES
+                        </Button>
+                    </div>
                     <div className="Movie Posters button-container">
                         <Button
                             disabled={disabled}
@@ -83,7 +83,7 @@ const GameSelection = () => {
                             style={{marginTop: 20, backgroundColor: buttonColors.but2}}
                             onClick={() => handleMode("POSTER", "but2")}
                         >
-                            Movie Scenes
+                            MOVIES
                         </Button>
                     </div>
                     <div className="Actors button-container">
@@ -93,7 +93,7 @@ const GameSelection = () => {
                             style={{marginTop: 20, backgroundColor: buttonColors.but3}}
                             onClick={() => handleMode("ACTOR", "but3")}
                         >
-                            Actors' Pictures
+                            Actors
                         </Button>
                     </div>
                     <div className="mixed button-container">
