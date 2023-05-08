@@ -45,6 +45,8 @@ const GameFormat = () => {
                 alert("Something went wrong while creating the game! See the console for details.");
             }
     }
+
+
     return (
         <BaseContainer>
             <div className="main container" style={{

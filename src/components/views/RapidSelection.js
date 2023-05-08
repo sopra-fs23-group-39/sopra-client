@@ -12,7 +12,7 @@ const GameSelection = () => {
     const [QuestionAmount, setQuestionAmount] = useState(5)
     const [TimerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
-    const [gameFormat] = useState("CUSTOM");
+    const [gameFormat,setGameFormat] = useState("CUSTOM");
     const [buttonColors, setButtonColors] = useState({
         but1: color,
         but2: color,
@@ -25,13 +25,17 @@ const GameSelection = () => {
         try {
             console.log(gameMode)
             const hostId = localStorage.getItem('id');
+            setGameFormat('Rapid')
             console.log(hostId);
             setQuestionAmount(5)
+            console.log('Before API call')
             const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: QuestionAmount, timer: TimerValue, gameFormat: gameFormat});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;
+            console.log(gameId);
             history.push(`/gamerapid/${gameId}`);
+            console.log('After API call');
             console.log('request to:', response.request.responseURL);
             console.log('status code:', response.status);
             console.log('status text:', response.statusText);

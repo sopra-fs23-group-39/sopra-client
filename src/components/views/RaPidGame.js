@@ -24,7 +24,6 @@ Player.propTypes = {
 };
 
 const RaPidGame = () => {
-    const dispatch = useDispatch();
 
 
 
@@ -35,7 +34,7 @@ const RaPidGame = () => {
     const [gameMode, setGameMode] = useState(null);
     const [questionAmount, setAmountOfQuestions] = useState(null);
     const [timer, setTimer] = useState(null);
-    const [gameStompClient, setGameStompClientLocal] = useState(null)
+    //const [gameStompClient, setGameStompClientLocal] = useState(null)
     const [disabled, setDisabled] = useState(false);
 
     // define a state variable (using the state hook).
@@ -47,27 +46,15 @@ const RaPidGame = () => {
 
     const {gameId} = useParams();
     const startGame = async () => {
-        if(gameStompClient && gameStompClient.connected){
-            gameStompClient.send(`/app/gamerapid/${gameId}`, {}, "START");
+            history.push(`/gamerapid/:gameId/question`);
             setDisabled(true);
-        } else {
-            //idk put error and kick or smth
-        }
 
 
     };
-    const quickTest = async () => {
-        if(gameStompClient && gameStompClient.connected){
-            console.log("send?")
 
-        } else {
-            //idk put error and kick or smth
-        }
-
-
-    };
     useEffect(() => {
         async function fetchData() {
+            console.log('Inside useEffect, beginning')
             try {
                 const response = await api.get(`/game/${gameId}/settings`);
                 // setGame(response.data);
@@ -84,34 +71,8 @@ const RaPidGame = () => {
 
         fetchData();
 
-        // const socket = new SockJS(`http:localhost:8080/gamerapid/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}`);
-
-
-        const gameStompClient = Stomp.over(() => socket);
-
-        setGameStompClientLocal(gameStompClient);
-        dispatch(setGameStompClient(gameStompClient));
-        dispatch(setGameId(gameId));
-
-        gameStompClient.connect({}, () => {
-            gameStompClient.subscribe(`/topic/gamerapid/${gameId}`, (message) => {
-                if(message.body == "game started."){
-                    history.push(`/game/${gameId}/question`);
-                }
-                console.log(message);
-                const players = JSON.parse(message.body);
-                setPlayerList(players);
-                console.log("host id" + playerList[0].id);
-                console.log(localStorage.getItem("id"))
-            })
-            console.log("before sending CONNECT");
-            gameStompClient.send(`/app/game/${gameId}`, {}, "SUBSCRIBE");
-            console.log("after sending CONNECT");
-        });
-
-    }, [dispatch, gameId]);
+    });
 
     let content = <Spinner/>;
 
@@ -126,13 +87,13 @@ const RaPidGame = () => {
                 </div>
                 <div>
                      <h2>Player:</h2>
-                     <p key={playerList[0].id}>{playerList[0].username}</p>
+                     //<p key={playerList[0].id}>{playerList[0].username}</p>
                 </div>
                 <Button
                     width="100%"
                     onClick={() => startGame()}
                     //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
+                    //style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
                     disabled = {disabled}
                 >
                     Start Game
