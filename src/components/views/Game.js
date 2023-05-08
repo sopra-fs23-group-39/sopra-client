@@ -143,7 +143,7 @@ const Game = () => {
                     width="100%"
                     onClick={() => startGame()}
                     //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-                    //style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
+                    style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
                     disabled = {disabled}
                 >
                     Start Game

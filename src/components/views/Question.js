@@ -201,9 +201,7 @@ const Question = () => {
             });
             setDisplayTimer(5);
         }, timer);
-        unmountTimeOutRef.current = setTimeout(() => {
-            history.push(`/game/${gameId}/standings`);
-        }, otherTimer + 1000);
+
         return () => {
             clearTimeout(timeoutRef.current);
         };
@@ -235,7 +233,7 @@ const Question = () => {
 
 
 
-        // Clean up the timeout when the component unmounts
+    // Clean up the timeout when the component unmounts
 
 
 
@@ -268,46 +266,46 @@ const Question = () => {
                         <h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Question</h1>
                         <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
                         <h3 style={{textAlign: "center", color: color, marginBottom: 10}}> Question timer: {displayTimer}</h3>
-                    {imageDisplay}
+                        {imageDisplay}
                         <div className="dashboard button-container">
-                    {/*<Button*/}
-                    {/*    style={{marginTop: 10}}*/}
-                    {/*    disabled={true}*/}
-                    {/*    >*/}
-                    {/*    {question.correctAnswer}*/}
-                    {/*</Button>*/}
-                        <Button
-                        style={{backgroundColor: buttonColors.but1}}
-                        width="100%"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer1, "but1")}
-                        >
-                    {question.answer1}
-                        </Button>
-                        <Button
-                        style={{backgroundColor: buttonColors.but2}}
-                        width="100%"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer2, "but2")}
-                        >
-                    {question.answer2}
-                        </Button>
-                        <Button
-                        style={{backgroundColor: buttonColors.but3}}
-                        width="100%"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer3, "but3")}
-                        >
-                    {question.answer3}
-                        </Button>
-                        <Button
-                        style={{backgroundColor: buttonColors.but4}}
-                        width="100%"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer4, "but4")}
-                        >
-                    {question.answer4}
-                        </Button>
+                            {/*<Button*/}
+                            {/*    style={{marginTop: 10}}*/}
+                            {/*    disabled={true}*/}
+                            {/*    >*/}
+                            {/*    {question.correctAnswer}*/}
+                            {/*</Button>*/}
+                            <Button
+                                style={{backgroundColor: buttonColors.but1}}
+                                width="100%"
+                                disabled={disabled}
+                                onClick={() => handleClick(question.answer1, "but1")}
+                            >
+                                {question.answer1}
+                            </Button>
+                            <Button
+                                style={{backgroundColor: buttonColors.but2}}
+                                width="100%"
+                                disabled={disabled}
+                                onClick={() => handleClick(question.answer2, "but2")}
+                            >
+                                {question.answer2}
+                            </Button>
+                            <Button
+                                style={{backgroundColor: buttonColors.but3}}
+                                width="100%"
+                                disabled={disabled}
+                                onClick={() => handleClick(question.answer3, "but3")}
+                            >
+                                {question.answer3}
+                            </Button>
+                            <Button
+                                style={{backgroundColor: buttonColors.but4}}
+                                width="100%"
+                                disabled={disabled}
+                                onClick={() => handleClick(question.answer4, "but4")}
+                            >
+                                {question.answer4}
+                            </Button>
                         </div>
                     </div>) : (<h1 style={{textAlign: "center", color: color, marginBottom: 10}}>Waiting for players...</h1>)}
 
