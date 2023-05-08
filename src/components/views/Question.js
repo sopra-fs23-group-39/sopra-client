@@ -250,7 +250,7 @@ const Question = () => {
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
             </div>
         );
-    } else if (gameMode === "POSTER"){
+    } else if (gameMode === "POSTER" || gameMode === "SHOWS"){
         imageDisplay = (
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
