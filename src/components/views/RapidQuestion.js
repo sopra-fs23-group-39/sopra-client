@@ -100,9 +100,9 @@ const RapidQuestion = () => {
 
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
 
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -132,7 +132,7 @@ const RapidQuestion = () => {
             questionTime: question.creationTime
         });
 
-        answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
+        answerStompClient.send(`/app/gamerapid/${gameId}/answer`, header, answerToSend)
         questionStompClient.send(`/app/gamerapid/${gameId}/question`, {},'NEWQUESTION')
         console.log("Answer is sent, object inside handleClick:");
         console.log(answerToSend)
@@ -182,17 +182,6 @@ const RapidQuestion = () => {
         } else if (question.correctAnswer === question.answer4) {
             correctButtonId = "but4";
         }
-        timeoutRef.current = setTimeout(() => {
-            console.log(timer);
-            console.log(disabled)
-            console.log("were we here?")
-            console.log(chosenButtonId);
-            //setDisplayTimer(timer);
-        }, timer);
-
-        return () => {
-            clearTimeout(timeoutRef.current);
-        };
     },[gameDataFetched, timer, otherTimer, question]);
 
     useEffect( () => {
