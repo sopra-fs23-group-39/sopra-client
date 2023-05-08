@@ -131,11 +131,6 @@ const RapidQuestion = () => {
             time: new Date(),
             questionTime: question.creationTime
         });
-        setDisabled(true);
-        setButtonColors({
-            ...buttonColors,
-            [buttonId]: "yellow"
-        });
 
         answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
         questionStompClient.send(`/app/gamerapid/${gameId}/question`, {},'NEWQUESTION')
@@ -189,23 +184,10 @@ const RapidQuestion = () => {
         }
         timeoutRef.current = setTimeout(() => {
             console.log(timer);
-            setDisabled(true);
             console.log(disabled)
             console.log("were we here?")
             console.log(chosenButtonId);
-            if(chosenButtonId == null) {
-                setButtonColors({
-                    ...buttonColors,
-                    [correctButtonId]: "green"
-                });
-            }
-            setButtonColors({
-                ...buttonColors,
-                [chosenButtonId.current]: "red",
-                [correctButtonId]: "green"
-            });
-            setDisplayTimer(5);
-
+            //setDisplayTimer(timer);
         }, timer);
 
         return () => {
@@ -227,7 +209,23 @@ const RapidQuestion = () => {
         return () => {
             clearInterval(intervalId);
         };
-    },[hostConnected])
+    },[hostConnected]);
+    useEffect(()=> {
+        if(!gameDataFetched){
+            return;
+        }
+        setDisplayTimer(timer);
+        timeoutRef.current = setTimeout(() => {
+            console.log(timer);
+            console.log(disabled)
+            console.log("were we here?")
+            console.log(chosenButtonId);
+            history.push(`/game/${gameId}/winner`)
+        },timer);
+        return () => {
+            clearTimeout(timeoutRef.current);
+        };
+    }, [gameDataFetched]);
 
 
 
