@@ -29,6 +29,22 @@ const GameFormat = () => {
         }
     }
 
+    const selectRapid = async () => {
+            try {
+                setGameFormat("Rapid")
+                console.log(gameFormat)
+                const hostId = localStorage.getItem('id');
+                const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue, gameFormat: gameFormat});
+                const response = await api.post('/game', requestBody);
+                const gameId = response.data.gameId;
+                history.push(`/rapid_selection`);
+                console.log('requested data:', response.data);
+            } catch (error) {
+                console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
+                console.error("Details:", error);
+                alert("Something went wrong while creating the game! See the console for details.");
+            }
+    }
     return (
         <BaseContainer>
             <div className="main container" style={{
@@ -63,7 +79,7 @@ const GameFormat = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 40}}
-                            onClick={() => history.push('/rapid_selection')}
+                            onClick={() => selectRapid()}
                         >
                             Rapid
                         </Button>

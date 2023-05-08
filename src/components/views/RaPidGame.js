@@ -86,7 +86,7 @@ const RaPidGame = () => {
 
         // const socket = new SockJS(`http:localhost:8080/gamerapid/${gameId}`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}`);
 
 
         const gameStompClient = Stomp.over(() => socket);
@@ -96,7 +96,7 @@ const RaPidGame = () => {
         dispatch(setGameId(gameId));
 
         gameStompClient.connect({}, () => {
-            gameStompClient.subscribe(`/topic/game/${gameId}`, (message) => {
+            gameStompClient.subscribe(`/topic/gamerapid/${gameId}`, (message) => {
                 if(message.body == "game started."){
                     history.push(`/game/${gameId}/question`);
                 }
