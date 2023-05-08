@@ -5,11 +5,7 @@ import {useHistory, useParams} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
-import {Stomp} from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import {api, handleError} from "../../helpers/api";
-import  { useDispatch} from "react-redux";
-import {setGameStompClient, setGameId} from "../../gameSlice";
 
 const Player = ({user}) => (
     <div className="player container">
@@ -23,7 +19,7 @@ Player.propTypes = {
     user: PropTypes.object
 };
 
-const RaPidGame = () => {
+const RapidGame = () => {
 
 
 
@@ -50,8 +46,6 @@ const RaPidGame = () => {
             history.push(`/gamerapid/${gameId}/question`);
             console.log("After historypush");
             setDisabled(true);
-
-
     };
 
     useEffect(() => {
@@ -72,8 +66,6 @@ const RaPidGame = () => {
         }
 
         fetchData();
-
-
     });
 
     let content = <Spinner/>;
@@ -119,6 +111,6 @@ const RaPidGame = () => {
     );
 }
 
-export default RaPidGame;
+export default RapidGame;
 
 

@@ -8,9 +8,9 @@ import {useState} from "react";
 const GameSelection = () => {
     const color = "#DEB522";
     const history = useHistory();
-    const [gameMode, setGameMode] = useState("POSTER");
+    const [gameMode, setGameMode] = useState("MOVIE");
     const [QuestionAmount, setQuestionAmount] = useState(5)
-    const [TimerValue, setTimerValue] = useState(5);
+    const [timerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
     const [gameFormat,setGameFormat] = useState("CUSTOM");
     const [buttonColors, setButtonColors] = useState({
@@ -29,7 +29,7 @@ const GameSelection = () => {
             console.log(hostId);
             setQuestionAmount(5)
             console.log('Before API call')
-            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: QuestionAmount, timer: TimerValue, gameFormat: gameFormat});
+            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: QuestionAmount, timer: timerValue, gameFormat: gameFormat});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;
@@ -69,24 +69,24 @@ const GameSelection = () => {
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
                     <h3 style={{textAlign: "center", marginTop: 40}}>Game theme:</h3>
-                    {/*<div className="Movie Trailers button-container">*/}
-                    {/*    <Button*/}
-                    {/*        disabled={disabled}*/}
-                    {/*        width="100%"*/}
-                    {/*        style={{marginTop: 10, backgroundColor: buttonColors.but1}}*/}
-                    {/*        onClick={() => handleMode("TRAILER", "but1")}*/}
-                    {/*    >*/}
-                    {/*        Movie Trailers*/}
-                    {/*    </Button>*/}
-                    {/*</div>*/}
+                    <div className="Movie Trailers button-container">
+                        <Button
+                            disabled={disabled}
+                            width="100%"
+                            style={{marginTop: 10, backgroundColor: buttonColors.but1}}
+                            onClick={() => handleMode("SHOW", "but1")}
+                        >
+                            TV SERIES
+                        </Button>
+                    </div>
                     <div className="Movie Posters button-container">
                         <Button
                             disabled={disabled}
                             width="100%"
                             style={{marginTop: 20, backgroundColor: buttonColors.but2}}
-                            onClick={() => handleMode("POSTER", "but2")}
+                            onClick={() => handleMode("MOVIE", "but2")}
                         >
-                            Movie Scenes
+                            MOVIES
                         </Button>
                     </div>
                     <div className="Actors button-container">
@@ -96,7 +96,7 @@ const GameSelection = () => {
                             style={{marginTop: 20, backgroundColor: buttonColors.but3}}
                             onClick={() => handleMode("ACTOR", "but3")}
                         >
-                            Actors' Pictures
+                            ACTORS
                         </Button>
                     </div>
                     <div className="mixed button-container">
@@ -106,7 +106,7 @@ const GameSelection = () => {
                             style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but4}}
                             onClick={() => handleMode("MIXED", "but4")}
                         >
-                            Mixed
+                            MIXED
                         </Button>
                     </div>
                     <div className ="Time Selection Slider">
@@ -117,13 +117,13 @@ const GameSelection = () => {
                                  <p>60s</p>
                             </div>
                             <div style = {{display: 'flex', justifyContent: 'center'}}>
-                                <output>{TimerValue}</output>
+                                <output>{timerValue}</output>
                                 <input
                                     type ="range"
                                     min = "5"
                                     max = "60"
                                     step = "5"
-                                    value = {TimerValue}
+                                    value = {timerValue}
                                     onChange = {handleTimerChange}
                                     style = {{width : '100%'}}
                                 />

@@ -37,8 +37,8 @@ const Question = () => {
 
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
         let questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
@@ -98,9 +98,9 @@ const Question = () => {
 
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
 
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -250,7 +250,7 @@ const Question = () => {
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
             </div>
         );
-    } else if (gameMode === "POSTER" || gameMode === "SHOWS"){
+    } else if (gameMode === "MOVIE" || gameMode === "SHOW"){
         imageDisplay = (
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>

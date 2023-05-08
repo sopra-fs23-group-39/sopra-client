@@ -25,7 +25,7 @@ import Winner from "components/views/Winner";
 import {GameFormatGuard} from "../routeProtectors/GameFormatGuard";
 import GameFormat from "../../views/GameFormat";
 import RapidSelection from "../../views/RapidSelection"
-import RaPidGame from "../../views/RaPidGame"
+import RapidGame from "../../views/RapidGame"
 import RapidQuestion from "../../views/RapidQuestion"
 /**
  * Main router of your application.
@@ -113,7 +113,7 @@ const AppRouter = () => {
            <RapidSelection />
         </Route>
         <Route exact path='/gamerapid/:gameId'>
-            <RaPidGame />
+            <RapidGame />
         </Route>
         <Route exact path ='/gamerapid/:gameId/question' render={(props) => (
            <QuestionGuard {...props}>

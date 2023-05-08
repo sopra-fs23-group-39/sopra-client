@@ -9,8 +9,8 @@ const GameSelection = () => {
     const color = "#DEB522";
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
-    const [gameMode, setGameMode] = useState("POSTER");
-    const [TimerValue, setTimerValue] = useState(5);
+    const [gameMode, setGameMode] = useState("MOVIE");
+    const [timerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
     const [gameFormat] = useState("CUSTOM");
     const [buttonColors, setButtonColors] = useState({
@@ -26,7 +26,7 @@ const GameSelection = () => {
             console.log(gameMode)
             const hostId = localStorage.getItem('id');
             console.log(hostId);
-            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue, gameFormat: gameFormat});
+            const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: timerValue, gameFormat: gameFormat});
             const response = await api.post('/game', requestBody);
             console.log(response.data);
             const gameId = response.data.gameId;
@@ -72,7 +72,7 @@ const GameSelection = () => {
                             disabled={disabled}
                             width="100%"
                             style={{marginTop: 10, backgroundColor: buttonColors.but1}}
-                            onClick={() => handleMode("SHOWS", "but1")}
+                            onClick={() => handleMode("SHOW", "but1")}
                         >
                             TV SERIES
                         </Button>
@@ -82,7 +82,7 @@ const GameSelection = () => {
                             disabled={disabled}
                             width="100%"
                             style={{marginTop: 20, backgroundColor: buttonColors.but2}}
-                            onClick={() => handleMode("POSTER", "but2")}
+                            onClick={() => handleMode("MOVIE", "but2")}
                         >
                             MOVIES
                         </Button>
@@ -136,13 +136,13 @@ const GameSelection = () => {
                                  <p>60s</p>
                             </div>
                             <div style = {{display: 'flex', justifyContent: 'center'}}>
-                                <output>{TimerValue}</output>
+                                <output>{timerValue}</output>
                                 <input
                                     type ="range"
                                     min = "5"
                                     max = "60"
                                     step = "5"
-                                    value = {TimerValue}
+                                    value = {timerValue}
                                     onChange = {handleTimerChange}
                                     style = {{width : '100%'}}
                                 />

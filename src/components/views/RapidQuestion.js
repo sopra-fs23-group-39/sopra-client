@@ -5,7 +5,6 @@ import 'styles/views/Question.scss'
 import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import {host} from "sockjs-client/lib/location";
 
 const RapidQuestion = () => {
 
@@ -38,8 +37,8 @@ const RapidQuestion = () => {
 
 
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
-        ///const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
+        //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
         const questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
@@ -97,12 +96,10 @@ const RapidQuestion = () => {
         }
     },[gameDataFetched,hostConnected])*/
 
-
-
     useEffect(() => {
-        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
+        //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
 
-        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
+        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -239,7 +236,7 @@ const RapidQuestion = () => {
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
             </div>
         );
-    } else if (gameMode === "POSTER"){
+    } else if (gameMode === "MOVIE" || gameMode === "SHOW"){
         imageDisplay = (
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
@@ -257,12 +254,6 @@ const RapidQuestion = () => {
                         <h3 style={{textAlign: "center", color: color, marginBottom: 10}}> Question timer: {displayTimer}</h3>
                     {imageDisplay}
                         <div className="dashboard button-container">
-                    {/*<Button*/}
-                    {/*    style={{marginTop: 10}}*/}
-                    {/*    disabled={true}*/}
-                    {/*    >*/}
-                    {/*    {question.correctAnswer}*/}
-                    {/*</Button>*/}
                         <Button
                         style={{backgroundColor: buttonColors.but1}}
                         width="100%"
