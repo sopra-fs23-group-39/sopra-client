@@ -34,17 +34,19 @@ const RapidQuestion = () => {
     const [hostId, setHostId] = useState(null);
     const [hostConnected, setHostConnected] = useState(false);
     const [displayTimer, setDisplayTimer] = useState(60);
+    const [questionStompClient, setQuestionStompClient] = useState(null);
 
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
-        let questionStompClient = Stomp.over(() => socket);
+        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
+        ///const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
+        const questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
             console.log('WebSocket connection established.');
+            setQuestionStompClient(questionStompClient);
             // "front address"
-            questionStompClient.subscribe(`/topic/game/${gameId}/question`, (receivedQuestion) => {
+            questionStompClient.subscribe(`/topic/gamerapid/${gameId}/question`, (receivedQuestion) => {
                 if(receivedQuestion.body === "Waiting for players..."){
                     console.log("waiting for players");
                 } else {
@@ -57,10 +59,10 @@ const RapidQuestion = () => {
                 }
             });
             // "back address"
-            questionStompClient.send(`/app/game/${gameId}/question`, {}, 'Question received!');
+            questionStompClient.send(`/app/gamerapid/${gameId}/question`, {}, 'NEWQUESTION');
         });
         socket.onclose= () => {
-            questionStompClient.send(`/app/game/${gameId}/question/disconnect`, {}, '');
+            questionStompClient.send(`/app/gamerapid/${gameId}/question/disconnect`, {}, '');
         }
         return () => {
             questionStompClient.disconnect();
@@ -98,9 +100,9 @@ const RapidQuestion = () => {
 
 
     useEffect(() => {
-        // const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -136,6 +138,7 @@ const RapidQuestion = () => {
         });
 
         answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
+        questionStompClient.send(`/app/gamerapid/${gameId}/question`, {},'NEWQUESTION')
         console.log("Answer is sent, object inside handleClick:");
         console.log(answerToSend)
     }
@@ -147,6 +150,7 @@ const RapidQuestion = () => {
     useEffect(() => {
         async function fetchData() {
             try {
+                console.log(gameId);
                 const response = await api.get(`/game/${gameId}/settings`);
                 console.log(response.data)
                 setGameMode(response.data.gameMode)
@@ -155,6 +159,7 @@ const RapidQuestion = () => {
                 setHostId(response.data.hostId);
                 console.log(response.data.timer);
                 console.log(timer);
+                setDisplayTimer(timer);
                 setGameDataFetched(true);
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
@@ -200,11 +205,9 @@ const RapidQuestion = () => {
                 [correctButtonId]: "green"
             });
             setDisplayTimer(5);
+
         }, timer);
 
-        unmountTimeOutRef.current = setTimeout(() => {
-            history.push(`/game/${gameId}/standings`);
-        }, otherTimer + 1000);
         return () => {
             clearTimeout(timeoutRef.current);
         };
@@ -221,12 +224,8 @@ const RapidQuestion = () => {
         const intervalId = setInterval (() => {
             setDisplayTimer(displayTimer => displayTimer -1);
         }, 1000);
-        unmountTimeOutRef.current = setTimeout(() => {
-            history.push(`/game/${gameId}/standings`);
-        }, timer + 5000);
         return () => {
             clearInterval(intervalId);
-            clearTimeout(unmountTimeOutRef.current);
         };
     },[hostConnected])
 

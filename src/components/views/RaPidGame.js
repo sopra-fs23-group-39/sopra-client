@@ -46,7 +46,9 @@ const RaPidGame = () => {
 
     const {gameId} = useParams();
     const startGame = async () => {
-            history.push(`/gamerapid/:gameId/question`);
+            console.log("Before historypush");
+            history.push(`/gamerapid/${gameId}/question`);
+            console.log("After historypush");
             setDisabled(true);
 
 
@@ -87,7 +89,6 @@ const RaPidGame = () => {
                 </div>
                 <div>
                      <h2>Player:</h2>
-                     //<p key={playerList[0].id}>{playerList[0].username}</p>
                 </div>
                 <Button
                     width="100%"
