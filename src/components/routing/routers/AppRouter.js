@@ -27,6 +27,7 @@ import GameFormat from "../../views/GameFormat";
 import RapidSelection from "../../views/RapidSelection"
 import RapidGame from "../../views/RapidGame"
 import RapidQuestion from "../../views/RapidQuestion"
+import TestingVideoEmbed from "../../views/TestingVideoEmbed";
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -97,6 +98,9 @@ const AppRouter = () => {
           <GameSelectionGuard>
             <Game/>
           </GameSelectionGuard>
+        </Route>
+        <Route exact path="/TestingVideoEmbed">
+            <TestingVideoEmbed/>
         </Route>
         <Route exact path="/game/:gameId/question" render={(props) => (
             <QuestionGuard {...props}>
