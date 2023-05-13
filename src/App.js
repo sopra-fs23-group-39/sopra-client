@@ -1,5 +1,7 @@
 import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
+import { ThemeProvider } from "styled-components";
+import {theme} from "styles/mui/customMui";
 
 /**
  * Happy coding!
@@ -8,10 +10,10 @@ import AppRouter from "components/routing/routers/AppRouter";
  */
 const App = () => {
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Header height="100"/>
       <AppRouter/>
-    </div>
+    </ThemeProvider>
   );
 };
 

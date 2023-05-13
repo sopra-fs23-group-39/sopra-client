@@ -2,11 +2,19 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
+//import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 //import {doRegistration} from "Register.js"
+import { Box, TextField } from '@mui/material';
+import { Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
+import {Visibility, VisibilityOff} from '@mui/icons-material'
+import CustomBox, {theme, CustomContainer } from 'styles/mui/customMui';
+import { ThemeProvider, useTheme } from '@mui/material/styles';
+import 'styles/mui/Box.scss';
+import 'styles/mui/Button.scss';
+
 
 /*
 It is possible to add multiple components inside a single file,
@@ -36,6 +44,7 @@ FormField.propTypes = {
   onChange: PropTypes.func
 };
 
+
 const Login = props => {
 
   
@@ -43,7 +52,13 @@ const Login = props => {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  
+  const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword((show) => !show);
+    }
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+      }
   
   const doLogin = async () => {
     try {
@@ -76,7 +91,65 @@ const Login = props => {
   }
 
   return (
-    <BaseContainer>
+    <ThemeProvider theme={theme}>
+          <Box color = "primary.main">
+                  <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+                      <InputLabel htmlFor="outlined-username">Username</InputLabel>
+                      <OutlinedInput
+                          id="outlined-username"
+                          label="Username"
+                          value={username}
+                          onChange={(un) => setUsername(un.target.value)}
+                          margin="dense"
+                      />
+                  </FormControl>
+                  <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+                      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                      <OutlinedInput
+                          id="outlined-adornment-password"
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          onChange={p => setPassword(p.target.value)}
+                          endAdornment={
+                          <InputAdornment position="end">
+                              <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                              >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                          </InputAdornment>
+                          }
+                          margin='dense'
+                          label="Password"
+                      />
+                  </FormControl>
+                    <Box className= "custom" color="primary">      
+                      <Button 
+                          //className='primary-button'
+                          color="secondary"
+                          width="100%"
+                          onClick={() => doLogin()}
+                          variant='contained'
+                          sx={{margin: 1}}
+                      >
+                          Login
+                      </Button>
+                      <Button 
+                          color = "secondary"
+                          width="100%"
+                          onClick={() => goToRegistration()}
+                          variant='contained'
+                          sx={{margin: 1}}
+                      >
+                          Register
+                      </Button>
+                  </Box>
+              </Box>
+            </ThemeProvider>
+    /*<BaseContainer>
       <div className="login container">
         <div className="login form">
           <FormField
@@ -109,7 +182,7 @@ const Login = props => {
           </div>
         </div>
       </div>
-    </BaseContainer>
+    </BaseContainer>*/
   );
 };
 
