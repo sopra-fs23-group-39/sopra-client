@@ -138,11 +138,15 @@ const Login = props => {
                           Login
                       </Button>
                       <Button 
-                          color = "secondary"
+                          sx={{
+                            margin: 1,
+                            color: theme.palette.secondary.main,
+                            borderColor: theme.palette.secondary.main
+                          }}
+                          variant="outlined"
                           width="100%"
-                          onClick={() => goToRegistration()}
-                          variant='contained'
-                          sx={{margin: 1}}
+                          size='small'
+                          onClick={() => goToRegistration()} 
                       >
                           Register
                       </Button>
