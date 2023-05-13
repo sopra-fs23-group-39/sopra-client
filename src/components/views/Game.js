@@ -35,6 +35,7 @@ const Game = () => {
     const [timer, setTimer] = useState(null);
     const [gameStompClient, setGameStompClientLocal] = useState(null)
     const [disabled, setDisabled] = useState(false);
+    const [isStarted, setIsStarted] = useState(false);
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -48,6 +49,7 @@ const Game = () => {
         if(gameStompClient && gameStompClient.connected){
             gameStompClient.send(`/app/game/${gameId}`, {}, "START");
             setDisabled(true);
+            setIsStarted(true);
         } else {
             //idk put error and kick or smth
         }
@@ -71,6 +73,7 @@ const Game = () => {
                 setGameMode(response.data.gameMode)
                 setAmountOfQuestions(response.data.questionAmount)
                 setTimer(response.data.timer)
+                setIsStarted(response.data.isStarted)
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
                 console.error(error);
