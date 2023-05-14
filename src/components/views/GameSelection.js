@@ -97,12 +97,22 @@ const GameSelection = () => {
                             Actors
                         </Button>
                     </div>
+                    <div className="Movie trailer button-container">
+                        <Button
+                            disabled={disabled}
+                            width="100%"
+                            style={{marginTop: 20, backgroundColor: buttonColors.but3}}
+                            onClick={() => handleMode("TRAILER", "but4")}
+                        >
+                            Movie Trailers
+                        </Button>
+                    </div>
                     <div className="mixed button-container">
                         <Button
                             disabled={disabled}
                             width="100%"
                             style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but4}}
-                            onClick={() => handleMode("MIXED", "but4")}
+                            onClick={() => handleMode("MIXED", "but5")}
                         >
                             Mixed
                         </Button>
