@@ -8,16 +8,23 @@ import {api, handleError} from "../../helpers/api";
 const JoinGame = () => {
   const history = useHistory();
   const [toJoinId, setToJoinId] = useState(null);
-
+  const [isStarted, setIsStarted] = useState(null)
   const doJoin = async () => {
-    try{
-      const requestBody = JSON.stringify(localStorage.getItem('id'));
-      await api.put(`/game/${toJoinId}`, requestBody);
-      history.push(`/game/${toJoinId}`);
-    } catch (error) {
-      alert(`Something went wrong trying to join the game: \n${handleError(error)}`);
+        try{
+            const requestBody = JSON.stringify(localStorage.getItem('id'));
+            const response = await api.get(`game/${toJoinId}/settings`);
+            if(response.data.isStarted === false){
+                await api.put(`/game/${toJoinId}`, requestBody);
+                history.push(`/game/${toJoinId}`);
+            }
+            else{
+                alert(`Game has already started`);
+            }
+
+        } catch (error) {
+            alert(`Something went wrong trying to join the game: \n${handleError(error)}`);
+        }
     }
-  }
 
   return (
     <div className="join container">
