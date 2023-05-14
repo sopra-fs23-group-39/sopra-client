@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import PropTypes from "prop-types";
 import 'styles/views/ChangeProfile.scss';
 import User from "../../models/User";
 import {Box} from '@mui/material';
@@ -11,33 +10,6 @@ import theme from 'styles/mui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
-
-
-const FormField = props => {
-    return (
-        <div className="dashboard field">
-            <label className="dashboard label">
-                {props.label}
-            </label>
-            <input
-                type={props.type}
-                className="dashboard input"
-                placeholder="enter here.."
-                disabled={props.disabled}
-                value={props.value}
-                onChange={e => props.onChange(e.target.value)}
-            />
-        </div>
-    );
-};
-
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func
-};
 
 const ChangeProfile = () => {
     const history = useHistory();
@@ -108,12 +80,12 @@ const ChangeProfile = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box color="primary.main" sx={{mt: 10}}>
-                <Typography variant="h4" align="center" gutterBottom color={theme.palette.grey[700]}>
+            <Box sx={{ mt: 10, backgroundColor: 'rgba(0, 0, 0, 0.8)', pt: '20px'}}>
+                <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}>
                     Change identifying details for your account
                 </Typography>
                 <FormControl sx={{m: 1, width: '60ch', mt: 10}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-username" position="top">Change Username</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-username" position="top" sx={{ color: theme.palette.primary.light }}>Change Username</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-username"
                         label="Change Username"
@@ -125,12 +97,20 @@ const ChangeProfile = () => {
                                 event.preventDefault();
                             }
                         }}
+                        sx={{
+                            '& fieldset': {
+                                borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                                color: theme.palette.primary.light,
+                            },
+                        }}
                         name="username"
                         margin="dense"
                     />
                 </FormControl>
                 <FormControl sx={{m: 1, width: '60ch', mt: 10}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Change Password</InputLabel>
+                    <InputLabel htmlFor="outlined-adornment-password" sx={{ color: theme.palette.primary.light }}>Change Password</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
                         placeholder="enter new password here..."
@@ -156,6 +136,14 @@ const ChangeProfile = () => {
                                 event.preventDefault();
                             }
                         }}
+                        sx={{
+                            '& fieldset': {
+                                borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                                color: theme.palette.primary.light,
+                            },
+                        }}
                     />
                 </FormControl>
                 <Box color="primary" sx={{display: 'flex', justifyContent: 'center'}}>
@@ -163,7 +151,7 @@ const ChangeProfile = () => {
                         sx={{
                             margin: 1,
                             width: '41ch',
-                            color: theme.palette.grey[700],
+                            color: theme.palette.primary.light,
                             borderColor: theme.palette.grey[700],
                         }}
                         variant="outlined"
@@ -178,8 +166,7 @@ const ChangeProfile = () => {
                     <Button
                         sx={{
                             margin: 1,
-                            color: theme.palette.grey[700],
-                            borderColor: theme.palette.grey[700],
+                            color: theme.palette.primary.light,
                         }}
                         variant="outlined"
                         width="100%"
