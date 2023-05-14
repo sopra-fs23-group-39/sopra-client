@@ -16,8 +16,6 @@ import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
 import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
 import Leaderboard from "components/views/Leaderboard";
 import Question from "../../views/Question";
-import {WaitingRoomGuard} from "../routeProtectors/WaitingRoomGuard";
-import WaitingRoomParticipant from "../../views/WaitingRoomParticipant";
 import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
 import Standings from "../../views/Standings";
@@ -52,9 +50,9 @@ const AppRouter = () => {
           </LoginGuard>
         </Route>
         <Route exact path="/register">
-            <LoginGuard>
-                <Register />
-            </LoginGuard>
+          <LoginGuard>
+            <Register />
+          </LoginGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/main"/>
@@ -65,19 +63,14 @@ const AppRouter = () => {
           </MainGuard>
         </Route>
         <Route exact path="/changes/:id" render={(props) => (
-            <ChangeProfileGuard {...props}>
-              <ChangeProfile />
-            </ChangeProfileGuard>
-          )} />
+          <ChangeProfileGuard {...props}>
+            <ChangeProfile />
+          </ChangeProfileGuard>
+        )} />
         <Route exact path="/join">
           <JoinGameGuard>
             <JoinGame/>
           </JoinGameGuard>
-        </Route>
-        <Route exact path="/waiting_room_participant">
-          <WaitingRoomGuard>
-            <WaitingRoomParticipant/>
-          </WaitingRoomGuard>
         </Route>
         <Route exact path="/leaderboard">
           <LeaderboardGuard>
@@ -91,28 +84,32 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/game_selection">
           <GameSelectionGuard>
-            <GameSelection/>
+            <GameSelection />
           </GameSelectionGuard>
         </Route>
         <Route exact path="/game/:gameId">
           <GameSelectionGuard>
-            <Game/>
+            <Game />
           </GameSelectionGuard>
         </Route>
         <Route exact path="/game/:gameId/question" render={(props) => (
-            <QuestionGuard {...props}>
-              <Question />
-            </QuestionGuard>
+          <QuestionGuard {...props}>
+            <Question />
+          </QuestionGuard>
         )} />
-        <Route exact path='/game/:gameId/standings'>
-          <Standings />
-        </Route>
-        <Route exact path='/game/:gameId/winner'>
-          <Winner />
-        </Route>
+        <Route exact path="/game/:gameId/standings" render={(props) => (
+          <QuestionGuard {...props}>
+            <Standings />
+          </QuestionGuard>
+        )} />>
+        <Route exact path='/game/:gameId/winner' render={(props) => (
+          <QuestionGuard {...props}>
+            <Winner />
+          </QuestionGuard>
+        )} />>
         <Route exact path='/rapid_selection'>
           <GameSelectionGuard>
-           <RapidSelection />
+          <RapidSelection />
           </GameSelectionGuard>
         </Route>
         <Route exact path='/gamerapid/:gameId'>
@@ -121,9 +118,9 @@ const AppRouter = () => {
           </RapidGuard>
         </Route>
         <Route exact path ='/gamerapid/:gameId/question' render={(props) => (
-           <QuestionGuard {...props}>
+          <QuestionGuard {...props}>
             <RapidQuestion />
-           </QuestionGuard>
+          </QuestionGuard>
            )} />
       </Switch>
     </BrowserRouter>

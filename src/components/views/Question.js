@@ -6,10 +6,12 @@ import {Button} from "../ui/Button";
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
 import {host} from "sockjs-client/lib/location";
+import "styles/views/VideoPlayer.scss";
+import YouTube from "react-youtube";
 
 const Question = () => {
 
-    const color = "#DEB522";
+    const color = "$accent";
     const [question, setQuestion] = useState({});
     const [gameMode, setGameMode] = useState(null);
     const [disabled, setDisabled] = useState(false);
@@ -35,6 +37,48 @@ const Question = () => {
     const [hostConnected, setHostConnected] = useState(false);
     const [displayTimer, setDisplayTimer] = useState(60);
 
+    const [playerState, setPlayerState] = useState(null);
+    const [isMuted, setIsMuted] = useState(true);
+    const playerRef = useRef(null);
+
+
+    const opts = {
+        playerVars: {
+            autoplay: 1,
+            mute: 1,
+            showinfo: 0,
+            modestbranding: 1,
+            loop: 1,
+            controls: 0,
+            start: 20
+        }
+    }
+
+    const onReady = (event) => {
+        setPlayerState(YouTube.PlayerState.PLAYING);
+        const player = playerRef.current.getInternalPlayer();
+        setTimeout(() => {
+            player.stopVideo();
+            setPlayerState(YouTube.PlayerState.ENDED);
+        }, timer); // Stop playback after x seconds
+    }
+
+    const handleMuteUnmuteClick = () => {
+        console.log('Mute/unmute clicked');
+        const player = playerRef.current.getInternalPlayer();
+        if (isMuted) {
+            player.unMute();
+            setIsMuted(false);
+        } else {
+            player.mute();
+            setIsMuted(true);
+        }
+    }
+
+    const handleStateChange = (event) => {
+        console.log('State changed:', event.data);
+        setPlayerState(event.data);
+    };
 
     useEffect(() => {
         //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
@@ -52,6 +96,7 @@ const Question = () => {
                     const parsedQuestion = JSON.parse(receivedQuestion.body);
                     setQuestion(parsedQuestion);
                     console.log(question);
+                    console.log(receivedQuestion.body);
                     setHostConnected(true);
 
                 }
@@ -256,6 +301,14 @@ const Question = () => {
                 <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
             </div>
         );
+    } else if (gameMode === "TRAILER") {
+        imageDisplay = (
+            <div className="video-container">
+                <div className="video-foreground">
+                <YouTube videoId={question.questionLink} opts = {opts} onStateChange={handleStateChange} onReady = {onReady} ref={playerRef}/>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -267,6 +320,11 @@ const Question = () => {
                         <h2 style={{textAlign: "center", color: color, marginBottom: 10}}>{question.questionText}</h2>
                         <h3 style={{textAlign: "center", color: color, marginBottom: 10}}> Question timer: {displayTimer}</h3>
                         {imageDisplay}
+                        {gameMode === "TRAILER" ? (
+                                <div>
+                                    <button onClick={handleMuteUnmuteClick}>{isMuted ? 'Unmute' : 'Mute'}</button>
+                                </div>
+                        ) : null}
                         <div className="dashboard button-container">
                             {/*<Button*/}
                             {/*    style={{marginTop: 10}}*/}

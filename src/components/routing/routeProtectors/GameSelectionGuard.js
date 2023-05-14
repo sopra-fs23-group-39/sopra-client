@@ -6,19 +6,13 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const GameSelectionGuard = props => {
-    //TODO: Delete this and uncomment token part when registration/login is setup
-    if(true){
-        return props.children;
-    }
-    return <Redirect to="/login"/>;
-
-    /*if (localStorage.getItem("token")) {
-        return props.children;
-    }
-    return <Redirect to="/login"/>;
-    */
+  //TODO
+  if (true) {
+    return props.children;
+  }
+  return <Redirect to="/login"/>;
 };
 
 GameSelectionGuard.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node
 };

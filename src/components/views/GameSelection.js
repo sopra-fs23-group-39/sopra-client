@@ -1,12 +1,12 @@
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
+import BaseContainer from "../ui/BaseContainer";
 import {useHistory} from 'react-router-dom';
-import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Main.scss";
 import {useState} from "react";
 
 const GameSelection = () => {
-    const color = "#DEB522";
+    const color = "$accent";
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
     const [gameMode, setGameMode] = useState("MOVIE");
@@ -97,12 +97,22 @@ const GameSelection = () => {
                             Actors
                         </Button>
                     </div>
+                    <div className="Movie trailer button-container">
+                        <Button
+                            disabled={disabled}
+                            width="100%"
+                            style={{marginTop: 20, backgroundColor: buttonColors.but3}}
+                            onClick={() => handleMode("TRAILER", "but4")}
+                        >
+                            Movie Trailers
+                        </Button>
+                    </div>
                     <div className="mixed button-container">
                         <Button
                             disabled={disabled}
                             width="100%"
                             style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but4}}
-                            onClick={() => handleMode("MIXED", "but4")}
+                            onClick={() => handleMode("MIXED", "but5")}
                         >
                             Mixed
                         </Button>
