@@ -1,11 +1,16 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import {Button} from "../ui/Button";
 import PropTypes from "prop-types";
 import 'styles/views/ChangeProfile.scss';
-import BaseContainer from "../ui/BaseContainer";
 import User from "../../models/User";
+import {Box} from '@mui/material';
+import {Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput, Typography} from '@mui/material';
+import {Visibility, VisibilityOff} from '@mui/icons-material'
+import {theme} from 'styles/mui/customMui';
+import {ThemeProvider} from '@mui/material/styles';
+import 'styles/mui/Box.scss';
+import 'styles/mui/Button.scss';
 
 
 const FormField = props => {
@@ -37,27 +42,23 @@ FormField.propTypes = {
 const ChangeProfile = () => {
     const history = useHistory();
     const [user, setUser] = useState(new User());
-    // const [username, setUsername] = useState(null);
-    // const [password, setPassword] = useState(null);
-    // const [repeatPassword, setRepeatPassword] = useState(null);
     const params = useParams();
-
     const id = params.id ? parseInt(params.id) : -1;
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword((show) => !show);
+    }
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    }
 
     useEffect(() => {
-
         async function fetchData() {
             try {
                 const response = await api.get(`/users/${id}`);
-
                 setUser(response.data);
-
-                console.log('request to:', response.request.responseURL);
-                console.log('status code:', response.status);
-                console.log('status text:', response.statusText);
-                console.log('requested data:', response.data);
-                console.log(response);
-
             } catch (error) {
                 console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
                 console.error("Details:", error);
@@ -68,43 +69,34 @@ const ChangeProfile = () => {
         fetchData();
     }, [id]);
 
-    function handleUsernameChanged (event) {
-        const {name, value} = event.target
-        setUser(prevUser => ({
-            ...prevUser,
-            [name]: value
-        }))
-    }
-
-    const doSaveUsername = async (user) => {
+    const saveNewCredentials = async (user) => {
         try {
             const requestBody = JSON.stringify({...user});
             await api.put(`/users/${params.id}`, requestBody);
             console.log(requestBody)
-
+            history.push("/profile/" + user.id)
         } catch (error) {
-            alert(`Something went wrong during saving a new username: \n${handleError(error)}`);
+            alert(`Username and Password are not allowed to be empty: \n${handleError(error)}`);
         }
     };
 
-    function handlePasswordChanged (event) {
-        const {name, value} = event.target
+    function handleUsernameChanged(event) {
+        const {name, value} = event.target;
+
         setUser(prevUser => ({
             ...prevUser,
             [name]: value
-        }))
+        }));
     }
 
-    const doSavePassword = async (user) => {
-        try {
-            const requestBody = JSON.stringify({...user});
-            await api.put(`/users/${id}`, requestBody);
-            console.log(requestBody)
+    function handlePasswordChanged(event) {
+        const {name, value} = event.target;
 
-        } catch (error) {
-            alert(`Something went wrong during saving a new password: \n${handleError(error)}`);
-        }
-    };
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value
+        }));
+    }
 
     const goBack = async () => {
         try {
@@ -115,61 +107,90 @@ const ChangeProfile = () => {
     };
 
     return (
-        <BaseContainer>
-            <div className="dashboard container">
-                <div className="dashboard form">
-                    <h1 style={{textAlign: "center", color: "#DEB522", marginBottom: 100}}>Profile</h1>
-                    <label className="dashboard label">
-                        change username
-                    </label>
-                    <input
+        <ThemeProvider theme={theme}>
+            <Box color="primary.main" sx={{mt: 10}}>
+                <Typography variant="h4" align="center" gutterBottom color={theme.palette.grey[700]}>
+                    Change identifying details for your account
+                </Typography>
+                <FormControl sx={{m: 1, width: '60ch', mt: 10}} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-username" position="top">Change Username</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-username"
+                        label="Change Username"
                         type="username"
-                        className="dashboard input"
                         placeholder="enter new username here..."
                         onChange={handleUsernameChanged}
+                        onKeyPress={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault();
+                            }
+                        }}
                         name="username"
-                        value={user.username}
+                        margin="dense"
                     />
-                    <div className="dashboard button-container">
-                        <Button
-                            onClick={() => doSaveUsername(user)}>
-                            SAVE USERNAME
-                        </Button>
-                    </div>
-                    <label className="dashboard label">
-                        change password
-                    </label>
-                    <input
-                        type="password"
-                        className="dashboard input"
+                </FormControl>
+                <FormControl sx={{m: 1, width: '60ch', mt: 10}} variant="outlined">
+                    <InputLabel htmlFor="outlined-adornment-password">Change Password</InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
                         placeholder="enter new password here..."
                         onChange={handlePasswordChanged}
-                        value={user.password}
                         name="password"
+                        type={showPassword ? 'text' : 'password'}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                </IconButton>
+                            </InputAdornment>
+                        }
+                        margin='dense'
+                        label="Password"
+                        onKeyPress={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault();
+                            }
+                        }}
                     />
-                    {/*<input*/}
-                    {/*    type="repeatPassword"*/}
-                    {/*    className="dashboard input"*/}
-                    {/*    placeholder="confirm new password here..."*/}
-                    {/*    onChange={un => setRepeatPassword(un)}*/}
-                    {/*    value={user.repeatPassword}*/}
-                    {/*    name="repeatPassword"*/}
-                    {/*/>*/}
-                    <div className="dashboard button-container">
-                        <Button
-                            onClick={() => doSavePassword(user)}>
-                            SAVE PASSWORD
-                        </Button>
-                        <Button
-                            style={{marginTop: 190}}
-                            onClick={() => goBack()}>
-                            BACK
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </BaseContainer>
-    );
-};
+                </FormControl>
+                <Box color="primary" sx={{display: 'flex', justifyContent: 'center'}}>
+                    <Button
+                        sx={{
+                            margin: 1,
+                            width: '41ch',
+                            color: theme.palette.grey[700],
+                            borderColor: theme.palette.grey[700],
+                        }}
+                        variant="outlined"
+                        width="100%"
+                        size='large'
+                        onClick={() => saveNewCredentials(user)}
+                    >
+                        Save New Credentials
+                    </Button>
+                </Box>
+                <Box className="custom" color="primary">
+                    <Button
+                        sx={{
+                            margin: 1,
+                            color: theme.palette.grey[700],
+                            borderColor: theme.palette.grey[700],
+                        }}
+                        variant="outlined"
+                        width="100%"
+                        size='large'
+                        onClick={() => goBack()}>
+                        Back
+                    </Button>
+                </Box>
+            </Box>
+        </ThemeProvider>
+    )
+}
 
 export default ChangeProfile;

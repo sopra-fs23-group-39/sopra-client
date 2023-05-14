@@ -2,22 +2,15 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-//import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
-import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import {theme} from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
-import {Box, Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
+import {Box, Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
-/*
-It is possible to add multiple components inside a single file,
-however be sure not to clutter your files with an endless amount!
-As a rule of thumb, use one file per component and only add small,
-specific components that belong to the main one in the same file.
- */
+
 const FormField = props => {
     return (
         <div className="login field">
@@ -82,6 +75,11 @@ const Register = props => {
                         value={username}
                         onChange={(un) => setUsername(un.target.value)}
                         margin="dense"
+                        onKeyPress={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault();
+                            }
+                        }}
                     />
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
@@ -105,6 +103,11 @@ const Register = props => {
                         }
                         margin='dense'
                         label="Password"
+                        onKeyPress={(event) => {
+                            if (event.key === " ") {
+                                event.preventDefault();
+                            }
+                        }}
                     />
                 </FormControl>
                   <Box className= "custom" color="primary">      
