@@ -1,0 +1,47 @@
+@import 'styles/theme';
+
+
+.parent-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2em;
+  //width: 30em;
+  //max-width: 30em;
+  font-size: 16px;
+  font-weight: 300;
+  //padding-left: 37px;
+  //padding-right: 37px;
+  //border-radius: 0.75em;
+  background-color: rgba(0, 0, 0, 0.8);
+  
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  box-shadow: $dropShadow;
+}
+
+.custom {
+  //background-color: #ff00dda4;
+  //color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2em;
+  align-items: center;
+  //width: 30em;
+  //max-width: 30em;
+  font-size: 16px;
+  font-weight: 300;
+  //padding-left: 37px;
+  //padding-right: 37px;
+  //border-radius: 0.75em;
+  
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  //box-shadow: $dropShadow;
+}

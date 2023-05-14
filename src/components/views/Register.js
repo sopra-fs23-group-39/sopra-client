@@ -2,11 +2,16 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
+//import {Button} from 'components/ui/Button';
 import 'styles/views/Login.scss';
 import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
-
+import theme from 'styles/mui/customMui';
+import { ThemeProvider} from '@mui/material/styles';
+import 'styles/mui/Box.scss';
+import 'styles/mui/Button.scss';
+import {Box, Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
+import {Visibility, VisibilityOff} from '@mui/icons-material'
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -39,7 +44,14 @@ const Register = props => {
     const history = useHistory();
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
-
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword((show) => !show);
+    }
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+      }
+  
     const doRegister = async () => {
         try {
             const requestBody = JSON.stringify({username, password});
@@ -60,7 +72,105 @@ const Register = props => {
     };
 
     return (
-        <BaseContainer>
+        <ThemeProvider theme={theme}>
+        <Box className="box">
+                <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+                    <InputLabel 
+                    htmlFor="outlined-username"
+                    sx={{ color: theme.palette.primary.light }}
+                    >
+                        Username
+                    </InputLabel>
+                    <OutlinedInput
+                        id="outlined-username"
+                        label="Username"
+                        value={username}
+                        onChange={(un) => setUsername(un.target.value)}
+                        margin="dense"
+                        sx={{
+                            '& fieldset': {
+                              borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                              color: theme.palette.primary.light,
+                            },
+                          }}
+                    />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+                    <InputLabel
+                        htmlFor="outlined-adornment-password"
+                        sx={{ color: theme.palette.primary.light }}
+                    >
+                        Password
+                    </InputLabel>
+                    <OutlinedInput
+                        id="outlined-adornment-password"
+                        type={showPassword ? 'text' : 'password'}
+                        value={password}
+                        onChange={p => setPassword(p.target.value)}
+                        sx={{
+                            '& fieldset': {
+                              borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                              color: theme.palette.primary.light,
+                            },
+                          }}
+                        endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                            sx={{ color: theme.palette.primary.light }}
+                            >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                        }
+                        margin='dense'
+                        label="Password"
+                    />
+                </FormControl>
+                  <Box className= "custom" color="primary">      
+                    <Button 
+                        sx={{
+                            margin: 1,
+                            backgroundColor: theme.palette.primary.main,
+                            color: theme.palette.primary.text,
+                            opacity: !username || !password ? 0.5 : 1,
+                            "&:disabled": { 
+                                color: theme.palette.primary.text,
+                                backgroundColor: theme.palette.primary.main,
+                                opacity: 0.5
+                            }
+                        }}
+                        variant="contained"
+                        width="100%"
+                        disabled={!username || !password}
+                        onClick={() => doRegister()}
+                        >
+                        Register
+                    </Button>
+                    <Button 
+                        sx={{
+                            margin: 1,
+                            color: theme.palette.primary.main,
+                            borderColor: theme.palette.primary.main
+                        }}
+                        variant="outlined"
+                        width="100%"
+                        size='small'
+                        onClick={() => history.push("/login")}
+                    >
+                        Back
+                    </Button>
+                </Box>
+            </Box>
+          </ThemeProvider>
+        /*<BaseContainer>
             <div className="login container">
                 <div className="login form">
                     <FormField
@@ -92,7 +202,7 @@ const Register = props => {
                     </div>
                 </div>
             </div>
-        </BaseContainer>
+                    </BaseContainer>*/
     );
 };
 
