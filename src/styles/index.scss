@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&family=Roboto+Mono:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import 'styles/theme';
+//@import '~@mui/material/styles';
+
 
 /**
 This file contains the general and shared style of your application.
@@ -9,10 +12,26 @@ body {
   padding: 0;
   min-width: 100vw;
   min-height: 100vh;
-  font-family: $fontDefault;
-  //background-image: linear-gradient(135deg, $accent 10%, $accentDark 100%);
-  background-color: #DEB522;
+  font-family: 'Roboto', sans-serif;
+  /*background-image: linear-gradient(
+    135deg,
+    var(--accent-color, #f9c9f9) 10%,
+    var(--accent-dark-color, #de24c5)100%
+    );*/
+  background-image: url(https://repository-images.githubusercontent.com/265447788/6d3d5600-9a32-11ea-964c-d8a5aaecb919);
+  //background-color: #DEB522;
 }
+
+
+/*.MuiButton-root {
+  color: var(--button-color);
+  background-color: var(--button-background);
+}
+
+.MuiTextField-root {
+  color: var(--input-color);
+  background-color: var(--input-background);
+}*/
 
 input,
 textarea,

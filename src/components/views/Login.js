@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 import { Box, TextField } from '@mui/material';
 import { Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
-import CustomBox, {theme, CustomContainer } from 'styles/mui/customMui';
+import theme from 'styles/mui/customMui';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
@@ -92,67 +92,96 @@ const Login = props => {
 
   return (
     <ThemeProvider theme={theme}>
-          <Box color = "primary.main">
-                  <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
-                      <InputLabel htmlFor="outlined-username">Username</InputLabel>
-                      <OutlinedInput
-                          id="outlined-username"
-                          label="Username"
-                          value={username}
-                          onChange={(un) => setUsername(un.target.value)}
-                          margin="dense"
-                      />
-                  </FormControl>
-                  <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
-                      <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                      <OutlinedInput
-                          id="outlined-adornment-password"
-                          type={showPassword ? 'text' : 'password'}
-                          value={password}
-                          onChange={p => setPassword(p.target.value)}
-                          endAdornment={
-                          <InputAdornment position="end">
-                              <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                              >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                          </InputAdornment>
-                          }
-                          margin='dense'
-                          label="Password"
-                      />
-                  </FormControl>
-                    <Box className= "custom" color="primary">      
-                      <Button 
-                          //className='primary-button'
-                          color="secondary"
-                          width="100%"
-                          onClick={() => doLogin()}
-                          variant='contained'
-                          sx={{margin: 1}}
-                      >
-                          Login
-                      </Button>
-                      <Button 
-                          sx={{
-                            margin: 1,
-                            color: theme.palette.secondary.main,
-                            borderColor: theme.palette.secondary.main
-                          }}
-                          variant="outlined"
-                          width="100%"
-                          size='small'
-                          onClick={() => goToRegistration()} 
-                      >
-                          Register
-                      </Button>
-                  </Box>
-              </Box>
-            </ThemeProvider>
+      <Box className="box">
+        <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+          <InputLabel
+            htmlFor="outlined-username"
+            sx={{ color: theme.palette.primary.light }}
+          >
+              Username
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-username"
+            label="Username"
+            value={username}
+            onChange={(un) => setUsername(un.target.value)}
+            margin="dense"
+            sx={{
+              '& fieldset': {
+                borderColor: theme.palette.primary.light,
+              },
+              '& input': {
+                color: theme.palette.primary.light,
+              },
+            }}
+          />
+        </FormControl>
+        <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+          <InputLabel 
+            htmlFor="outlined-adornment-password"
+            sx={{ color: theme.palette.primary.light }}
+          >
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={p => setPassword(p.target.value)}
+            sx={{
+              '& fieldset': {
+                borderColor: theme.palette.primary.light,
+              },
+              '& input': {
+                color: theme.palette.primary.light,
+              },
+            }}
+            endAdornment={
+            <InputAdornment position="end">
+                <IconButton
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+                sx={{ color: theme.palette.primary.light }}
+                >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+            </InputAdornment>
+            }
+              margin='dense'
+              label="Password"
+          />
+        </FormControl>
+        <Box className= "custom" color="primary">      
+          <Button 
+            sx={{
+              margin: 1,
+              color: theme.palette.primary.main
+            }}
+            width="100%"
+            onClick={() => doLogin()}
+            variant='contained'
+            sx={{margin: 1}}
+          >
+            Login
+          </Button>
+          <Button 
+              sx={{
+                margin: 1,
+                color: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main
+              }}
+              variant="outlined"
+              width="100%"
+              size='small'
+              onClick={() => goToRegistration()} 
+            >
+              Register
+          </Button>
+        </Box>
+      </Box>
+    </ThemeProvider>
     /*<BaseContainer>
       <div className="login container">
         <div className="login form">
