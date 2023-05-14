@@ -10,17 +10,20 @@ const GameFormat = () => {
     const [gameMode] = useState("MIXED");
     const [TimerValue] = useState(5);
     const [sliderValue] = useState(2);
-    const [gameFormat, setGameFormat] = useState("BLITZ");
 
-    const selectBlitz = async () => {
+    async function selectGameFormat(gameFormat) {
         try {
-            setGameFormat("Blitz")
             console.log(gameFormat)
             const hostId = localStorage.getItem('id');
             const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue, gameFormat: gameFormat});
             const response = await api.post('/game', requestBody);
             const gameId = response.data.gameId;
-            history.push(`/game/${gameId}`);
+            if (gameFormat === "RAPID"){
+                history.push(`/gamerapid/${gameId}`)
+            }
+            else{
+                history.push(`/game/${gameId}`);
+            }
             console.log('requested data:', response.data);
         } catch (error) {
             console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
@@ -29,22 +32,6 @@ const GameFormat = () => {
         }
     }
 
-    const selectRapid = async () => {
-            try {
-                setGameFormat("Rapid")
-                console.log(gameFormat)
-                const hostId = localStorage.getItem('id');
-                const requestBody = JSON.stringify({hostId, gameMode: gameMode, questionAmount: sliderValue, timer: TimerValue, gameFormat: gameFormat});
-                const response = await api.post('/game', requestBody);
-                const gameId = response.data.gameId;
-                history.push(`/rapid_selection`);
-                console.log('requested data:', response.data);
-            } catch (error) {
-                console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while creating the game! See the console for details.");
-            }
-    }
 
 
     return (
@@ -72,7 +59,7 @@ const GameFormat = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 40}}
-                            onClick={() => selectBlitz()}
+                            onClick={() => selectGameFormat("BLITZ")}
                         >
                             Blitz
                         </Button>
@@ -81,7 +68,7 @@ const GameFormat = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 40}}
-                            onClick={() => selectRapid()}
+                            onClick={() => selectGameFormat("RAPID")}
                         >
                             Rapid
                         </Button>
