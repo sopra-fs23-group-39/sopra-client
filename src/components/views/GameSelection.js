@@ -1,12 +1,12 @@
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
+import BaseContainer from "../ui/BaseContainer";
 import {useHistory} from 'react-router-dom';
-import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Main.scss";
 import {useState} from "react";
 
 const GameSelection = () => {
-    const color = "#DEB522";
+    const color = "$accent";
     const history = useHistory();
     const [sliderValue, setSliderValue] = useState(5);
     const [gameMode, setGameMode] = useState("MOVIE");

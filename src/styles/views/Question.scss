@@ -1,31 +1,12 @@
 @import 'styles/theme';
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
-
-  for more information visit https://sass-lang.com/guide
- */
-
 .dashboard {
-  //&.container {
-  //  margin-top: 2em;
-  //  min-height: 300px;
-  //  /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
-  //  @include center;
-  //  flex-direction: column;
-  //}
   &.container {
-    margin-top: 2em;
     min-height: 300px;
-    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
     @include center;
     flex-direction: column;
-    background-image: url(https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cq_auto:eco%2Cw_1240/MTc0NDMzMjEyMTYyOTA5NTQ0/best-mindfuck-movies.webp);
-    background-repeat: repeat-y;
-    background-size: cover;
+    background-image: url(https://repository-images.githubusercontent.com/265447788/6d3d5600-9a32-11ea-964c-d8a5aaecb919);
   }
-
   &.form {
     display: flex;
     flex-direction: column;
@@ -42,26 +23,8 @@
     transition: opacity 0.5s ease, transform 0.5s ease;
     box-shadow: $dropShadow;
   }
-
-  //&.form {
-  //  display: flex;
-  //  flex-direction: column;
-  //  // justify-content: center;
-  //  width: 30em;
-  //  max-width: 30em;
-  //  font-size: 16px;
-  //  height: 50em;
-  //  font-weight: 300;
-  //  padding-left: 37px;
-  //  padding-right: 37px;
-  //  border-radius: 0.75em;
-  //  background-color: $background;
-  //  transition: opacity 0.5s ease, transform 0.5s ease;
-  //  box-shadow: $dropShadow;
-  //}
-
   &.title {
-    color: $accent;
+    color: $textColor;
     //justify-content: center;
     //font-family: $fontDefault;
     margin-bottom: 20px;
@@ -97,7 +60,6 @@
     row-gap: 20px;
     flex-direction: column;
   }
-
   .image {
     justify-content: center;
     max-width: 100%;

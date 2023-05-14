@@ -7,7 +7,7 @@
    feel free to play around with these and see what other look you can come up with! :D
 */
 
-$accent: #0aa408;
+$accent: #DEB522; //#DEB522 yellow    #39FF14 green   #007FFF blue  #0aa408 greenFlorence
 $accentDark: #123597;
 $textColor: white;
 $background: #262632;
@@ -21,8 +21,12 @@ $SMALL_WIDTH: 768px;
 
 /* some standard elements */
 /* fonts */
-$fontDefault: "M PLUS Rounded 1c", sans-serif;
-$fontMono: "Roboto Mono", monospace;
+$fontDefault: "Poppins", sans-serif;
+$fontMono: "Poppins", sans-serif;
+//$fontDefault: 'Noto Sans JP', sans-serif;
+//$fontMono: 'Noto Sans JP', sans-serif;
+//$fontDefault: "M PLUS Rounded 1c", sans-serif;
+//$fontMono: "Roboto Mono", monospace;
 
 /* a standard drop shadow */
 $dropShadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.25);
