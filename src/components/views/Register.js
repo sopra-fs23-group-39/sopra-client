@@ -4,7 +4,7 @@ import User from 'models/User';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/Login.scss';
 import PropTypes from "prop-types";
-import {theme} from 'styles/mui/customMui';
+import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
@@ -66,9 +66,14 @@ const Register = props => {
 
     return (
         <ThemeProvider theme={theme}>
-        <Box color = "primary.main">
+        <Box className="box">
                 <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-username">Username</InputLabel>
+                    <InputLabel 
+                    htmlFor="outlined-username"
+                    sx={{ color: theme.palette.primary.light }}
+                    >
+                        Username
+                    </InputLabel>
                     <OutlinedInput
                         id="outlined-username"
                         label="Username"
@@ -80,15 +85,36 @@ const Register = props => {
                                 event.preventDefault();
                             }
                         }}
+                        sx={{
+                            '& fieldset': {
+                              borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                              color: theme.palette.primary.light,
+                            },
+                          }}
                     />
                 </FormControl>
                 <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                    <InputLabel
+                        htmlFor="outlined-adornment-password"
+                        sx={{ color: theme.palette.primary.light }}
+                    >
+                        Password
+                    </InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         value={password}
                         onChange={p => setPassword(p.target.value)}
+                        sx={{
+                            '& fieldset': {
+                              borderColor: theme.palette.primary.light,
+                            },
+                            '& input': {
+                              color: theme.palette.primary.light,
+                            },
+                          }}
                         endAdornment={
                         <InputAdornment position="end">
                             <IconButton
@@ -96,6 +122,7 @@ const Register = props => {
                             onClick={handleClickShowPassword}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
+                            sx={{ color: theme.palette.primary.light }}
                             >
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
@@ -114,11 +141,18 @@ const Register = props => {
                     <Button 
                         sx={{
                             margin: 1,
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.text,
+                            backgroundColor: theme.palette.primary.main,
+                            color: theme.palette.primary.text,
+                            opacity: !username || !password ? 0.5 : 1,
+                            "&:disabled": { 
+                                color: theme.palette.primary.text,
+                                backgroundColor: theme.palette.primary.main,
+                                opacity: 0.5
+                            }
                         }}
                         variant="contained"
                         width="100%"
+                        disabled={!username || !password}
                         onClick={() => doRegister()}
                         >
                         Register
@@ -126,8 +160,8 @@ const Register = props => {
                     <Button 
                         sx={{
                             margin: 1,
-                            color: theme.palette.secondary.main,
-                            borderColor: theme.palette.secondary.main
+                            color: theme.palette.primary.main,
+                            borderColor: theme.palette.primary.main
                         }}
                         variant="outlined"
                         width="100%"

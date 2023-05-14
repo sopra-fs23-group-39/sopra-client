@@ -1,7 +1,7 @@
 import Header from "components/views/Header";
 import AppRouter from "components/routing/routers/AppRouter";
 import { ThemeProvider } from "styled-components";
-import {theme} from "styles/mui/customMui";
+import theme from "styles/mui/customMui";
 
 /**
  * Happy coding!

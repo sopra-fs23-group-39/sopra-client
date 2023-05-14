@@ -1,39 +1,48 @@
-import { Box } from '@mui/material';
-import './Box.scss';
-import { createTheme} from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import * as colors from '@mui/material/colors';
 
 
-export const CustomBox = ({ children, ...props }) => (
-  <Box className="box custom" {...props}>
-    {children}
-  </Box>
-);
-
-export const CustomContainer = ({ children, ...props }) => (
-    <Box className="box" {...props}>
-      {children}
-    </Box>
-  );
-
-
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: colors.yellow[400],
-        main: colors.yellow[500],
-        dark: colors.orange,
-        contrastText: "#000" ,
-      },
-      secondary: {
-        light: colors.blue[400],
-        main: colors.blue[500],
-        dark: colors.blue[900],
-        contrastText: '#000',
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: colors.yellow[400],
+      main: colors.yellow[500],
+      dark: colors.orange[500],
+      contrastText: '#000',
+    },
+    secondary: {
+      light: colors.blue[400],
+      main: colors.blue[500],
+      dark: colors.blue[900],
+      contrastText: '#fff',
+      text: '#000',
+    },
+    tertiary: {
+        light:'#000',
+        main: '#000',
+        dark: '#000',
+        contrastText: '#fff',
+        text: '#fff',
+    },
+  },
+  /*components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          '--button-color': (props) => props.theme.palette.primary.main,
+          '--button-background': (props) => props.theme.palette.secondary.main,
+        },
       },
     },
-  });
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '--input-color': (props) => props.theme.palette.primary.main,
+          '--input-background': (props) => props.theme.palette.secondary.main,
+        },
+      },
+    },
+  },*/
+});
 
-export {theme};
-
+export default theme;
