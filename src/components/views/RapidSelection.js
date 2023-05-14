@@ -6,7 +6,7 @@ import "styles/views/Main.scss";
 import {useState} from "react";
 
 const GameSelection = () => {
-    const color = "#DEB522";
+    const color = "$accent";
     const history = useHistory();
     const [gameMode, setGameMode] = useState("MOVIE");
     const [QuestionAmount, setQuestionAmount] = useState(5)

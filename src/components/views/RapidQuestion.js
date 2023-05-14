@@ -8,7 +8,7 @@ import {api, handleError} from "../../helpers/api";
 
 const RapidQuestion = () => {
 
-    const color = "#DEB522";
+    const color = "$accent";
     const [question, setQuestion] = useState({});
     const [gameMode, setGameMode] = useState(null);
     const [disabled, setDisabled] = useState(false);
