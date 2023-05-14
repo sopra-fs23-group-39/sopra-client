@@ -13,7 +13,7 @@ const JoinGame = () => {
     const doJoin = async () => {
         try{
             const requestBody = JSON.stringify(localStorage.getItem('id'));
-            const response = await api.get(`game/{toJoinId}/settings`);
+            const response = await api.get(`game/${toJoinId}/settings`);
             if(response.data.isStarted === false){
                 await api.put(`/game/${toJoinId}`, requestBody);
                 history.push(`/game/${toJoinId}`);
