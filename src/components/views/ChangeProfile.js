@@ -7,7 +7,7 @@ import User from "../../models/User";
 import {Box} from '@mui/material';
 import {Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput, Typography} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
-import {theme} from 'styles/mui/customMui';
+import theme from 'styles/mui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
