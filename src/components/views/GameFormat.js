@@ -19,7 +19,7 @@ const GameFormat = () => {
             const response = await api.post('/game', requestBody);
             const gameId = response.data.gameId;
             if (gameFormat === "RAPID"){
-                history.push(`/gamerapid/${gameId}`)
+                history.push(`/rapid_selection`)
             }
             else{
                 history.push(`/game/${gameId}`);
