@@ -1,18 +1,31 @@
 import {api, handleError} from 'helpers/api';
-import {Button} from 'components/ui/Button';
-import BaseContainer from "../ui/BaseContainer";
+//import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import "styles/views/Main.scss";
 import {useState} from "react";
+import {Box, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput, Slider } from '@mui/material';
+import 'styles/mui/Box.scss';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import SplitButton from 'styles/mui/SplitButton';
+import theme from 'styles/mui/customMui';
+import { ThemeProvider} from '@mui/material/styles';
+import PrimaryButton from 'styles/mui/Button';
+import SecondaryButton from 'styles/mui/SecondaryButton';
 
 const GameSelection = () => {
-    const color = "$accent";
+    const optionsFormat = ["custom", "blitz", "rapid"];
+    const optionsTheme = ["SHOW", "MOVIE", "ACTOR", "TRAILER", "MIXED"]
     const history = useHistory();
+    const [questionAmount, setQuestionAmount] = useState(2);
+    const [timerValue, setTimerValue] = useState(5);
+    const color = "#DEB522";
     const [sliderValue, setSliderValue] = useState(5);
     const [gameMode, setGameMode] = useState("MOVIE");
-    const [timerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
-    const [gameFormat] = useState("CUSTOM");
+    const [gameFormat, setGameFormat] = useState('CUSTOM');
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption2, setSelectedOption2] = useState(null);
     const [buttonColors, setButtonColors] = useState({
         but1: color,
         but2: color,
@@ -21,7 +34,88 @@ const GameSelection = () => {
         but5: color
     });
 
+    const handleCustom = () => {
+        history.push('/game_custom');
+    };
+    
+    const handleRapid = async () => {
+        try {
+          setGameFormat('Rapid');
+          const hostId = localStorage.getItem('id');
+          const requestBody = JSON.stringify({
+            hostId,
+            gameMode,
+            questionAmount,
+            timer: timerValue,
+            gameFormat,
+          });
+          const response = await api.post('/game', requestBody);
+          const gameId = response.data.gameId;
+          history.push(`/rapid_selection/${gameId}`);
+        } catch (error) {
+          console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
+          console.error('Details:', error);
+          alert('Something went wrong while creating the game! See the console for details.');
+        }
+    };
+    
+    const handleBlitz = async () => {
+        try {
+          setGameFormat('Blitz');
+          const hostId = localStorage.getItem('id');
+          const requestBody = JSON.stringify({
+            hostId,
+            gameMode,
+            questionAmount,
+            timer: timerValue,
+            gameFormat,
+          });
+          const response = await api.post('/game', requestBody);
+          const gameId = response.data.gameId;
+          history.push(`/game/${gameId}`);
+        } catch (error) {
+          console.error(`Something went wrong while creating the game: \n${handleError(error)}`);
+          console.error('Details:', error);
+          alert('Something went wrong while creating the game! See the console for details.');
+        }
+    };
+  
+    const handleClickFormat = (selectedOption) => {
+          console.log('Selected option:', selectedOption);
+          if (selectedOption === 'blitz') {
+              handleBlitz();
+          } else if (selectedOption === 'rapid') {
+              handleRapid();
+          } else if (selectedOption === 'custom') {
+              handleCustom();
+          }
+    };
 
+ /*   const handleClickTheme = (selectedOption) => {
+            console.log('Selected option:', selectedOption);
+            if (selectedOption === 'tv show') {
+                handleMode("SHOW", "but1");
+            } else if (selectedOption === 'actors') {
+                handleMode("ACTOR", "but3");
+            } else if (selectedOption === 'movies') {
+                handleMode("MOVIE", "but2");
+            } else if (selectedOption === 'mixed') {
+                handleMode("MIXED", "but4");
+            };
+    };*/
+
+    const handleClickTheme = (selectedOption2) => {
+        console.log('Selected option:', selectedOption2);
+        if (selectedOption2 === 'tv show') {
+            setGameMode("SHOW");
+        } else if (selectedOption2 === 'actors') {
+            setGameMode("ACTOR");
+        } else if (selectedOption2 === 'movies') {
+            setGameMode("MOVIE");
+        } else if (selectedOption2 === 'mixed') {
+            setGameMode("MIXED");
+        };
+};
     const createGame = async (gameMode) => {
         try {
             console.log(gameMode)
@@ -42,15 +136,19 @@ const GameSelection = () => {
             console.error("Details:", error);
             alert("Something went wrong while creating the game! See the console for details.");
         }
-    }
+    };
 
     function handleMode(mode, buttonId) {
-        setDisabled(true);
+        //setDisabled(true);
         setGameMode(mode);
-        setButtonColors({
+        /*setButtonColors({
             ...buttonColors,
             [buttonId]: "yellow"
-        });
+        });*/
+    };
+
+    function handleFormat(format) {
+        setGameFormat(format);
     }
 
     const handleSliderChange = (event) => {
@@ -63,125 +161,68 @@ const GameSelection = () => {
 
 
     return (
-        <BaseContainer>
-            <div className="main container" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%"}}>
-                <div className="main form">
-                    <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
-                    <h3 style={{textAlign: "center", marginTop: 40}}>Game theme:</h3>
-                    <div className="Movie Trailers button-container">
-                        <Button
-                            disabled={disabled}
-                            width="100%"
-                            style={{marginTop: 10, backgroundColor: buttonColors.but1}}
-                            onClick={() => handleMode("SHOW", "but1")}
-                        >
-                            TV SERIES
-                        </Button>
-                    </div>
-                    <div className="Movie Posters button-container">
-                        <Button
-                            disabled={disabled}
-                            width="100%"
-                            style={{marginTop: 20, backgroundColor: buttonColors.but2}}
-                            onClick={() => handleMode("MOVIE", "but2")}
-                        >
-                            MOVIES
-                        </Button>
-                    </div>
-                    <div className="Actors button-container">
-                        <Button
-                            disabled={disabled}
-                            width="100%"
-                            style={{marginTop: 20, backgroundColor: buttonColors.but3}}
-                            onClick={() => handleMode("ACTOR", "but3")}
-                        >
-                            Actors
-                        </Button>
-                    </div>
-                    <div className="Movie trailer button-container">
-                        <Button
-                            disabled={disabled}
-                            width="100%"
-                            style={{marginTop: 20, backgroundColor: buttonColors.but4}}
-                            onClick={() => handleMode("TRAILER", "but4")}
-                        >
-                            Movie Trailers
-                        </Button>
-                    </div>
-                    <div className="mixed button-container">
-                        <Button
-                            disabled={disabled}
-                            width="100%"
-                            style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but5}}
-                            onClick={() => handleMode("MIXED", "but5")}
-                        >
-                            Mixed
-                        </Button>
-                    </div>
-                    <div className ="Slider">
-                        <div>
-                            <h3 style={{textAlign: "center", marginBottom: 0}}>Number of questions:</h3>
-                            <div style = {{display: 'flex', justifyContent: 'space-between'}}>
-                                <p>5</p>
-                                <p>20</p>
-                            </div>
-                            <div style = {{display: 'flex', justifyContent: 'center'}}>
-                                <output>{sliderValue}</output>
-                                <input
-                                    type ="range"
-                                    min = "5"
-                                    max = "20"
-                                    step = "1"
-                                    value = {sliderValue}
-                                    onChange = {handleSliderChange}
-                                    style = {{width : '100%'}}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className ="Time Selection Slider">
-                        <div>
-                            <h3 style={{textAlign: "center", marginTop: 10, marginBottom: 0}}>Timer (seconds per question):</h3>
-                            <div style = {{display: 'flex', justifyContent: 'space-between'}}>
-                                 <p>5s</p>
-                                 <p>60s</p>
-                            </div>
-                            <div style = {{display: 'flex', justifyContent: 'center'}}>
-                                <output>{timerValue}</output>
-                                <input
-                                    type ="range"
-                                    min = "5"
-                                    max = "60"
-                                    step = "5"
-                                    value = {timerValue}
-                                    onChange = {handleTimerChange}
-                                    style = {{width : '100%'}}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="Create Game button-container">
-                        <Button
-                            width="100%"
-                            style={{marginTop: 40}}
-                            onClick={() => createGame(gameMode)}
-                        >
-                            CREATE GAME
-                        </Button>
-                    </div>
-                    <div className="Back to main page button-container">
-                        <Button
-                            width="100%"
-                            style = {{marginTop:0}}
-                            onClick={() => history.push('/main')}
-                        >
-                            CANCEL
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        </BaseContainer>
+        <ThemeProvider theme={theme}>
+            <Box className="box" sx={{ textAlign: 'center'}}>
+                    <h3>Game format:</h3>
+                    <Box className="row">
+                        <PrimaryButton label="custom" onClick={() => handleCustom()}/>
+                        <PrimaryButton label="blitz" onClick={() => handleBlitz()}/>
+                        <PrimaryButton label="rapid" onClick={() => handleRapid()}/>
+                        {/*<SplitButton options={optionsFormat} handleClick={handleClickFormat}/>*/}
+                    </Box>
+                    <h3 class="center"> Game theme:</h3>
+                    <Box className="row">
+                        <PrimaryButton label="tv series" onClick={() => handleMode("SHOW", "but1")}/>
+                        <PrimaryButton label="movies" onClick={() => handleMode("MOVIE", "but2")}/>
+                        <PrimaryButton label="actors" onClick={() => handleMode("ACTOR", "but3")}/>
+                        <PrimaryButton label="trailer" onClick={() => handleMode("TRAILER", "but4")}/>
+                        <PrimaryButton label="mixed" onClick={() => handleMode("MIXED", "but5")}/>
+                        {/*<SplitButton options={optionsTheme} handleClick={handleClickTheme}/>*/}
+                    </Box>
+                <Box clasName="row">
+                    <h3>Number of questions:</h3>
+                    <Box className="row">
+                        <Slider 
+                            sx={{
+                                color: theme.palette.primary.main,
+                                maxWidth: 500
+                            }}
+                            aria-label='Questions'
+                            defaultValue={5}
+                            //getAriaValueText={valuetext}
+                            valueLabelDisplay='auto'
+                            step={1}
+                            marks
+                            min={5}
+                            max={20}
+                            onChange={handleSliderChange}
+                        />
+                    </Box>
+                </Box>
+                <h3>Timer (seconds per question):</h3>
+                <Box className="row">
+                    <Slider 
+                        sx={{
+                            color: theme.palette.primary.main,
+                            maxWidth: 500
+                        }}
+                        aria-label='Questions'
+                        defaultValue={5}
+                        //getAriaValueText={valuetext}
+                        valueLabelDisplay='auto'
+                        step={1}
+                        marks
+                        min={5}
+                        max={20}
+                        onChange={handleTimerChange}
+                    />
+                </Box>
+                <PrimaryButton label="create game" onClick={() => createGame(gameMode)} />
+                <SecondaryButton label="cancel" onClick={() => history.push('/main')} />
+            </Box>
+        </ThemeProvider>
     );
-}
+
+};
 
 export default GameSelection;
