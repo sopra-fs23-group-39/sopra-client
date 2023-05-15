@@ -74,7 +74,7 @@ const Profile = () => {
         <div>
             {isLoading ? <Spinner/> :
                 <ThemeProvider theme={theme}>
-                    <Box sx={{mt: 10, backgroundColor: 'rgba(0, 0, 0, 0.8)', width: '500px', pt: '20px'}}>
+                    <Box sx={{backgroundColor: 'rgba(0, 0, 0, 0.8)', width: '500px', pt: '20px'}}>
                         <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}>
                             Profile
                         </Typography>
@@ -112,10 +112,10 @@ const Profile = () => {
                             </Box>
                         </Box>
                         <Box color="primary"
-                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
+                             sx={{mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
                             <Box sx={{flexGrow: 1}}>
                                 <Typography variant="subtitle1" color={theme.palette.primary.light}>
-                                    Rank
+                                    Custom Rank
                                 </Typography>
                             </Box>
                             <Box sx={{flex: '0 0 auto'}}>
@@ -126,17 +126,19 @@ const Profile = () => {
                              sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
                             <Box sx={{flexGrow: 1}}>
                                 <Typography variant="subtitle1" color={theme.palette.primary.light}>
-                                    Total amount of Custom points </Typography>
+                                    Total amount of Custom points
+                                </Typography>
                             </Box>
                             <Box sx={{flex: '0 0 auto'}}>
                                 <CustomChip label={user.totalPointsAllGames} color={theme.palette.primary.light}/>
                             </Box>
                         </Box>
                         <Box color="primary"
-                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
+                             sx={{mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
                             <Box sx={{flexGrow: 1}}>
                                 <Typography variant="subtitle1" color={theme.palette.primary.light}>
-                                    Blitz Rank </Typography>
+                                    Blitz Rank
+                                </Typography>
                             </Box>
                             <Box sx={{flex: '0 0 auto'}}>
                                 <CustomChip label={user.blitzRank} color={theme.palette.primary.light}/>
@@ -146,10 +148,33 @@ const Profile = () => {
                              sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
                             <Box sx={{flexGrow: 1}}>
                                 <Typography variant="subtitle1" color={theme.palette.primary.light}>
-                                    Total amount of Blitz points </Typography>
+                                    Total amount of Blitz points
+                                </Typography>
                             </Box>
                             <Box sx={{flex: '0 0 auto'}}>
                                 <CustomChip label={user.totalBlitzPointsAllGames} color={theme.palette.primary.light}/>
+                            </Box>
+                        </Box>
+                        <Box color="primary"
+                             sx={{mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
+                            <Box sx={{flexGrow: 1}}>
+                                <Typography variant="subtitle1" color={theme.palette.primary.light}>
+                                    Rapid Rank
+                                </Typography>
+                            </Box>
+                            <Box sx={{flex: '0 0 auto'}}>
+                                <CustomChip label={user.rapidRank} color={theme.palette.primary.light}/>
+                            </Box>
+                        </Box>
+                        <Box color="primary"
+                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
+                            <Box sx={{flexGrow: 1}}>
+                                <Typography variant="subtitle1" color={theme.palette.primary.light}>
+                                    Total amount of Rapid points
+                                </Typography>
+                            </Box>
+                            <Box sx={{flex: '0 0 auto'}}>
+                                <CustomChip label={user.totalRapidPointsAllGames} color={theme.palette.primary.light}/>
                             </Box>
                         </Box>
                         <Box className="custom" color="primary">

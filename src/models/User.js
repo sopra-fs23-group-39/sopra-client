@@ -15,6 +15,8 @@ class User {
     this.currentPoints = null;
     this.totalBlitzPointsAllGames = null;
     this.blitzRank = null;
+    this.totalRapidPointsAllGames = null;
+    this.rapidRank = null;
     Object.assign(this, data);
   }
 }
