@@ -14,14 +14,14 @@
   justify-content: center;
   margin-top: 2em;
   //width: 30em;
-  //max-width: 30em;
+  max-width: auto;
   font-size: 16px;
   font-weight: 300;
   //padding-left: 37px;
   //padding-right: 37px;
   //border-radius: 0.75em;
   background-color: rgba(0, 0, 0, 0.8);
-  
+  color: white;
   transition: opacity 0.5s ease, transform 0.5s ease;
   box-shadow: $dropShadow;
 }
@@ -41,7 +41,20 @@
   //padding-left: 37px;
   //padding-right: 37px;
   //border-radius: 0.75em;
-  
+  text-align: center;
   transition: opacity 0.5s ease, transform 0.5s ease;
   //box-shadow: $dropShadow;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  max-width: auto;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
 }

@@ -8,12 +8,16 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 //import {doRegistration} from "Register.js"
 import { Box, TextField } from '@mui/material';
-import { Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
+import {Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
 import theme from 'styles/mui/customMui';
 import { ThemeProvider, useTheme } from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
+import PasswordInput from 'styles/mui/PasswordInput';
+import PrimaryButton from 'styles/mui/Button';
+import SecondaryButton from 'styles/mui/SecondaryButton';
+
 
 
 /*
@@ -52,13 +56,6 @@ const Login = props => {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => {
-        setShowPassword((show) => !show);
-    }
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      }
   
   const doLogin = async () => {
     try {
@@ -116,69 +113,14 @@ const Login = props => {
             }}
           />
         </FormControl>
-        <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
-          <InputLabel 
-            htmlFor="outlined-adornment-password"
-            sx={{ color: theme.palette.primary.light }}
-          >
-            Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            value={password}
-            onChange={p => setPassword(p.target.value)}
-            sx={{
-              '& fieldset': {
-                borderColor: theme.palette.primary.light,
-              },
-              '& input': {
-                color: theme.palette.primary.light,
-              },
-            }}
-            endAdornment={
-            <InputAdornment position="end">
-                <IconButton
-                aria-label="toggle password visibility"
-                onClick={handleClickShowPassword}
-                onMouseDown={handleMouseDownPassword}
-                edge="end"
-                sx={{ color: theme.palette.primary.light }}
-                >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-            </InputAdornment>
-            }
-              margin='dense'
-              label="Password"
-          />
-        </FormControl>
-        <Box className= "custom" color="primary">      
-          <Button 
-            sx={{
-              margin: 1,
-              color: theme.palette.primary.main
-            }}
-            width="100%"
-            onClick={() => doLogin()}
-            variant='contained'
-            sx={{margin: 1}}
-          >
-            Login
-          </Button>
-          <Button 
-              sx={{
-                margin: 1,
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main
-              }}
-              variant="outlined"
-              width="100%"
-              size='small'
-              onClick={() => goToRegistration()} 
-            >
-              Register
-          </Button>
+        <PasswordInput
+          label="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <Box className= "custom" color="primary">  
+          <PrimaryButton label="login" onClick={() => doLogin()} />
+          <SecondaryButton label="register" onClick={() => goToRegistration()} />
         </Box>
       </Box>
     </ThemeProvider>

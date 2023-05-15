@@ -12,6 +12,7 @@ import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import {Box, Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
+import { PrimaryButton, SecondaryButton } from 'styles/mui/Button';
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -134,7 +135,7 @@ const Register = props => {
                         label="Password"
                     />
                 </FormControl>
-                  <Box className= "custom" color="primary">      
+                  <Box className= "custom">      
                     <Button 
                         sx={{
                             margin: 1,

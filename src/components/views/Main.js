@@ -1,11 +1,14 @@
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
-import {Button} from 'components/ui/Button';
+//import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Main.scss";
 import React from 'react';
 import {useSelector} from "react-redux";
+import {Box, Button} from '@mui/material';
+import PrimaryButton from 'styles/mui/Button';
+import SecondaryButton from 'styles/mui/SecondaryButton';
 
 
 const Main = () => {
@@ -44,7 +47,16 @@ const Main = () => {
     }, [gameId]);
 
     return (
-        <BaseContainer>
+        <Box className="box">
+            <PrimaryButton label="create game" onClick={() => history.push('/game_selection')}/>
+            <PrimaryButton label="join game" onClick={() => history.push("/join")}/>
+            <PrimaryButton label="leaderboard" onClick={() => history.push("/leaderboard")}/>
+            <PrimaryButton label="profile" onClick={() => history.push("/profile/" + currentId)}/>
+            <Box className="row"  sx={{ marginTop: 5 }}>
+                <SecondaryButton label="logout" onClick={() => logout()}/>
+            </Box>
+        </Box>
+        /*<BaseContainer>
             <div className="main container">
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
@@ -52,7 +64,7 @@ const Main = () => {
                         <Button
                             width="100%"
                             style={{marginTop: 80}}
-                            onClick={() => history.push('/game_format')}
+                            onClick={() => history.push('/game_selection')}
                         >
                             Create Game
                         </Button>
@@ -95,7 +107,7 @@ const Main = () => {
                     </div>
                 </div>
             </div>
-        </BaseContainer>
+    </BaseContainer>*/
     );
 }
 

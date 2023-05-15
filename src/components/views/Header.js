@@ -2,6 +2,9 @@ import React from "react";
 import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
+import { yellow } from "@mui/material/colors";
+import {Box, ThemeProvider} from "@mui/material";
+import theme from "styles/mui/customMui";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -12,10 +15,17 @@ import "styles/views/Header.scss";
  * @FunctionalComponent
  */
 const Header = props => (
-  <div className="header container" style={{height: props.height}}>
-    <h1 className="header title">The Movie Monster</h1>
-    <ReactLogo width="60px" height="60px"/>
-  </div>
+  <ThemeProvider theme={theme}>
+    <div className="header container" style={{height: props.height}}>
+      <Box className="row">
+        <h1 className="header title">
+          <Box sx={{color: theme.palette.primary.main}}>The Movie Monster</Box>
+          <ReactLogo width="60px" height="60px"/>
+        </h1>
+        
+      </Box>
+    </div>
+  </ThemeProvider>
 );
 
 Header.propTypes = {

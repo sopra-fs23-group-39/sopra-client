@@ -5,7 +5,7 @@ import * as colors from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      light: colors.yellow[400],
+      light: colors.yellow[300],
       main: colors.yellow[500],
       dark: colors.orange[500],
       contrastText: '#000',
