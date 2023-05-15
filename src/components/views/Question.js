@@ -85,8 +85,8 @@ const Question = () => {
     };
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
         let questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
@@ -147,9 +147,9 @@ const Question = () => {
 
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
@@ -181,7 +181,7 @@ const Question = () => {
         setDisabled(true);
         setButtonColors({
             ...buttonColors,
-            [buttonId]: "yellow"
+            [buttonId]: theme.palette.primary.light
         });
 
         answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)

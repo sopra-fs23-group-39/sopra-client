@@ -42,8 +42,8 @@ const RapidQuestion = () => {
 
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
+        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
         const questionStompClient = Stomp.over(() => socket);
 
         questionStompClient.connect({}, () => {
@@ -102,9 +102,9 @@ const RapidQuestion = () => {
     },[gameDataFetched,hostConnected])*/
 
     useEffect(() => {
-        //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
+        const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
 
-        const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
+        //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
         client.connect({}, () => {
