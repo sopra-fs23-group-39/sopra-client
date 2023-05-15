@@ -11,8 +11,6 @@ function Standings() {
     const [totalRanking, setTotalRanking] = useState([]);
 
     const timeoutRef = useRef(null);
-    const [questionAmount, setQuestionAmount] = useState();
-    const [currentRound, setCurrentRound] = useState();
 
     useEffect(() => {
         async function fetchCurrentRanking() {
@@ -45,31 +43,6 @@ function Standings() {
         fetchTotalRanking();
 
     }, []);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-            const response = await api.get(`/game/${gameId}/settings`);
-            setQuestionAmount(response.data.questionAmount);
-            setCurrentRound(response.data.currentRound);
-            console.log(response.data.currentRound);
-            console.log(response.data.questionAmount);
-            /*console.log('request to:', response.request.responseURL);
-            console.log('status code:', response.status);
-            console.log('status text:', response.statusText);
-            console.log('requested data:', response.data);
-            console.log("Game settings:")
-            console.log(response);*/
-
-        } catch (error) {
-            console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
-            console.error("Details:", error);
-            alert("Something went wrong while fetching the game settings! See the console for details.");
-        }
-    }
-
-    fetchData();
-}, []);
 
     useEffect(async () => {
         try {

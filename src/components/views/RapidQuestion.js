@@ -213,21 +213,6 @@ const RapidQuestion = () => {
         };
     }, [gameDataFetched]);
 
-
-
-
-
-
-
-        // Clean up the timeout when the component unmounts
-
-
-
-    //This hook is to automatically route to the next page
-
-
-
-
     let imageDisplay = null;
 
     if (gameMode === "ACTOR" || gameMode === "MIXED"){

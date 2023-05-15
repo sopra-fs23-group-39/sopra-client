@@ -17,7 +17,8 @@ const GameSelection = () => {
         but1: color,
         but2: color,
         but3: color,
-        but4: color
+        but4: color,
+        but5: color
     });
 
 
@@ -101,7 +102,7 @@ const GameSelection = () => {
                         <Button
                             disabled={disabled}
                             width="100%"
-                            style={{marginTop: 20, backgroundColor: buttonColors.but3}}
+                            style={{marginTop: 20, backgroundColor: buttonColors.but4}}
                             onClick={() => handleMode("TRAILER", "but4")}
                         >
                             Movie Trailers
@@ -111,7 +112,7 @@ const GameSelection = () => {
                         <Button
                             disabled={disabled}
                             width="100%"
-                            style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but4}}
+                            style={{marginTop: 20, marginBottom: 20, backgroundColor: buttonColors.but5}}
                             onClick={() => handleMode("MIXED", "but5")}
                         >
                             Mixed

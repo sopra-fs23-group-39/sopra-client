@@ -4,7 +4,6 @@
   &.container {
     height: 850px;
     @include center;
-    background-image: url(https://repository-images.githubusercontent.com/265447788/6d3d5600-9a32-11ea-964c-d8a5aaecb919);
   }
   &.form {
     display: flex;
@@ -37,7 +36,7 @@
     height: 35px;
     padding-left: 15px;
     border: none;
-    //border-radius: $borderRadius;
+    border-radius: $borderRadius;
     background: transparentize(white, 0.85);
     color: $textColor;
     flex: 1;
