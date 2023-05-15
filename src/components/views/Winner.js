@@ -1,10 +1,11 @@
 import 'styles/views/Winner.scss';
 import {useHistory, useParams} from 'react-router-dom';
-import BaseContainer from 'components/ui/BaseContainer';
-import { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {api, handleError} from 'helpers/api';
 import {Button} from 'components/ui/Button';
-import {useSelector} from "react-redux";
+import {ThemeProvider} from "@mui/material/styles";
+import theme from "../../styles/mui/customMui";
+import {Box, Typography} from "@mui/material";
 
 
 const Winner = () => {
@@ -18,8 +19,6 @@ const Winner = () => {
             try {
                 const response = await api.get(`/game/${gameId}/winner`);
                 setWinner(response.data);
-                console.log("Fetched winner:");
-                console.log(response.data);
             } catch (error) {
                 alert(`Something went wrong while fetching the winner: \n${handleError(error)}`);
             }
@@ -36,30 +35,26 @@ const Winner = () => {
             alert(`Something went wrong during returning to Main page: \n${handleError(error)}`);
         }
     };
+
     return (
-        <BaseContainer>
-            <div className="winner container">
-                <div className="winner form">
-                    <div>
-                        {winner && (
-                            <h1>The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!</h1>
-                         )}
-                    </div>
-                    <div className="main button-container">
-                        <Button
-                          width="100%"
-                          style = {{marginTop: 550}}
-                          onClick={() => goToMain()}
-                        >
-                          Go to Main Page
-                        </Button>
-                    </div>
+        <ThemeProvider theme={theme}>
+            <Box sx={{mt: 10, backgroundColor: 'rgba(0, 0, 0, 0.8)', pt: '20px'}}>
+                <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}
+                            sx={{px: '20px'}}>
+                    The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!
+                </Typography>
+                <div className="main button-container">
+                    <Button
+                        width="80%"
+                        style={{marginTop: 350, marginBottom: 20}}
+                        onClick={() => goToMain()}
+                    >
+                        Go back to Main Page
+                    </Button>
                 </div>
-            </div>
-        </BaseContainer>
-    );
+            </Box>
+        </ThemeProvider>
+    )
 }
 
-
 export default Winner;
-

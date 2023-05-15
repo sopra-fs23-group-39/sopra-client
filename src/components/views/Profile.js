@@ -23,7 +23,7 @@ const Profile = () => {
             try {
                 const response = await api.get(`/users/${params.id}`);
                 setUser(response.data);
-                setIsLoading(false)
+                setIsLoading(false);
             } catch (error) {
                 alert("Something went wrong while fetching the user! See the console for details.");
             }

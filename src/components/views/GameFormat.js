@@ -9,7 +9,7 @@ const GameFormat = () => {
     const history = useHistory();
     const [gameMode] = useState("MIXED");
     const [TimerValue] = useState(5);
-    const [sliderValue] = useState(2);
+    const [sliderValue] = useState(5);
 
     async function selectGameFormat(gameFormat) {
         try {
