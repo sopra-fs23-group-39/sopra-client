@@ -20,7 +20,7 @@ const Main = () => {
 
     const logout = async () => {
         try {
-            await api.post('/users/logout', localStorage.getItem('id'))
+            await api.put('/users/logout', localStorage.getItem('id'))
             localStorage.removeItem('id');
             history.push('/login');
         } catch (error) {
