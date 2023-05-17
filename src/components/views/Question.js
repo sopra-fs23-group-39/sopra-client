@@ -144,7 +144,6 @@ const Question = () => {
 
     useEffect(() => {
         //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
-
         const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
         const client = Stomp.over(() => socket);
 
