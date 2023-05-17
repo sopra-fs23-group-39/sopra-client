@@ -16,7 +16,7 @@ import 'styles/mui/Button.scss';
 import PasswordInput from 'styles/mui/PasswordInput';
 import PrimaryButton from 'styles/mui/Button';
 import SecondaryButton from 'styles/mui/SecondaryButton';
-import theme from "../../styles/mui/customMui";
+import theme from 'styles/mui/customMui';
 
 
 

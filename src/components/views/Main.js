@@ -48,7 +48,7 @@ const Main = () => {
 
     return (
         <Box className="box">
-            <PrimaryButton label="create game" onClick={() => history.push('/game_selection')}/>
+            <PrimaryButton label="create game" onClick={() => history.push('/game_format')}/>
             <PrimaryButton label="join game" onClick={() => history.push("/join")}/>
             <PrimaryButton label="leaderboard" onClick={() => history.push("/leaderboard")}/>
             <PrimaryButton label="profile" onClick={() => history.push("/profile/" + currentId)}/>
