@@ -1,0 +1,11 @@
+@import 'styles/theme';
+
+.inspect {
+  display: none;
+  font-size: 12px;
+  color: gray;
+}
+
+.player:hover .inspect {
+  display: inline;
+}

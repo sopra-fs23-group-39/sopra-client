@@ -1,90 +1,155 @@
-import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
-import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Leaderboard.scss";
 import {api, handleError} from "../../helpers/api";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Player from "../ui/Player";
-import PropTypes from "prop-types";
+import theme from "../../styles/mui/customMui";
+import {Button, Box, Typography} from "@mui/material";
+import {ThemeProvider} from "@mui/material/styles";
+import {Spinner} from "../ui/Spinner";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import 'styles/mui/Box.scss';
+import 'styles/mui/Button.scss';
 
-const FormField = props => {
-    return (
-        <div className="dashboard field">
-            <label className="dashboard label">
-                {props.label}
-            </label>
-            <input
-                type={props.type}
-                className="dashboard input"
-                placeholder="enter here.."
-                disabled={props.disabled}
-                value={props.value}
-                onChange={e => props.onChange(e.target.value)}
-            />
-        </div>
-    );
-};
-
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    type: PropTypes.string,
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func
-};
 
 const Leaderboard = () => {
     const history = useHistory();
     const [users, setUsers] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [gameFormat, setGameFormat] = useState("CUSTOM");
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const response = await api.get('/users');
                 setUsers(response.data);
+                setIsLoading(false);
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
+
         fetchData();
     }, []);
 
-    let content = null;
-
-    if (users) {
+    const customLeaderboard = async () => {
         users.sort((a, b) => (a.userRank - b.userRank));
-        content = (
-            <div className="leaderboard">
-                <ul className="player-list">
-                    {users.map(user => (
-                        <Player user={user} key={user.id}/>
-                    ))}
-                </ul>
-            </div>
-        );
+        setGameFormat("CUSTOM")
+    };
+
+    const blitzLeaderboard = async () => {
+        users.sort((a, b) => (a.blitzRank - b.blitzRank));
+        setGameFormat("BLITZ")
     }
 
-    return (
-        <BaseContainer>
-            <div className="leaderboard container">
-                <div className="leaderboard form">
-                    <h1 style={{textAlign: "center"}}>Leaderboard</h1>
-                    {content}
-                    <div className="leaderboard button-container">
+    const rapidLeaderboard = async () => {
+        users.sort((a, b) => (a.rapidRank - b.rapidRank));
+        setGameFormat("RAPID")
+    }
+
+    return (<div>
+        {isLoading ? <Spinner/> : <ThemeProvider theme={theme}>
+            <Box sx={{mt: 10, backgroundColor: 'rgba(0, 0, 0, 0.8)', pt: '20px'}}>
+                <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}>
+                    Leaderboard
+                </Typography>
+                <Box
+                    sx={{
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', '& > *': {
+                            m: 1,
+                        },
+                    }}
+                >
+                    <ButtonGroup variant="text" aria-label="text button group"
+                                 sx={{mt: 2, '& button': {width: '100px'}}}>
                         <Button
-                            width="100%"
-                            style={{marginTop: 350}}
-                            onClick={() => history.push("/main")}
+                            onClick={() => customLeaderboard()}
                         >
-                            Back
+                            Custom
                         </Button>
-                    </div>
-                </div>
-            </div>
-        </BaseContainer>
-    );
+                        <Button
+                            onClick={() => blitzLeaderboard()}
+                        >
+                            Blitz
+                        </Button>
+                        <Button
+                            onClick={() => rapidLeaderboard()}
+                        >
+                            Rapid
+                        </Button>
+                    </ButtonGroup>
+                </Box>
+                <Box sx={{mt: 1, width: '100%', height: 400, marginRight: '2em', color: theme.palette.primary.light}}>
+                    <Typography variant="h6" align="center" gutterBottom color={theme.palette.primary.light}>
+                        {gameFormat}
+                    </Typography>
+                    <Typography>
+                        {<hr style={{
+                            width: '90%',
+                            marginLeft: '2em',
+                            borderTop: '0.2px',
+                            borderColor: theme.palette.primary.light
+                        }}/>}
+                    </Typography>
+                    <Box sx={{
+                        width: '90%',
+                        height: 400,
+                        minWidth: 670,
+                        color: theme.palette.primary.light,
+                        overflow: 'auto',
+                        marginRight: '2em',
+                        marginLeft: '2em',
+
+                        '&::-webkit-scrollbar': {
+                            width: '12px',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            backgroundColor: theme.palette.primary.light,
+                            borderRadius: '6px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            backgroundColor: 'transparent',
+                        },
+                    }}>
+                        <Typography variant="body1" align="left" gutterBottom sx={{mt: 2}}>
+                            {users.map(user => (<div key={user.id} style={{display: 'flex', alignItems: 'center'}}>
+                                <span style={{marginLeft: '2em', marginRight: '2em', minWidth: 300}}>
+        {gameFormat === 'CUSTOM' ? `Rank: ${user.userRank}` : gameFormat === 'BLITZ' ? `Rank: ${user.blitzRank}` : gameFormat === 'RAPID' ? `Rank: ${user.rapidRank}` : ''}
+                                </span>
+                                <Player
+                                    user={{
+                                        ...user,
+                                        username: user.username.length > 20 ? user.username.substring(0, 20) + '...' : user.username,
+                                    }}
+                                />
+                            </div>))}
+                        </Typography>
+                    </Box>
+                    <Typography align="left">
+                        {<hr style={{
+                            width: '90%',
+                            marginLeft: '2em',
+                            borderTop: '0.2px',
+                            borderColor: theme.palette.primary.light
+                        }}/>}
+                    </Typography>
+                </Box>); <Box className="custom" color="primary">
+                <Button
+                    sx={{
+                        mt: 5, mb: 3, color: theme.palette.primary.light,
+                    }}
+                    variant="outlined"
+                    width="100%"
+                    size='large'
+                    onClick={() => history.push("/main")}>
+                    Back
+                </Button>
+            </Box>
+            </Box>
+        </ThemeProvider>}
+    </div>)
 }
 
 export default Leaderboard;
