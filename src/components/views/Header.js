@@ -20,7 +20,6 @@ const Header = props => (
       <Box className="row">
         <h1 className="header title">
           <Box sx={{color: theme.palette.primary.main}}>The Movie Monster</Box>
-          <ReactLogo width="60px" height="60px"/>
         </h1>
         
       </Box>

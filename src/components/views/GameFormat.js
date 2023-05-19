@@ -7,7 +7,7 @@ import {useState} from "react";
 import { Box, Button } from '@mui/material';
 import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
-import PrimaryButton from 'styles/mui/Button';
+import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 
 
@@ -49,7 +49,7 @@ const GameFormat = () => {
         <ThemeProvider theme={theme}>
             <Box className="box" sx={{ textAlign: 'center'}}>
                 <h3 style={{textAlign: "center", marginTop: 40}}>Select a Game Mode:</h3>
-                <Box sx={{ mb: ['4%', '10%'] }}>
+                <Box className="row"/*sx={{ mb: ['4%', '10%'] }}*/>
                     <PrimaryButton label="custom" onClick={() => history.push("/game_selection")}/>
                     <PrimaryButton label="blitz" onClick={() => selectGameFormat("BLITZ")}/>
                     <PrimaryButton label="rapid" onClick={() => selectGameFormat("RAPID")}/>

@@ -11,12 +11,13 @@ import { Box, TextField } from '@mui/material';
 import {Button, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
 import { ThemeProvider, useTheme } from '@mui/material/styles';
-import 'styles/mui/Box.scss';
+
 import 'styles/mui/Button.scss';
 import PasswordInput from 'styles/mui/PasswordInput';
-import PrimaryButton from 'styles/mui/Button';
+import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 import theme from 'styles/mui/customMui';
+import "styles/mui/ResponsiveUI.scss";
 
 
 
@@ -118,10 +119,10 @@ const Login = props => {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
-        <Box className= "custom" color="primary">  
+        {/*<Box className= "custom" color="primary">  */}
           <PrimaryButton label="login" onClick={() => doLogin()} />
           <SecondaryButton label="register" onClick={() => goToRegistration()} />
-        </Box>
+        {/*</Box>*/}
       </Box>
     </ThemeProvider>
     /*<BaseContainer>
