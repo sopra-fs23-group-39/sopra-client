@@ -91,7 +91,7 @@ const Login = props => {
   return (
     <ThemeProvider theme={theme}>
       <Box className="box">
-        <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+        <FormControl sx={{ m: 1, display:"flex", width:"90%" }} variant="outlined">
           <InputLabel
             htmlFor="outlined-username"
             sx={{ color: theme.palette.primary.light }}

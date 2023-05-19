@@ -8,6 +8,12 @@ import SockJS from "sockjs-client";
 import {api, handleError} from "../../helpers/api";
 import {useDispatch} from "react-redux";
 import {setGameStompClient, setGameId} from "../../gameSlice";
+import PrimaryButton from 'styles/mui/PrimaryButton';
+import SecondaryButton from 'styles/mui/SecondaryButton';
+import theme from 'styles/mui/customMui';
+import "styles/mui/ResponsiveUI.scss";
+import { ThemeProvider} from '@mui/material/styles';
+import { Box, Typography } from '@mui/material';
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -92,7 +98,45 @@ const Game = () => {
 
   if (gameId) {
     content = (
-      <div className="game container">
+      <Box className="box">
+        <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1.5rem + 2vw)'}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
+             Waiting Room
+        </Typography>
+        <Box sx={{display: "flex", flexDirection: "row" }}>
+          <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
+            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
+              Game Settings:
+            </Typography>
+              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}}>
+                <p>Game ID: <span>{gameId}</span></p>
+                <p>Format: <span>{gameFormat}</span></p>
+                <p>Theme: <span>{gameMode}</span></p>
+                <p>Number of questions: <span>{questionAmount}</span></p>
+                <p>Time per question: <span>{timer}</span> seconds</p>
+              </Typography>
+          </Box>
+          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%"}}>
+            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}} >
+              Participants:
+            </Typography>
+              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+              {playerList ? (
+                    <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
+                      <p key={playerList[0].id}><span>Host:</span> {playerList[0].username}</p>
+                      {playerList.slice(1).map((player) => (
+                          <p key={player.id}><span>Player:</span> {player.username}</p>
+                      ))}
+                    </Box>
+                  ) : (
+                    <p>Loading player list...</p>
+                  )}
+              </Typography>
+          </Box>
+        </Box>
+        <PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>
+        <SecondaryButton label="quit" onClick={() => history.push('/main')}/>
+      </Box>
+      /*<div className="game container">
         <div className="game form">
           <div className="game elements">
             <h1 style={{textAlign: "center"}}> WAITING ROOM </h1>
@@ -141,7 +185,7 @@ const Game = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div>*/
     );
   }
 

@@ -7,7 +7,7 @@ export function PrimaryButton ({ label, onClick }) {
 
     return (
         <ThemeProvider theme={theme}>
-          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Button
               sx={{
                 margin: 1,

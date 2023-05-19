@@ -42,7 +42,7 @@ export default function SplitButton({ options, onSelect }) {
 
   return (
     <React.Fragment>
-      <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+      <ButtonGroup sx={{margin: 3, display: "flex", width: "100%"}} variant="contained" ref={anchorRef} aria-label="split button">
         <Button onClick={handleClick}>{selectedValue}</Button>
         <Button
           size="small"

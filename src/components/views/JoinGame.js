@@ -1,8 +1,13 @@
-import {Button} from 'components/ui/Button';
+//import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import "styles/views/JoinGame.scss";
 import {useState} from "react";
 import {api, handleError} from "../../helpers/api";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from 'styles/mui/customMui';
+import PrimaryButton from 'styles/mui/PrimaryButton';
+import SecondaryButton from 'styles/mui/SecondaryButton';
+import {Box, FormControl, InputLabel, OutlinedInput} from '@mui/material';
 
 
 const JoinGame = () => {
@@ -27,7 +32,41 @@ const JoinGame = () => {
     }
 
   return (
-    <div className="join container">
+    <ThemeProvider theme={theme}>
+      <Box className="box">
+        <Box>
+          <div>
+            To join a game, please enter its ID:
+          </div>
+        </Box>
+          <FormControl sx={{ m: 1, display:"flex", width:"90%" }} variant="outlined">
+            <InputLabel
+              htmlFor="outlined-join"
+              sx={{ color: theme.palette.primary.light }}
+            >
+                Game ID
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-join"
+              label="Game ID"
+              value={toJoinId}
+              onChange={(event) => setToJoinId(event.target.value)}
+              margin="dense"
+              sx={{
+                '& fieldset': {
+                  borderColor: theme.palette.primary.light,
+                },
+                '& input': {
+                  color: theme.palette.primary.light,
+                },
+              }}
+            />
+          </FormControl>
+          <PrimaryButton label="join game" onClick={() => doJoin()}/>
+          <SecondaryButton label="back" onClick={() => history.push("/main")}/>
+      </Box>
+    </ThemeProvider>
+    /*<div className="join container">
       <div className="join form">
         <div className="join elements">
           <h1 style={{textAlign: "center"}}>JOIN GAME</h1>
@@ -65,7 +104,7 @@ const JoinGame = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </div>*/
   );
 }
 

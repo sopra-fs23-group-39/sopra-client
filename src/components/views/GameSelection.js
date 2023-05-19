@@ -3,7 +3,7 @@ import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 //import "styles/views/Main.scss";
 import {useState} from "react";
-import {Box, Container, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput, Slider } from '@mui/material';
+import {Box, Slider } from '@mui/material';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import SplitButton from 'styles/mui/SplitButton';

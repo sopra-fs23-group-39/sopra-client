@@ -1,13 +1,21 @@
 import {api, handleError} from 'helpers/api';
-import {Button} from 'components/ui/Button';
+//import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
-import BaseContainer from "components/ui/BaseContainer";
-import "styles/views/Main.scss";
+//import BaseContainer from "components/ui/BaseContainer";
+//import "styles/views/Main.scss";
 import {useState} from "react";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from 'styles/mui/customMui';
+import {Box, Slider } from '@mui/material';
+import PrimaryButton from 'styles/mui/PrimaryButton';
+import SecondaryButton from 'styles/mui/SecondaryButton';
+import SplitButton from 'styles/mui/SplitButton';
+import "styles/mui/ResponsiveUI.scss";
 
 const GameSelection = () => {
     const color = "$accent";
     const history = useHistory();
+    const options = ["SHOW", "MOVIE", "ACTOR", "TRAILER", "MIXED"]
     const [gameMode, setGameMode] = useState("MOVIE");
     const [QuestionAmount, setQuestionAmount] = useState(5)
     const [timerValue, setTimerValue] = useState(5);
@@ -57,6 +65,10 @@ const GameSelection = () => {
         });
     }
 
+    const handleSplitButtonChange = (index) => {
+        setGameMode(options[index]);
+        handleMode(options[index], `but${index + 1}`);
+      };
 
     const handleTimerChange = (event) =>{
         setTimerValue(event.target.value);
@@ -64,7 +76,32 @@ const GameSelection = () => {
 
 
     return (
-        <BaseContainer>
+        <ThemeProvider theme={theme}>
+        <Box className="box">
+            <h3 className="center">Game theme:</h3>
+            <Box className="row">
+                <SplitButton options={options} onSelect={handleSplitButtonChange} selectedIndex={options.indexOf(gameMode)} />
+            </Box>
+            <h3>Timer (length of game):</h3>
+            <Box className="row">
+            <Slider
+                className="slider"
+                aria-label="Questions"
+                defaultValue={5}
+                //getAriaValueText={valuetext}
+                valueLabelDisplay="auto"
+                step={1}
+                marks
+                min={5}
+                max={60}
+                onChange={handleTimerChange}
+            />
+            </Box>
+            <PrimaryButton className="primary-button" label="create game" onClick={() => createGame(gameMode)} />
+            <SecondaryButton className="secondary-button" label="cancel" onClick={() => history.push('/main')} />
+        </Box>
+    </ThemeProvider>
+        /*<BaseContainer>
             <div className="main container" style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%"}}>
                 <div className="main form">
                     <h1 style={{textAlign: "center"}}>The Movie Monster</h1>
@@ -150,7 +187,7 @@ const GameSelection = () => {
                     </div>
                 </div>
             </div>
-        </BaseContainer>
+    </BaseContainer>*/
     );
 }
 

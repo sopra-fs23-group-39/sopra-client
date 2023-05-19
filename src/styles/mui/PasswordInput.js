@@ -20,7 +20,7 @@ export const PasswordInput = ({ label, value, onChange }) => {
   };
 
   return (
-    <FormControl sx={{ m: 1, width: '60ch' }} variant="outlined">
+    <FormControl sx={{ m: 1, width: '90%', display:"flex" }} variant="outlined">
       <InputLabel
         htmlFor="outlined-adornment-password"
         sx={{ color: 'primary.light' }}
