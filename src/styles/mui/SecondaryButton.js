@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 
@@ -8,9 +8,13 @@ import { ThemeProvider} from '@mui/material/styles';
 export function SecondaryButton ({ label, onClick}) {
   
     return (
-      <Button
+    <ThemeProvider theme={theme}>
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <Button
             sx={{
                 margin: 1,
+                minHeight: "30%",
+                minWidth: "25%",
                 color: theme.palette.primary.main,
                 border: `1px solid ${theme.palette.primary.main}`,
                 '&:hover': {
@@ -18,13 +22,14 @@ export function SecondaryButton ({ label, onClick}) {
                 color: theme.palette.primary.contrastText
                 },
             }}
-        variant="outlined"
-        maxWidth="100%"
-        onClick={onClick}
-        size='small'
-      >
-        {label}
-      </Button>
+          variant="outlined"
+          onClick={onClick}
+          size='small'
+        >
+          {label}
+        </Button>
+      </Box>
+    </ThemeProvider>
     );
 };
 

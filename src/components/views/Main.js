@@ -7,7 +7,7 @@ import "styles/views/Main.scss";
 import React from 'react';
 import {useSelector} from "react-redux";
 import {Box, Button} from '@mui/material';
-import PrimaryButton from 'styles/mui/Button';
+import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 
 

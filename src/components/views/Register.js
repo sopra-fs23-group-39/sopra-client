@@ -10,7 +10,7 @@ import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import {Box, Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
-import { PrimaryButton, SecondaryButton } from 'styles/mui/Button';
+import { PrimaryButton, SecondaryButton } from 'styles/mui/PrimaryButton';
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
