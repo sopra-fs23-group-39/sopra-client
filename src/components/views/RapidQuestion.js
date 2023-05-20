@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
 import 'styles/views/Question.scss';
-import {ButtonGroup,Button,Box,Typography} from '@mui/material';
+import {ButtonGroup,Button,Box,Typography,LinearProgress} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import theme from 'styles/mui/customMui';
@@ -39,6 +39,7 @@ const RapidQuestion = () => {
     const [hostConnected, setHostConnected] = useState(false);
     const [displayTimer, setDisplayTimer] = useState(60);
     const [questionStompClient, setQuestionStompClient] = useState(null);
+    const [timerMax, setTimerMax] = useState(50);
 
 
     useEffect(() => {
@@ -156,8 +157,9 @@ const RapidQuestion = () => {
                 setHostId(response.data.hostId);
                 console.log(response.data.timer);
                 console.log(timer);
-                setDisplayTimer(timer);
+                setDisplayTimer(response.data.timer);
                 setGameDataFetched(true);
+                setTimerMax(response.data.timer);
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
                 console.error(error);
@@ -168,6 +170,7 @@ const RapidQuestion = () => {
         fetchData();
     },[gameId]);
 
+    const normalise = (value) => ((timerMax-(value))*100)/timerMax;
 
 
     useEffect(()=>{
@@ -251,6 +254,7 @@ const RapidQuestion = () => {
                             <Typography variant="h5" align="center" gutterBottom color={theme.palette.primary.light}
                                 sx={{px:'20px'}}>
                                 QuestionTimer: {displayTimer}
+                                <LinearProgress variant="determinate" color="inherit" value={normalise(displayTimer)} />
                             </Typography>
                             {imageDisplay}
                             <div className="dashboard button-container">

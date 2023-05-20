@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss';
-import {ButtonGroup,Button,Box,Typography} from '@mui/material';
+import {ButtonGroup,Button,Box,Typography,LinearProgress} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import theme from 'styles/mui/customMui';
@@ -40,11 +40,14 @@ const Question = () => {
     const [hostId, setHostId] = useState(null);
     const [hostConnected, setHostConnected] = useState(false);
     const [displayTimer, setDisplayTimer] = useState(60);
+    const [timerMax, setTimerMax] = useState(60);
 
     const [playerState, setPlayerState] = useState(null);
     const [isMuted, setIsMuted] = useState(true);
     const playerRef = useRef(null);
 
+
+    const normalise = (value) => ((timerMax-(value))*100)/timerMax;
 
     const opts = {
         playerVars: {
@@ -198,9 +201,10 @@ const Question = () => {
                 const response = await api.get(`/game/${gameId}/settings`);
                 console.log(response.data)
                 setGameMode(response.data.gameMode)
-                setTimer(response.data.timer * 1000);
+                setTimer(response.data.timer * 1000 + 1);
                 setOtherTimer(response.data.timer * 1000);
                 setHostId(response.data.hostId);
+                setTimerMax(response.data.timer);
                 console.log(response.data.timer);
                 console.log(timer);
                 setGameDataFetched(true);
@@ -248,6 +252,7 @@ const Question = () => {
                 [correctButtonId]: "green"
             });
             setDisplayTimer(5);
+            setTimerMax(4);
         }, timer);
 
         return () => {
@@ -320,10 +325,6 @@ const Question = () => {
                 <Box sx={{backgroundColor: 'rgba(0, 0, 0, 0.8)', pt: '20px', p: '5px'}}>
                     {hostConnected ? (
                         <div>
-                            <Typography variant="h3" align="center" gutterBottom color={theme.palette.primary.light}
-                                sx={{px: '20px'}}>
-                                Question
-                            </Typography>
                             <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}
                                 sx={{px: '20px'}}>
                                 {question.questionText}
@@ -331,6 +332,7 @@ const Question = () => {
                             <Typography variant="h5" align="center" gutterBottom color={theme.palette.primary.light}
                                 sx={{px:'20px'}}>
                                 QuestionTimer: {displayTimer}
+                                <LinearProgress variant="determinate" color="inherit" value={normalise(displayTimer)} />
                             </Typography>
                             {imageDisplay}
                             {gameMode === "TRAILER" ? (
