@@ -66,9 +66,9 @@ const Game = () => {
 
     fetchData();
 
-    //const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
+    const socket = new SockJS(`http:localhost:8080/game/${gameId}`);
 
-    const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
+    //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
 
     const gameStompClient = Stomp.over(() => socket);
 
@@ -135,8 +135,8 @@ const Game = () => {
         </Box>
         {
           (!playerList || playerList[0].id != localStorage.getItem('id')) ? (
-              <PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>
-          ):(<PrimaryButton label="start game" onClick={() => startGame()} disabled = {true}/>)
+              <PrimaryButton label="start game" onClick={() => startGame()} disabled = {true}/>
+          ):(<PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>)
         }
 
 
