@@ -9,6 +9,7 @@ import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
+import "styles/mui/ResponsiveUI.scss";
 
 
 const GameFormat = () => {

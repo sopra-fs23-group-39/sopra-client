@@ -3,7 +3,7 @@ import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 //import "styles/views/Main.scss";
 import {useState} from "react";
-import {Box, Slider } from '@mui/material';
+import {Box, Slider, Typography } from '@mui/material';
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import SplitButton from 'styles/mui/SplitButton';
@@ -94,17 +94,16 @@ const GameSelection = () => {
     return (
         <ThemeProvider theme={theme}>
             <Box className="box">
-                <h3 className="center">Game theme:</h3>
+                <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Game theme:</Typography>
                 <Box className="row">
                     <SplitButton options={options} onSelect={handleSplitButtonChange} selectedIndex={options.indexOf(selectedOption)} />
                 </Box>
-                <h3>Number of questions:</h3>
+                <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Number of questions:</Typography>
                 <Box className="row">
                     <Slider
                     className="slider"
                     aria-label="Questions"
                     defaultValue={5}
-                    //getAriaValueText={valuetext}
                     valueLabelDisplay="auto"
                     step={1}
                     marks
@@ -113,7 +112,7 @@ const GameSelection = () => {
                     onChange={handleSliderChange}
                     />
                 </Box>
-                <h3>Timer (seconds per question):</h3>
+                <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Timer (seconds per question):</Typography>
                 <Box className="row">
                 <Slider
                     className="slider"
@@ -124,7 +123,7 @@ const GameSelection = () => {
                     step={1}
                     marks
                     min={5}
-                    max={20}
+                    max={60}
                     onChange={handleTimerChange}
                 />
                 </Box>

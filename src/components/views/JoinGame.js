@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from 'styles/mui/customMui';
 import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
-import {Box, FormControl, InputLabel, OutlinedInput} from '@mui/material';
+import {Box, FormControl, InputLabel, OutlinedInput, Typography} from '@mui/material';
 
 
 const JoinGame = () => {
@@ -35,11 +35,11 @@ const JoinGame = () => {
     <ThemeProvider theme={theme}>
       <Box className="box">
         <Box>
-          <div>
+          <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}}>
             To join a game, please enter its ID:
-          </div>
+          </Typography>
         </Box>
-          <FormControl sx={{ m: 1, display:"flex", width:"90%" }} variant="outlined">
+          <FormControl sx={{ m: 1, display:"flex", width:"30%" }} variant="outlined">
             <InputLabel
               htmlFor="outlined-join"
               sx={{ color: theme.palette.primary.light }}
@@ -62,7 +62,7 @@ const JoinGame = () => {
               }}
             />
           </FormControl>
-          <PrimaryButton label="join game" onClick={() => doJoin()}/>
+          <PrimaryButton label="join game" onClick={() => doJoin()} disabled={!toJoinId}/>
           <SecondaryButton label="back" onClick={() => history.push("/main")}/>
       </Box>
     </ThemeProvider>
