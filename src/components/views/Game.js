@@ -87,9 +87,8 @@ const Game = () => {
         console.log("host id" + playerList[0].id);
         console.log(localStorage.getItem("id"));
       })
-      console.log("before sending CONNECT");
       gameStompClient.send(`/app/game/${gameId}`, {}, "SUBSCRIBE");
-      console.log("after sending CONNECT");
+
     });
 
   }, [dispatch, gameId]);
