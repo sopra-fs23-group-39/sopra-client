@@ -133,7 +133,13 @@ const Game = () => {
               </Typography>
           </Box>
         </Box>
-        <PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>
+        {
+          (!playerList || playerList[0].id != localStorage.getItem('id')) ? (
+              <PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>
+          ):(<PrimaryButton label="start game" onClick={() => startGame()} disabled = {true}/>)
+        }
+
+
         <SecondaryButton label="quit" onClick={() => history.push('/main')}/>
       </Box>
       /*<div className="game container">
