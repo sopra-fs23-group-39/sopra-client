@@ -70,6 +70,10 @@ const GameFormat = () => {
                        <div>
                          Single Player mode. One Player has to guess as fast as possible in a limited amount of time.
                        </div>
+                       <h3>WARNING:</h3>
+                       <div>
+                           Refreshing or closing the page during the game will cause you to be removed from the game!
+                       </div>
                      </div>
                      
                 )}

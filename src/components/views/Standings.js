@@ -71,6 +71,10 @@ function Standings() {
         // };
     }, [history, gameId]);
 
+    window.addEventListener('beforeunload', (event) => {
+        history.push(`/main`);
+    })
+
     return (
         <ThemeProvider theme={theme}>
             <Box className= "box">

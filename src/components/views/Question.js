@@ -275,6 +275,9 @@ const Question = () => {
         };
     },[hostConnected])
 
+    window.addEventListener('beforeunload', (event) => {
+        history.push(`/main`);
+    })
 
 
 
