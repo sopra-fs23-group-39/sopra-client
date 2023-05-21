@@ -120,7 +120,7 @@ const Login = props => {
           onChange={(event) => setPassword(event.target.value)}
         />
         {/*<Box className= "custom" color="primary">  */}
-          <PrimaryButton label="login" onClick={() => doLogin()} />
+          <PrimaryButton label="login" disabled={!username || !password} onClick={() => doLogin()} />
           <SecondaryButton label="register" onClick={() => goToRegistration()} />
         {/*</Box>*/}
       </Box>

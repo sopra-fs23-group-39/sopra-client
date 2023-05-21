@@ -7,7 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from 'styles/mui/customMui';
 import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
-import {Box, FormControl, InputLabel, OutlinedInput} from '@mui/material';
+import {Box, FormControl, InputLabel, OutlinedInput, Typography} from '@mui/material';
 
 
 const JoinGame = () => {
@@ -19,13 +19,17 @@ const JoinGame = () => {
             const requestBody = JSON.stringify(localStorage.getItem('id'));
             const response = await api.get(`game/${toJoinId}/settings`);
             if(response.data.isStarted === false){
-                await api.put(`/game/${toJoinId}`, requestBody);
-                history.push(`/game/${toJoinId}`);
+                const playerList = response.data.players;
+                if(response.data.players.find(player => player.id == localStorage.getItem('id'))){
+                    alert(`You can't join a game that you're already in.`)
+                } else {
+                    await api.put(`/game/${toJoinId}`, requestBody);
+                    history.push(`/game/${toJoinId}`);
+                }
             }
             else{
                 alert(`Game has already started`);
             }
-
         } catch (error) {
             alert(`Something went wrong trying to join the game: \n${handleError(error)}`);
         }
@@ -35,11 +39,11 @@ const JoinGame = () => {
     <ThemeProvider theme={theme}>
       <Box className="box">
         <Box>
-          <div>
+          <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}}>
             To join a game, please enter its ID:
-          </div>
+          </Typography>
         </Box>
-          <FormControl sx={{ m: 1, display:"flex", width:"90%" }} variant="outlined">
+          <FormControl sx={{ m: 1, display:"flex", width:"30%" }} variant="outlined">
             <InputLabel
               htmlFor="outlined-join"
               sx={{ color: theme.palette.primary.light }}
@@ -62,7 +66,7 @@ const JoinGame = () => {
               }}
             />
           </FormControl>
-          <PrimaryButton label="join game" onClick={() => doJoin()}/>
+          <PrimaryButton label="join game" onClick={() => doJoin()} disabled={!toJoinId}/>
           <SecondaryButton label="back" onClick={() => history.push("/main")}/>
       </Box>
     </ThemeProvider>

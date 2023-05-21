@@ -9,6 +9,7 @@ import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
+import "styles/mui/ResponsiveUI.scss";
 
 
 const GameFormat = () => {
@@ -69,6 +70,10 @@ const GameFormat = () => {
                        <h3>Rapid:</h3>
                        <div>
                          Single Player mode. One Player has to guess as fast as possible in a limited amount of time.
+                       </div>
+                       <h3>WARNING:</h3>
+                       <div>
+                           Refreshing or closing the page during the game will cause you to be removed from the game!
                        </div>
                      </div>
                      
