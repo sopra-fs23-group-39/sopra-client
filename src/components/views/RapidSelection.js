@@ -15,12 +15,12 @@ import "styles/mui/ResponsiveUI.scss";
 const GameSelection = () => {
     const color = "$accent";
     const history = useHistory();
-    const options = ["SHOW", "MOVIE", "ACTOR", "TRAILER", "MIXED"]
+    const options = ["SHOW", "MOVIE", "ACTOR", "MIXED"]
     const [gameMode, setGameMode] = useState("MOVIE");
-    const [QuestionAmount, setQuestionAmount] = useState(5)
+    const [QuestionAmount, setQuestionAmount] = useState(100)
     const [timerValue, setTimerValue] = useState(5);
     const [disabled, setDisabled] = useState(false);
-    const [gameFormat,setGameFormat] = useState("CUSTOM");
+    const [gameFormat,setGameFormat] = useState("RAPID");
     const [buttonColors, setButtonColors] = useState({
         but1: color,
         but2: color,
@@ -33,7 +33,6 @@ const GameSelection = () => {
         try {
             console.log(gameMode)
             const hostId = localStorage.getItem('id');
-            setGameFormat('Rapid')
             console.log(hostId);
             setQuestionAmount(5)
             console.log('Before API call')
