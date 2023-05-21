@@ -120,7 +120,7 @@ const GameSelection = () => {
                     defaultValue={5}
                     //getAriaValueText={valuetext}
                     valueLabelDisplay="auto"
-                    step={1}
+                    step={5}
                     marks
                     min={5}
                     max={60}

@@ -6,6 +6,13 @@ import BaseContainer from "components/ui/BaseContainer";
 import PropTypes from "prop-types";
 import "styles/views/Game.scss";
 import {api, handleError} from "../../helpers/api";
+import PrimaryButton from 'styles/mui/PrimaryButton';
+import SecondaryButton from 'styles/mui/SecondaryButton';
+import theme from 'styles/mui/customMui';
+import "styles/mui/ResponsiveUI.scss";
+import { ThemeProvider} from '@mui/material/styles';
+import { Box, Typography } from '@mui/material';
+
 
 const Player = ({user}) => (
     <div className="player container">
@@ -32,6 +39,7 @@ const RapidGame = () => {
     const [timer, setTimer] = useState(null);
     //const [gameStompClient, setGameStompClientLocal] = useState(null)
     const [disabled, setDisabled] = useState(false);
+    const [gameFormat, setGameFormat] = useState(null);
 
     // define a state variable (using the state hook).
     // if this variable changes, the component will re-render, but the variable will
@@ -58,6 +66,7 @@ const RapidGame = () => {
                 setGameMode(response.data.gameMode)
                 setAmountOfQuestions(response.data.questionAmount)
                 setTimer(response.data.timer)
+                setGameFormat(response.data.gameFormat)
             } catch (error) {
                 console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
                 console.error(error);
@@ -72,44 +81,35 @@ const RapidGame = () => {
 
     if (gameId) {
         content = (
-            <div className="game container">
-                <div className="game form">
-                <h2> Waiting Room </h2>
-                <div>Game ID: {gameId}
-                    <div>Theme: {gameMode}</div>
-                    <div>Game time: {timer}</div>
-                </div>
-                {/*<div>
-                     <h2>Player:</h2>
-                </div>*/}
-                <Button
-                    width="100%"
-                    onClick={() => startGame()}
-                    //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-                    //style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
-                    style = {{marginTop:20}}
-                    disabled = {disabled}
-                >
-                    Start Game
-                </Button>
-                <Button
-                    width="100%"
-                    style={{marginTop: 20}}
-                    onClick={() => history.push('/main')}
-                >
-                    Quit
-                </Button>
-            </div>
-        </div>
+          <Box className="box">
+            <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1.5rem + 2vw)'}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
+                 Waiting Room
+            </Typography>
+            <Box sx={{display: "flex", flexDirection: "row" }}>
+              <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
+                <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
+                  Game Settings:
+                </Typography>
+                  <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}}>
+                    <p>Game ID: <span>{gameId}</span></p>
+                    <p>Format: <span>{gameFormat}</span></p>
+                    <p>Theme: <span>{gameMode}</span></p>
+                    <p>GameTime: <span>{timer}</span> seconds</p>
+                  </Typography>
+              </Box>
+            </Box>
+            <PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>
+            <SecondaryButton label="quit" onClick={() => history.push('/main')}/>
+          </Box>
         );
-    }
+      }
 
-    return (
-        <BaseContainer>
+      return (
+        <div>
             {content}
-        </BaseContainer>
-    );
-}
+        </div>
+      );
+    }
 
 export default RapidGame;
 
