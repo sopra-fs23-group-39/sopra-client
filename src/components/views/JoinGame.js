@@ -19,13 +19,17 @@ const JoinGame = () => {
             const requestBody = JSON.stringify(localStorage.getItem('id'));
             const response = await api.get(`game/${toJoinId}/settings`);
             if(response.data.isStarted === false){
-                await api.put(`/game/${toJoinId}`, requestBody);
-                history.push(`/game/${toJoinId}`);
+                const playerList = response.data.players;
+                if(response.data.players.find(player => player.id == localStorage.getItem('id'))){
+                    alert(`You can't join a game that you're already in.`)
+                } else {
+                    await api.put(`/game/${toJoinId}`, requestBody);
+                    history.push(`/game/${toJoinId}`);
+                }
             }
             else{
                 alert(`Game has already started`);
             }
-
         } catch (error) {
             alert(`Something went wrong trying to join the game: \n${handleError(error)}`);
         }
