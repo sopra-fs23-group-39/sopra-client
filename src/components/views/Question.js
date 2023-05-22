@@ -12,6 +12,7 @@ import {api, handleError} from "../../helpers/api";
 import {host} from "sockjs-client/lib/location";
 import "styles/views/VideoPlayer.scss";
 import YouTube from "react-youtube";
+import PrimaryButton from 'styles/mui/PrimaryButton';
 
 const Question = () => {
 
@@ -26,6 +27,7 @@ const Question = () => {
     but3: color,
     but4: color
   });
+  const[buttonOpacity, setButtonOpacity]=useState(1);
   const {gameId} = useParams();
   const history = useHistory();
   const timeoutRef = useRef(null);
@@ -151,9 +153,13 @@ const Question = () => {
     });
     setDisabled(true);
     setButtonColors({
-      ...buttonColors,
-      [buttonId]: "yellow"
+      but1: "yellow",
+      but2: "yellow",
+      but3: "yellow",
+      but4: "yellow",
+      //[buttonId]: "blue"
     });
+    setButtonOpacity(0.5);
 
     answerStompClient.send(`/app/game/${gameId}/answer`, header, answerToSend)
     console.log("Answer is sent, object inside handleClick:");
@@ -173,6 +179,7 @@ const Question = () => {
         console.log(response.data.timer);
         console.log(timer);
         setGameDataFetched(true);
+        setButtonOpacity(1);
       } catch (error) {
         console.error(`Something went wrong while fetching the game settings: \n${handleError(error)}`);
         console.error(error);
@@ -205,15 +212,22 @@ const Question = () => {
       console.log(chosenButtonId);
       if(chosenButtonId == null) {
         setButtonColors({
-          ...buttonColors,
+          but1: "yellow",
+          but2: "yellow",
+          but3: "yellow",
+          but4: "yellow",
           [correctButtonId]: "green"
         });
       }
       setButtonColors({
-        ...buttonColors,
+        but1: "yellow",
+        but2: "yellow",
+        but3: "yellow",
+        but4: "yellow",
         [chosenButtonId.current]: "red",
         [correctButtonId]: "green"
       });
+      setButtonOpacity(0.5);
       setDisplayTimer(5);
       setTimerMax(4);
     }, timer);
@@ -316,7 +330,9 @@ const Question = () => {
                     sx={{
                       mb: 2,
                       color: theme.palette.primary.light,
-                      backgroundColor: buttonColors.but1}}
+                      backgroundColor: buttonColors.but1,
+                      opacity: chosenButtonId != "but1" ? buttonOpacity : 1
+                      }}
                     variant="outlined"
                     disabled={disabled}
                     onClick={() => handleClick(question.answer1, 'but1')}
@@ -328,6 +344,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but2,
+                      opacity: chosenButtonId != "but2" ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
@@ -342,6 +359,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but3,
+                      opacity: chosenButtonId != "but3" ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
@@ -354,6 +372,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but4,
+                      opacity: chosenButtonId != 'but4' ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
