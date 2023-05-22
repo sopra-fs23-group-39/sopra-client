@@ -3,7 +3,7 @@ import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
 import 'styles/views/Question.scss';
-import {ButtonGroup,Button,Box,Typography,LinearProgress} from '@mui/material';
+import {ButtonGroup,Button,Box,Typography,LinearProgress,Grid} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import theme from 'styles/mui/customMui';
@@ -239,94 +239,110 @@ const RapidQuestion = () => {
 
     return (
         <div>
-            <ThemeProvider theme={theme}>
-                <Box sx={{backgroundColor: 'rgba(0, 0, 0, 0.8)', pt: '20px', p: '5px'}}>
-                    {hostConnected ? (
-                        <div>
-                            <Typography variant="h3" align="center" gutterBottom color={theme.palette.primary.light}
-                                sx={{px: '20px'}}>
-                                Question
-                            </Typography>
-                            <Typography variant="h4" align="center" gutterBottom color={theme.palette.primary.light}
-                                sx={{px: '20px'}}>
-                                {question.questionText}
-                            </Typography>
-                            <Typography variant="h5" align="center" gutterBottom color={theme.palette.primary.light}
-                                sx={{px:'20px'}}>
-                                QuestionTimer: {displayTimer}
-                                <LinearProgress variant="determinate" color="inherit" value={normalise(displayTimer)} />
-                            </Typography>
-                            {imageDisplay}
-                            <div className="dashboard button-container">
-                                {/*<Button*/}
-                                {/*    style={{marginTop: 10}}*/}
-                                {/*    disabled={true}*/}
-                                {/*    >*/}
-                                {/*    {question.correctAnswer}*/}
-                                {/*</Button>*/}
-                                <ButtonGroup
-                                    fullWidth
-                                    color = 'inherit'
-                                    >
-                                    <Button
-                                        sx={{
-                                            mb: 2,
-                                            color: theme.palette.primary.light,
-                                            backgroundColor: buttonColors.but1
-                                        }}
-                                        variant="outlined"
-                                        disabled={disabled}
-                                        onClick={() => handleClick(question.answer1, "but1")}
-                                    >
-                                        {question.answer1}
-                                    </Button>
-                                    <Button
-                                        sx={{
-                                            mb: 2,
-                                            color: theme.palette.primary.light,
-                                            backgroundColor: buttonColors.but2
-                                        }}
-                                        variant="outlined"
-                                        disabled={disabled}
-                                        onClick={() => handleClick(question.answer2, "but2")}
-                                    >
-                                        {question.answer2}
-                                    </Button>
-                                </ButtonGroup>
-                                <ButtonGroup
-                                    fullWidth
-                                    color = 'inherit'>
-                                    <Button
-                                        sx={{
-                                            mb: 2,
-                                            color: theme.palette.primary.light,
-                                            backgroundColor: buttonColors.but3
-                                        }}
-                                        variant="outlined"
-                                        disabled={disabled}
-                                        onClick={() => handleClick(question.answer3, "but3")}
-                                    >
-                                        {question.answer3}
-                                    </Button>
-                                    <Button
-                                        sx={{
-                                            mb: 2,
-                                            color: theme.palette.primary.light,
-                                            backgroundColor: buttonColors.but4
-                                        }}
-                                        variant="outlined"
-                                        disabled={disabled}
-                                        onClick={() => handleClick(question.answer4, "but4")}
-                                    >
-                                        {question.answer4}
-                                    </Button>
-                                </ButtonGroup>
-                            </div>
-                        </div>) : (<h1 style={{textAlign: "center", color: color, marginBottom: 10}}> Waiting for players...</h1>)}
-                </Box>
+          <ThemeProvider theme={theme}>
+            <Box
+              sx={{ backgroundColor: 'rgba(0, 0, 0, 0.8)',pt: '5%',p:'2%',pb:'2%', width: '100%'}}
+            > {hostConnected ? (
+              <div>
+                <Typography
+                  variant="h4"
+                  align="center"
+                  gutterBottom color={theme.palette.primary.light}
+                  sx={{ px: ['10px', '20px'] }}>
+                  {question.questionText}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  align="center"
+                  gutterBottom
+                  color={theme.palette.primary.light}
+                  sx={{px: ['10px', '20px'],}}
+                >
+                  QuestionTimer: {displayTimer}
+                  <LinearProgress
+                    variant="determinate"
+                    color="inherit"
+                    value={normalise(displayTimer)}
+                  />
+                </Typography>
+                {imageDisplay}
+                  <div className="dashboard button-container">
+                    <Grid container spacing={2} color="inherit">
+                      <Grid item xs={6}><Button
+                        sx={{
+                          width : "100%",
+                          height: "100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but1,
+                          }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer1, 'but1')}
+                      >
+                        {question.answer1}
+                      </Button></Grid>
+                      <Grid item xs={6}><Button
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but2,
+                        }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer2, 'but2')}
+                      >
+                        {question.answer2}
+                      </Button></Grid>
+                    </Grid>
+                    <Grid container spacing={2} color="inherit">
+                      <Grid item xs={6}>
+                        <Button
+                            sx={{
+                              width: "100%",
+                              height: "100%",
+                              color: theme.palette.primary.light,
+                              backgroundColor: buttonColors.but3,
+                            }}
+                            variant="outlined"
+                            disabled={disabled}
+                            onClick={() => handleClick(question.answer3, 'but3')}
+                          >
+                            {question.answer3}
+                        </Button>
+                      </Grid>
+                      <Grid item xs={6}>
+                          <Button
+                            sx={{
+                              width:"100%",
+                              height:"100%",
+                              color: theme.palette.primary.light,
+                              backgroundColor: buttonColors.but4,
+                            }}
+                            variant="outlined"
+                            disabled={disabled}
+                            onClick={() => handleClick(question.answer4, 'but4')}
+                          >
+                            {question.answer4}
+                          </Button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                </div>
+              ) : (
+                <h1 style={{
+                  textAlign: 'center',
+                  color: color,
+                  marginBottom: '10px',
+                }}
+                >
+                  Waiting for players...
+                </h1>
+              )}
+              </Box>
             </ThemeProvider>
-        </div>
-    );
+          </div>
+      );
 }
 
 export default RapidQuestion;
