@@ -24,13 +24,13 @@ const Leaderboard = () => {
                 const response = await api.get('/users');
                 setUsers(response.data);
                 setIsLoading(false);
+                customLeaderboard();
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
-
         fetchData();
     }, []);
 
@@ -113,15 +113,29 @@ const Leaderboard = () => {
                             backgroundColor: 'transparent',
                         },
                     }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Typography style={{ marginLeft: '2em', fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                                Rank
+                            </Typography>
+                            <Typography style={{ fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                                Points
+                            </Typography>
+                            <Typography style={{ fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                                Username
+                            </Typography>
+                        </div>
                         <Typography variant="body1" align="left" gutterBottom sx={{mt: 2}}>
                             {users.map(user => (<div key={user.id} style={{display: 'flex', alignItems: 'center'}}>
-                                <span style={{marginLeft: '2em', marginRight: '2em', minWidth: 300}}>
-        {gameFormat === 'CUSTOM' ? `Rank: ${user.userRank}` : gameFormat === 'BLITZ' ? `Rank: ${user.blitzRank}` : gameFormat === 'RAPID' ? `Rank: ${user.rapidRank}` : ''}
+                                <span style={{marginLeft: '2em', minWidth: 155}}>
+        {gameFormat === 'CUSTOM' ? `${user.userRank}` : gameFormat === 'BLITZ' ? `${user.blitzRank}` : gameFormat === 'RAPID' ? `${user.rapidRank}` : ''}
+                                </span>
+                                <span style={{minWidth: 155}}>
+        {gameFormat === 'CUSTOM' ? `${user.totalPointsAllGames}` : gameFormat === 'BLITZ' ? `${user.totalBlitzPointsAllGames}` : gameFormat === 'RAPID' ? `${user.totalRapidPointsAllGames}` : ''}
                                 </span>
                                 <Player
                                     user={{
                                         ...user,
-                                        username: user.username.length > 20 ? user.username.substring(0, 20) + '...' : user.username,
+                                        username: user.username.length > 20 ? user.username.substring(0, 24) + '...' : user.username,
                                     }}
                                 />
                             </div>))}
