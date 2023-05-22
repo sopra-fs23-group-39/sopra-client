@@ -22,17 +22,20 @@ const Leaderboard = () => {
         async function fetchData() {
             try {
                 const response = await api.get('/users');
-                setUsers(response.data);
+                const fetchedUsers = response.data;
+                setUsers(fetchedUsers.sort((a, b) => a.userRank - b.userRank));
                 setIsLoading(false);
-                customLeaderboard();
             } catch (error) {
                 console.error(`Something went wrong while fetching the users: \n${handleError(error)}`);
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the users! See the console for details.");
             }
         }
+
         fetchData();
+
     }, []);
+
 
     const customLeaderboard = async () => {
         users.sort((a, b) => (a.userRank - b.userRank));
@@ -48,6 +51,7 @@ const Leaderboard = () => {
         users.sort((a, b) => (a.rapidRank - b.rapidRank));
         setGameFormat("RAPID")
     }
+
 
     return (<div>
         {isLoading ? <Spinner/> : <ThemeProvider theme={theme}>
@@ -113,14 +117,17 @@ const Leaderboard = () => {
                             backgroundColor: 'transparent',
                         },
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography style={{ marginLeft: '2em', fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <Typography style={{marginLeft: '2em', fontWeight: 'bold', minWidth: 155}} variant="body1"
+                                        color={theme.palette.primary.light}>
                                 Rank
                             </Typography>
-                            <Typography style={{ fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                            <Typography style={{fontWeight: 'bold', minWidth: 155}} variant="body1"
+                                        color={theme.palette.primary.light}>
                                 Points
                             </Typography>
-                            <Typography style={{ fontWeight: 'bold', minWidth: 155 }} variant="body1" color={theme.palette.primary.light}>
+                            <Typography style={{fontWeight: 'bold', minWidth: 155}} variant="body1"
+                                        color={theme.palette.primary.light}>
                                 Username
                             </Typography>
                         </div>
