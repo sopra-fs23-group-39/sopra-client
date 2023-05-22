@@ -1,6 +1,4 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-// import {GameGuard} from "components/routing/routeProtectors/GameGuard";
-// import GameRouter from "components/routing/routers/GameRouter";
 import {MainGuard} from "components/routing/routeProtectors/MainGuard";
 import MainRouter from "components/routing/routers/MainRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
@@ -46,7 +44,7 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/login">
           <LoginGuard>
-            <Login/>
+            <Login />
           </LoginGuard>
         </Route>
         <Route exact path="/register">
@@ -69,17 +67,17 @@ const AppRouter = () => {
         )} />
         <Route exact path="/join">
           <JoinGameGuard>
-            <JoinGame/>
+            <JoinGame />
           </JoinGameGuard>
         </Route>
         <Route exact path="/leaderboard">
           <LeaderboardGuard>
-            <Leaderboard/>
+            <Leaderboard />
           </LeaderboardGuard>
         </Route>
         <Route exact path="/game_format">
           <GameFormatGuard>
-            <GameFormat/>
+            <GameFormat />
           </GameFormatGuard>
         </Route>
         <Route exact path="/game_selection">
@@ -109,7 +107,7 @@ const AppRouter = () => {
         )} />>
         <Route exact path='/rapid_selection'>
           <GameSelectionGuard>
-          <RapidSelection />
+            <RapidSelection />
           </GameSelectionGuard>
         </Route>
         <Route exact path='/gamerapid/:gameId'>
@@ -121,7 +119,7 @@ const AppRouter = () => {
           <QuestionGuard {...props}>
             <RapidQuestion />
           </QuestionGuard>
-           )} />
+          )} />
       </Switch>
     </BrowserRouter>
   );

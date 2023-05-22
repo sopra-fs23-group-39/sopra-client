@@ -11,12 +11,12 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const LeaderboardGuard = props => {
-    if (localStorage.getItem("id")) {
-        return props.children;
-    }
-    return <Redirect to="/login"/>;
+  if (localStorage.getItem("id")) {
+    return props.children;
+  }
+  return <Redirect to="/login"/>;
 };
 
 LeaderboardGuard.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node
 };

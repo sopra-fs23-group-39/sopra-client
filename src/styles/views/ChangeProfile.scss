@@ -1,13 +1,6 @@
 @import '../theme';
 
 .dashboard {
-//&.container {
-   //  margin-top: 2em;
-   //  min-height: 300px;
-   //  /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
-   //  @include center;
-   //  flex-direction: column;
-   //}
 &.container {
      margin-top: 2em;
      min-height: 300px;
@@ -15,7 +8,6 @@
      @include center;
      flex-direction: column;
  }
-
 &.form {
      display: flex;
      flex-direction: column;
@@ -32,11 +24,8 @@
      transition: opacity 0.5s ease, transform 0.5s ease;
      box-shadow: $dropShadow;
    }
-
 &.title {
      color: $accent;
- //justify-content: center;
- //font-family: $fontDefault;
      margin-bottom: 20px;
      font-weight: bold;
      text-align: center;

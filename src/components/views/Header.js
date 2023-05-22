@@ -1,8 +1,6 @@
 import React from "react";
-import {ReactLogo} from "components/ui/ReactLogo";
 import PropTypes from "prop-types";
 import "styles/views/Header.scss";
-import { yellow } from "@mui/material/colors";
 import {Box, ThemeProvider} from "@mui/material";
 import theme from "styles/mui/customMui";
 

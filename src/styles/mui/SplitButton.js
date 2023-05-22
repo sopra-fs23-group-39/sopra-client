@@ -36,7 +36,6 @@ export default function SplitButton({ options, onSelect }) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
 

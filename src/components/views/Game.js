@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react'; //api,
 import {Spinner} from 'components/ui/Spinner';
-import {Button} from 'components/ui/Button';
 import {useHistory, useParams} from 'react-router-dom';
 import "styles/views/Game.scss";
 import {Stomp} from "@stomp/stompjs";
@@ -12,7 +11,6 @@ import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 import theme from 'styles/mui/customMui';
 import "styles/mui/ResponsiveUI.scss";
-import { ThemeProvider} from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
 
 const Game = () => {
@@ -29,20 +27,12 @@ const Game = () => {
   const {gameId} = useParams();
 
   const startGame = async () => {
-    if(gameStompClient && gameStompClient.connected){
-        gameStompClient.send(`/app/game/${gameId}`, {}, "START");
-        setDisabled(true);
-        setIsStarted(true);
+    if (gameStompClient?.connected) {
+      gameStompClient.send(`/app/game/${gameId}`, {}, "START");
+      setDisabled(true);
+      setIsStarted(true);
     } else {
-        //idk put error and kick or smth
-    }
-  };
-
-  const quickTest = async () => {
-    if(gameStompClient && gameStompClient.connected){
-        console.log("send?")
-    } else {
-        //idk put error and kick or smth
+      //idk put error and kick or smth
     }
   };
 
@@ -50,7 +40,6 @@ const Game = () => {
     async function fetchData() {
       try {
         const response = await api.get(`/game/${gameId}/settings`);
-        // setGame(response.data);
         console.log(response.data)
         setGameMode(response.data.gameMode)
         setGameFormat(response.data.gameFormat)
@@ -79,7 +68,7 @@ const Game = () => {
     gameStompClient.connect({}, () => {
       gameStompClient.subscribe(`/topic/game/${gameId}`, (message) => {
         if(message.body == "game started."){
-            history.push(`/game/${gameId}/question`);
+          history.push(`/game/${gameId}/question`);
         }
         console.log(message);
         const players = JSON.parse(message.body);
@@ -99,7 +88,7 @@ const Game = () => {
     content = (
       <Box className="box">
         <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1.5rem + 2vw)'}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
-             Waiting Room
+          Waiting Room
         </Typography>
         <Box sx={{display: "flex", flexDirection: "row" }}>
           <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
@@ -120,77 +109,25 @@ const Game = () => {
             </Typography>
               <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
               {playerList ? (
-                    <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
-                      <p key={playerList[0].id}><span>Host:</span> {playerList[0].username}</p>
-                      {playerList.slice(1).map((player) => (
-                          <p key={player.id}><span>Player:</span> {player.username}</p>
-                      ))}
-                    </Box>
-                  ) : (
-                    <p>Loading player list...</p>
-                  )}
+                <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
+                  <p key={playerList[0].id}><span>Host:</span> {playerList[0].username}</p>
+                  {playerList.slice(1).map((player) => (
+                      <p key={player.id}><span>Player:</span> {player.username}</p>
+                  ))}
+                </Box>
+                ) : (
+                  <p>Loading player list...</p>
+                )}
               </Typography>
           </Box>
         </Box>
         {
           (!playerList || playerList[0].id != localStorage.getItem('id')) ? (
-              <PrimaryButton label="start game" onClick={() => startGame()} disabled = {true}/>
+            <PrimaryButton label="start game" onClick={() => startGame()} disabled = {true}/>
           ):(<PrimaryButton label="start game" onClick={() => startGame()} disabled = {disabled}/>)
         }
-
-
         <SecondaryButton label="quit" onClick={() => history.push('/main')}/>
       </Box>
-      /*<div className="game container">
-        <div className="game form">
-          <div className="game elements">
-            <h1 style={{textAlign: "center"}}> WAITING ROOM </h1>
-            <div className="game content">
-              <div className="game column">
-                <h2>Game settings:</h2>
-                <p>Game ID: <span>{gameId}</span></p>
-                <p>Format: <span>{gameFormat}</span></p>
-                <p>Theme: <span>{gameMode}</span></p>
-                <p>Number of questions: <span>{questionAmount}</span></p>
-                <p>Time per question: <span>{timer}</span> seconds</p>
-              </div>
-              <div className="game column">
-                <div className="game participants">
-                  <h2>Participants:</h2>
-                  {playerList ? (
-                    <div>
-                      <p key={playerList[0].id}><span>Host:</span> {playerList[0].username}</p>
-                      {playerList.slice(1).map((player) => (
-                          <p key={player.id}><span>Player:</span> {player.username}</p>
-                      ))}
-                    </div>
-                  ) : (
-                    <p>Loading player list...</p>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="game buttons">
-            <Button
-              width="100%"
-              onClick={() => startGame()}
-              //do not put !==, != is intentional since one of them is a string, the other isn't, but as long as the number is equal it should return true.
-              style={{ display: (!playerList || playerList[0].id != localStorage.getItem('id')) ? 'none' : 'block' }}
-              disabled = {disabled}
-            >
-              START GAME
-            </Button>
-            <Button
-              width="100%"
-              style={{marginTop: 20}}
-              onClick={() => history.push('/main')}
-            >
-              QUIT
-            </Button>
-          </div>
-        </div>
-      </div>*/
     );
   }
 

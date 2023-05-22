@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 
 
 export const ChangeProfileGuard = props => {
-    const { id } = props.match.params;
-    const userId = localStorage.getItem("id");
+  const { id } = props.match.params;
+  const userId = localStorage.getItem("id");
 
-    if (userId === id) {
-        return props.children;
-    }
+  if (userId === id) {
+    return props.children;
+  }
 
-    return <Redirect to="/main" />;
+  return <Redirect to="/main" />;
 };
 
 ChangeProfileGuard.propTypes = {
-    children: PropTypes.node
+  children: PropTypes.node
 };

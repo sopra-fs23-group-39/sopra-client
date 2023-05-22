@@ -6,8 +6,7 @@ import PropTypes from "prop-types";
  * @param props
  */
 export const GameSelectionGuard = props => {
-  //TODO
-  if (true) {
+  if (localStorage.getItem("id")) {
     return props.children;
   }
   return <Redirect to="/login"/>;

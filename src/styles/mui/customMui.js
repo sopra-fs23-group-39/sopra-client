@@ -18,31 +18,13 @@ const theme = createTheme({
       text: '#000',
     },
     tertiary: {
-        light:'#000',
-        main: '#000',
-        dark: '#000',
-        contrastText: '#fff',
-        text: '#fff',
+      light:'#000',
+      main: '#000',
+      dark: '#000',
+      contrastText: '#fff',
+      text: '#fff',
     },
   },
-  /*components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          '--button-color': (props) => props.theme.palette.primary.main,
-          '--button-background': (props) => props.theme.palette.secondary.main,
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '--input-color': (props) => props.theme.palette.primary.main,
-          '--input-background': (props) => props.theme.palette.secondary.main,
-        },
-      },
-    },
-  },*/
 });
 
 export default theme;

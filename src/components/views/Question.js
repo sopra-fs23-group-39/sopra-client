@@ -2,17 +2,15 @@ import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss';
-import {ButtonGroup,Button,Box,Typography,LinearProgress,Grid} from '@mui/material';
+import {Button, Box, Typography, LinearProgress, Grid} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import theme from 'styles/mui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import {useHistory, useParams} from "react-router-dom";
 import {api, handleError} from "../../helpers/api";
-import {host} from "sockjs-client/lib/location";
 import "styles/views/VideoPlayer.scss";
 import YouTube from "react-youtube";
-import PrimaryButton from 'styles/mui/PrimaryButton';
 
 const Question = () => {
 
@@ -360,35 +358,35 @@ const Question = () => {
                 <Grid container spacing={2} color="inherit">
                   <Grid item xs={6}>
                     <Button
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          color: theme.palette.primary.light,
-                          backgroundColor: buttonColors.but3,
-                          opacity: chosenButtonId.current !== "but3" ? buttonOpacity : 0.75
-                        }}
-                        variant="outlined"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer3, 'but3')}
-                      >
-                        {question.answer3}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        color: theme.palette.primary.light,
+                        backgroundColor: buttonColors.but3,
+                        opacity: chosenButtonId.current !== "but3" ? buttonOpacity : 0.75
+                      }}
+                      variant="outlined"
+                      disabled={disabled}
+                      onClick={() => handleClick(question.answer3, 'but3')}
+                    >
+                      {question.answer3}
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
-                      <Button
-                        sx={{
-                          width:"100%",
-                          height:"100%",
-                          color: theme.palette.primary.light,
-                          backgroundColor: buttonColors.but4,
-                          opacity: chosenButtonId.current !== 'but4' ? buttonOpacity : 0.75
-                        }}
-                        variant="outlined"
-                        disabled={disabled}
-                        onClick={() => handleClick(question.answer4, 'but4')}
-                      >
-                        {question.answer4}
-                      </Button>
+                    <Button
+                      sx={{
+                        width:"100%",
+                        height:"100%",
+                        color: theme.palette.primary.light,
+                        backgroundColor: buttonColors.but4,
+                        opacity: chosenButtonId.current !== 'but4' ? buttonOpacity : 0.75
+                      }}
+                      variant="outlined"
+                      disabled={disabled}
+                      onClick={() => handleClick(question.answer4, 'but4')}
+                    >
+                      {question.answer4}
+                    </Button>
                   </Grid>
                 </Grid>
               </div>

@@ -3,14 +3,12 @@ import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
 import 'styles/views/Login.scss';
-import PropTypes from "prop-types";
 import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
-import {Box, Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput } from '@mui/material';
-import {Visibility, VisibilityOff} from '@mui/icons-material'
-import { PrimaryButton} from 'styles/mui/PrimaryButton';
+import {Box, FormControl, InputLabel, OutlinedInput } from '@mui/material';
+import {PrimaryButton} from 'styles/mui/PrimaryButton';
 import PasswordInput from 'styles/mui/PasswordInput';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 /*
@@ -19,135 +17,70 @@ however be sure not to clutter your files with an endless amount!
 As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
-const FormField = props => {
-    return (
-        <div className="login field">
-            <label className="login label">
-                {props.label}
-            </label>
-            <input
-                className="login input"
-                placeholder="enter here.."
-                value={props.value}
-                onChange={e => props.onChange(e.target.value)}
-            />
-        </div>
-    );
-};
-
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func
-};
 
 const Register = props => {
-    const history = useHistory();
-    const [password, setPassword] = useState(null);
-    const [username, setUsername] = useState(null);
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => {
-        setShowPassword((show) => !show);
+  const history = useHistory();
+  const [password, setPassword] = useState(null);
+  const [username, setUsername] = useState(null);
+
+  const doRegister = async () => {
+    try {
+      const requestBody = JSON.stringify({username, password});
+      const response = await api.post('/users', requestBody);
+      // Get the returned user and update a new object.
+      const user = new User(response.data);
+      // Store the token into the local storage.
+      localStorage.setItem('id', user.id);
+      // Register successfully worked --> navigate to the route /game in the GameRouter
+      history.push(`/main`);
+    } catch (error) {
+      alert(`Something went wrong during the registration: \n${handleError(error)}`);
     }
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      }
-  
-    const doRegister = async () => {
-        try {
-            const requestBody = JSON.stringify({username, password});
-            const response = await api.post('/users', requestBody);
+  };
 
-            // Get the returned user and update a new object.
-            const user = new User(response.data);
-
-            // Store the token into the local storage.
-            localStorage.setItem('id', user.id);
-
-
-            // Register successfully worked --> navigate to the route /game in the GameRouter
-            history.push(`/main`);
-        } catch (error) {
-            alert(`Something went wrong during the registration: \n${handleError(error)}`);
-        }
-    };
-
-    return (
-        <ThemeProvider theme={theme}>
-        <Box className="box">
-                <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
-                    <InputLabel 
-                    htmlFor="outlined-username"
-                    sx={{ color: theme.palette.primary.light }}
-                    >
-                        Username
-                    </InputLabel>
-                    <OutlinedInput
-                        id="outlined-username"
-                        label="Username"
-                        value={username}
-                        onChange={(un) => setUsername(un.target.value)}
-                        margin="dense"
-                        onKeyPress={(event) => {
-                            if (event.key === " ") {
-                                event.preventDefault();
-                            }
-                        }}
-                        sx={{
-                            '& fieldset': {
-                              borderColor: theme.palette.primary.light,
-                            },
-                            '& input': {
-                              color: theme.palette.primary.light,
-                            },
-                          }}
-                    />
-                </FormControl>
-                <PasswordInput
-                    label="Password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                  <Box className= "custom">      
-                    <PrimaryButton label="register" onClick={() => doRegister()} disabled={!username || !password} />
-                    <SecondaryButton label="back" onClick={() => history.push("/login")} />
-                </Box>
-            </Box>
-          </ThemeProvider>
-        /*<BaseContainer>
-            <div className="login container">
-                <div className="login form">
-                    <FormField
-                        label="Username"
-                        value={username}
-                        onChange={un => setUsername(un)}
-                    />
-                    <FormField
-                        label="Password"
-                        value={password}
-                        onChange={n => setPassword(n)}
-                    />
-                    <div className="login button-container">
-                        <Button
-                            disabled={!username || !password}
-                            width="100%"
-                            onClick={() => doRegister()}
-                        >
-                            Register
-                        </Button>
-                    </div>
-                    <div className="login button-container">
-                        <Button
-                            width="100%"
-                            onClick={() => history.push("/login")}
-                        >
-                            Back
-                        </Button>
-                    </div>
-                </div>
-            </div>
-                    </BaseContainer>*/
-    );
+  return (
+    <ThemeProvider theme={theme}>
+      <Box className="box">
+        <FormControl sx={{ m: 1, width: '90%' }} variant="outlined">
+          <InputLabel
+            htmlFor="outlined-username"
+            sx={{ color: theme.palette.primary.light }}
+          >
+            Username
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-username"
+            label="Username"
+            value={username}
+            onChange={(un) => setUsername(un.target.value)}
+            margin="dense"
+            onKeyPress={(event) => {
+              if (event.key === " ") {
+                  event.preventDefault();
+              }
+            }}
+            sx={{
+              '& fieldset': {
+                borderColor: theme.palette.primary.light,
+              },
+              '& input': {
+                color: theme.palette.primary.light,
+              },
+            }}
+          />
+        </FormControl>
+        <PasswordInput
+          label="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
+        <Box className= "custom">
+          <PrimaryButton label="register" onClick={() => doRegister()} disabled={!username || !password} />
+          <SecondaryButton label="back" onClick={() => history.push("/login")} />
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
 };
 
 /**
