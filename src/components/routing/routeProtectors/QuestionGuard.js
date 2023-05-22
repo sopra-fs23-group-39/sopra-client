@@ -8,8 +8,6 @@ export const QuestionGuard = props => {
   const { gameId } = props.match.params;
   const [players, setPlayers] = useState(null);
   const userId = parseInt(localStorage.getItem('id'));
-  console.log(userId); //It's a string
-  console.log(typeof userId);
   const [isInGame, setIsInGame] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const storage = window.localStorage;
