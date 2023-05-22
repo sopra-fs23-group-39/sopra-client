@@ -331,7 +331,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but1,
-                      opacity: chosenButtonId != "but1" ? buttonOpacity : 1
+                      opacity: chosenButtonId !== "but1" ? buttonOpacity : 1
                       }}
                     variant="outlined"
                     disabled={disabled}
@@ -344,7 +344,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but2,
-                      opacity: chosenButtonId != "but2" ? buttonOpacity : 1
+                      opacity: chosenButtonId !== "but2" ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
@@ -359,7 +359,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but3,
-                      opacity: chosenButtonId != "but3" ? buttonOpacity : 1
+                      opacity: chosenButtonId !== "but3" ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
@@ -372,7 +372,7 @@ const Question = () => {
                       mb: 2,
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but4,
-                      opacity: chosenButtonId != 'but4' ? buttonOpacity : 1
+                      opacity: chosenButtonId !== 'but4' ? buttonOpacity : 1
                     }}
                     variant="outlined"
                     disabled={disabled}
