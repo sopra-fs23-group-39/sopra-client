@@ -93,17 +93,6 @@ const Profile = () => {
                              sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
                             <Box sx={{flexGrow: 1}}>
                                 <Typography variant="subtitle1" color={theme.palette.primary.light}>
-                                    Status
-                                </Typography>
-                            </Box>
-                            <Box sx={{flex: '0 0 auto'}}>
-                                <CustomChip label={user.status} color={theme.palette.primary.light}/>
-                            </Box>
-                        </Box>
-                        <Box color="primary"
-                             sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2}}>
-                            <Box sx={{flexGrow: 1}}>
-                                <Typography variant="subtitle1" color={theme.palette.primary.light}>
                                     Number of games
                                 </Typography>
                             </Box>
@@ -179,6 +168,7 @@ const Profile = () => {
                         </Box>
                         <Box className="custom" color="primary">
                             <Button
+                                disabled={String(user.id) !== localStorage.getItem('id')}
                                 sx={{
                                     mt: 1,
                                     color: theme.palette.primary.light,

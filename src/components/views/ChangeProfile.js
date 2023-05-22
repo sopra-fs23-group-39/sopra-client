@@ -10,6 +10,7 @@ import theme from 'styles/mui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
+import PrimaryButton from "../../styles/mui/PrimaryButton";
 
 const ChangeProfile = () => {
     const history = useHistory();
@@ -146,22 +147,7 @@ const ChangeProfile = () => {
                         }}
                     />
                 </FormControl>
-                <Box color="primary" sx={{display: 'flex', justifyContent: 'center'}}>
-                    <Button
-                        sx={{
-                            margin: 1,
-                            width: '41ch',
-                            color: theme.palette.primary.light,
-                            borderColor: theme.palette.grey[700],
-                        }}
-                        variant="outlined"
-                        width="100%"
-                        size='large'
-                        onClick={() => saveNewCredentials(user)}
-                    >
-                        Save New Credentials
-                    </Button>
-                </Box>
+                <PrimaryButton label="save new credentials" onClick={() => saveNewCredentials(user)}/>
                 <Box className="custom" color="primary">
                     <Button
                         sx={{

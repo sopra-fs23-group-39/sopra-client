@@ -7,6 +7,7 @@ import {ThemeProvider} from "@mui/material/styles";
 import theme from "../../styles/mui/customMui";
 import {Box, Typography} from "@mui/material";
 import {Spinner} from "../ui/Spinner";
+import PrimaryButton from "../../styles/mui/PrimaryButton";
 
 
 const Winner = () => {
@@ -49,13 +50,9 @@ const Winner = () => {
                             The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!
                         </Typography>
                         <div className="main button-container">
-                            <Button
-                                width="80%"
-                                style={{marginTop: 350, marginBottom: 20}}
-                                onClick={() => goToMain()}
-                            >
-                                Go back to Main Page
-                            </Button>
+                            <Box sx={{mt: 10, mb:2}}>
+                                <PrimaryButton label="go back to main page" onClick={() => goToMain()}/>
+                            </Box>
                         </div>
                     </Box>
                 </ThemeProvider>}
