@@ -2,7 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss';
-import {ButtonGroup,Button,Box,Typography,LinearProgress} from '@mui/material';
+import {ButtonGroup,Button,Box,Typography,LinearProgress,Grid} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
 import theme from 'styles/mui/customMui';
@@ -17,6 +17,7 @@ import PrimaryButton from 'styles/mui/PrimaryButton';
 const Question = () => {
 
   const color = "$accent";
+  const color2 = "yellow";
   const [question, setQuestion] = useState({});
   const [gameMode, setGameMode] = useState(null);
   const [disabled, setDisabled] = useState(false);
@@ -153,10 +154,10 @@ const Question = () => {
     });
     setDisabled(true);
     setButtonColors({
-      but1: "yellow",
-      but2: "yellow",
-      but3: "yellow",
-      but4: "yellow",
+      but1: color2,
+      but2: color2,
+      but3: color2,
+      but4: color2,
       //[buttonId]: "blue"
     });
     setButtonOpacity(0.5);
@@ -212,18 +213,18 @@ const Question = () => {
       console.log(chosenButtonId);
       if(chosenButtonId == null) {
         setButtonColors({
-          but1: "yellow",
-          but2: "yellow",
-          but3: "yellow",
-          but4: "yellow",
+          but1: color2,
+          but2: color2,
+          but3: color2,
+          but4: color2,
           [correctButtonId]: "green"
         });
       }
       setButtonColors({
-        but1: "yellow",
-        but2: "yellow",
-        but3: "yellow",
-        but4: "yellow",
+        but1: color2,
+        but2: color2,
+        but3: color2,
+        but4: color2,
         [chosenButtonId.current]: "red",
         [correctButtonId]: "green"
       });
@@ -264,29 +265,30 @@ const Question = () => {
 
   let imageDisplay = null;
 
-  if (gameMode === "ACTOR" || gameMode === "MIXED"){
+  if (gameMode === "ACTOR" || gameMode === "MIXED") {
     imageDisplay = (
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
-        <img src={question.questionLink} className="image" alt="MoviePicture" style={{width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "365px" }}>
+        <img src={question.questionLink} className="image" alt="MoviePicture" style={{ width: "340px", height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto" }} />
       </div>
     );
-  } else if (gameMode === "MOVIE" || gameMode === "SHOW"){
+  } else if (gameMode === "MOVIE" || gameMode === "SHOW") {
     imageDisplay = (
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "365px"}}>
-        <img src={question.questionLink} className="image" alt="MoviePicture" style={{height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto"}}/>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "90%", width: "100%" }}>
+        <img src={question.questionLink} className="image" alt="MoviePicture" style={{ height: "365px", objectFit: "cover", objectPosition: "center top", margin: "auto" }} />
       </div>
     );
   } else if (gameMode === "TRAILER") {
     imageDisplay = (
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "576px"}}>
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "576px" }}>
         <div className="video-container">
           <div className="video-foreground">
-            <YouTube videoId={question.questionLink} opts = {opts} onStateChange={handleStateChange} onReady = {onReady} ref={playerRef}/>
+            <YouTube videoId={question.questionLink} opts={opts} onStateChange={handleStateChange} onReady={onReady} ref={playerRef} />
           </div>
         </div>
       </div>
     );
   }
+
 
   return (
     <div>
@@ -325,62 +327,70 @@ const Question = () => {
                 </div>
               ) : null}
               <div className="dashboard button-container">
-                <ButtonGroup fullWidth color="inherit">
-                  <Button
+                <Grid container spacing={2} color="inherit">
+                  <Grid item xs={6}><Button
                     sx={{
-                      mb: 2,
+                      width : "100%",
+                      height: "100%",
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but1,
-                      opacity: chosenButtonId !== "but1" ? buttonOpacity : 1
+                      opacity: chosenButtonId.current !== "but1" ? buttonOpacity : 0.75
                       }}
                     variant="outlined"
                     disabled={disabled}
                     onClick={() => handleClick(question.answer1, 'but1')}
                   >
                     {question.answer1}
-                  </Button>
-                  <Button
+                  </Button></Grid>
+                  <Grid item xs={6}><Button
                     sx={{
-                      mb: 2,
+                      width: "100%",
+                      height: "100%",
                       color: theme.palette.primary.light,
                       backgroundColor: buttonColors.but2,
-                      opacity: chosenButtonId !== "but2" ? buttonOpacity : 1
+                      opacity: chosenButtonId.current !== "but2" ? buttonOpacity : 0.75
                     }}
                     variant="outlined"
                     disabled={disabled}
                     onClick={() => handleClick(question.answer2, 'but2')}
                   >
                     {question.answer2}
-                  </Button>
-                </ButtonGroup>
-                <ButtonGroup fullWidth color="inherit">
-                  <Button
-                    sx={{
-                      mb: 2,
-                      color: theme.palette.primary.light,
-                      backgroundColor: buttonColors.but3,
-                      opacity: chosenButtonId !== "but3" ? buttonOpacity : 1
-                    }}
-                    variant="outlined"
-                    disabled={disabled}
-                    onClick={() => handleClick(question.answer3, 'but3')}
-                  >
-                    {question.answer3}
-                  </Button>
-                  <Button
-                    sx={{
-                      mb: 2,
-                      color: theme.palette.primary.light,
-                      backgroundColor: buttonColors.but4,
-                      opacity: chosenButtonId !== 'but4' ? buttonOpacity : 1
-                    }}
-                    variant="outlined"
-                    disabled={disabled}
-                    onClick={() => handleClick(question.answer4, 'but4')}
-                  >
-                    {question.answer4}
-                  </Button>
-                </ButtonGroup>
+                  </Button></Grid>
+                </Grid>
+                <Grid container spacing={2} color="inherit">
+                  <Grid item xs={6}>
+                    <Button
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but3,
+                          opacity: chosenButtonId.current !== "but3" ? buttonOpacity : 0.75
+                        }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer3, 'but3')}
+                      >
+                        {question.answer3}
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                      <Button
+                        sx={{
+                          width:"100%",
+                          height:"100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but4,
+                          opacity: chosenButtonId.current !== 'but4' ? buttonOpacity : 0.75
+                        }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer4, 'but4')}
+                      >
+                        {question.answer4}
+                      </Button>
+                  </Grid>
+                </Grid>
               </div>
             </div>
           ) : (

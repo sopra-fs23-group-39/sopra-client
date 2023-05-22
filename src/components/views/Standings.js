@@ -77,7 +77,21 @@ function Standings() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className= "box">
+            <Box className= "box"
+                sx={{
+                    height: "100%",
+                    overflow: "auto",
+                    '&::-webkit-scrollbar': {
+                        width: '12px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: theme.palette.primary.light,
+                        borderRadius: '6px',
+                    },
+                    '&::-webkit-scrollbar-track': {
+                        backgroundColor: 'transparent',
+                    }}}
+                >
                 <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1rem + 2vw)', paddingBottom:"5%"}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
                     Standings
                  </Typography>
