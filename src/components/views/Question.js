@@ -43,6 +43,9 @@ const Question = () => {
   const [playerState, setPlayerState] = useState(null);
   const [isMuted, setIsMuted] = useState(true);
   const playerRef = useRef(null);
+  const websocketURL = process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_WEBSOCKET_URL_PROD
+      : process.env.REACT_APP_WEBSOCKET_URL_DEV;
 
   const normalise = (value) => ((timerMax-(value))*100)/timerMax;
 
@@ -86,7 +89,10 @@ const Question = () => {
 
   useEffect(() => {
     //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
-    const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+    //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
+    const socket = new SockJS(`${websocketURL}/game/${gameId}/question`);
+    console.log(`${websocketURL}/game/${gameId}/question`)
+
     let questionStompClient = Stomp.over(() => socket);
 
     questionStompClient.connect({}, () => {
@@ -119,7 +125,10 @@ const Question = () => {
 
   useEffect(() => {
     //const socket = new SockJS(`http://localhost:8080/game/${gameId}/answer`);
-    const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+    //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
+    const socket = new SockJS(`${websocketURL}/game/${gameId}/answer`);
+
+    console.log(`${websocketURL}/game/${gameId}/answer`);
     const client = Stomp.over(() => socket);
 
     client.connect({}, () => {
