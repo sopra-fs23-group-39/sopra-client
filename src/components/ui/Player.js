@@ -1,8 +1,7 @@
 import {useHistory} from 'react-router-dom';
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
-import "styles/views/Game.scss";
-import "styles/views/Inspect.scss"
+import "styles/Inspect.scss"
 
 
 const Player = ({user}) => {

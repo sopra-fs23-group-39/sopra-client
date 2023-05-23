@@ -1,11 +1,10 @@
 import {useHistory, useParams} from 'react-router-dom';
 import {useEffect, useState, useRef} from "react";
 import {api, handleError} from 'helpers/api';
-import 'styles/views/Standings.scss'
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
-import "styles/mui/ResponsiveUI.scss";
+import "styles/ResponsiveUI.scss";
 
 
 function Standings() {

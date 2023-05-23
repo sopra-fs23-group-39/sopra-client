@@ -1,11 +1,10 @@
 import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
-import "styles/views/Main.scss";
 import {useSelector} from "react-redux";
 import {Box} from '@mui/material';
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
 
 
 const Main = () => {

@@ -1,12 +1,11 @@
-import 'styles/views/Winner.scss';
 import {useHistory, useParams} from 'react-router-dom';
 import React, {useEffect, useState} from "react";
 import {api, handleError} from 'helpers/api';
 import {ThemeProvider} from "@mui/material/styles";
-import theme from "../../styles/mui/customMui";
+import theme from "../../ui/customMui";
 import {Box, Typography} from "@mui/material";
-import {Spinner} from "../ui/Spinner";
-import PrimaryButton from "../../styles/mui/PrimaryButton";
+import {Spinner} from "../../ui/Spinner";
+import PrimaryButton from "../../ui/PrimaryButton";
 
 
 const Winner = () => {
@@ -47,11 +46,9 @@ const Winner = () => {
                         sx={{px: '20px'}}>
               The Winner is {winner.username} with {winner.totalPointsCurrentGame} points!
             </Typography>
-            <div className="main button-container">
-              <Box sx={{mt: 10, mb:2}}>
-                <PrimaryButton label="go back to main page" onClick={() => goToMain()}/>
-              </Box>
-            </div>
+            <Box sx={{mt: 10, mb:2}}>
+              <PrimaryButton label="go back to main page" onClick={() => goToMain()}/>
+            </Box>
           </Box>
         </ThemeProvider>}
     </div>

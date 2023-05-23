@@ -3,12 +3,12 @@ import {useHistory} from 'react-router-dom';
 import {useState} from "react";
 import {Box, Slider, Typography } from '@mui/material';
 import * as React from 'react';
-import SplitButton from 'styles/mui/SplitButton';
-import theme from 'styles/mui/customMui';
+import SplitButton from 'components/ui/SplitButton';
+import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
-import "styles/mui/ResponsiveUI.scss";
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
+import "styles/ResponsiveUI.scss";
 
 const GameSelection = () => {
   const options = ["SHOW", "MOVIE", "ACTOR", "TRAILER", "MIXED"]

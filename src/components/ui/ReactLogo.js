@@ -1,6 +1,6 @@
 import React from "react";
-import "styles/ui/ReactLogo.scss";
-import theme from "styles/mui/customMui";
+import "styles/ReactLogo.scss";
+import theme from "components/ui/customMui";
 import {ThemeProvider} from "@mui/material";
 
 export const ReactLogo = props => {

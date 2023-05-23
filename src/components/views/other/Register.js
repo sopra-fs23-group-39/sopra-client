@@ -2,15 +2,14 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-import 'styles/views/Login.scss';
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
-import 'styles/mui/Box.scss';
-import 'styles/mui/Button.scss';
+import 'styles/Box.scss';
+import 'styles/Button.scss';
 import {Box, FormControl, InputLabel, OutlinedInput } from '@mui/material';
-import {PrimaryButton} from 'styles/mui/PrimaryButton';
-import PasswordInput from 'styles/mui/PasswordInput';
-import SecondaryButton from 'styles/mui/SecondaryButton';
+import {PrimaryButton} from 'components/ui/PrimaryButton';
+import PasswordInput from 'components/ui/PasswordInput';
+import SecondaryButton from 'components/ui/SecondaryButton';
 /*
 It is possible to add multiple components inside a single file,
 however be sure not to clutter your files with an endless amount!
@@ -18,7 +17,7 @@ As a rule of thumb, use one file per component and only add small,
 specific components that belong to the main one in the same file.
  */
 
-const Register = props => {
+const Register = () => {
   const history = useHistory();
   const [password, setPassword] = useState(null);
   const [username, setUsername] = useState(null);

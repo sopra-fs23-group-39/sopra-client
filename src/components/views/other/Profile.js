@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
-import {api, handleError} from "../../helpers/api";
-import 'styles/views/Profile.scss';
+import {api, handleError} from "../../../helpers/api";
 import {Box, Button, Typography} from '@mui/material';
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
-import 'styles/mui/Box.scss';
-import 'styles/mui/Button.scss';
-import {Spinner} from "../ui/Spinner";
+import 'styles/Box.scss';
+import 'styles/Button.scss';
+import {Spinner} from "../../ui/Spinner";
 import Chip from '@mui/material/Chip';
 
 const Profile = () => {

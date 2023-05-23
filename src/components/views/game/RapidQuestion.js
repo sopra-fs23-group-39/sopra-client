@@ -1,14 +1,14 @@
 import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
-import 'styles/views/Question.scss'
+import 'styles/Question.scss'
 import {Button, Box, Typography, LinearProgress, Grid} from '@mui/material';
-import 'styles/mui/Box.scss';
-import 'styles/mui/Button.scss';
-import theme from 'styles/mui/customMui';
+import 'styles/Box.scss';
+import 'styles/Button.scss';
+import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import {useHistory, useParams} from "react-router-dom";
-import {api, handleError} from "../../helpers/api";
+import {api, handleError} from "../../../helpers/api";
 
 const RapidQuestion = () => {
 

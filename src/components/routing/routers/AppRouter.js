@@ -1,24 +1,24 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {MainGuard} from "components/routing/routeProtectors/MainGuard";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
-import Main from "../../views/Main";
-import Login from "components/views/Login";
-import Register from "components/views/Register";
-import Profile from "components/views/Profile";
-import ChangeProfile from "../../views/ChangeProfile";
-import GameSelection from "components/views/GameSelection";
-import JoinGame from "components/views/JoinGame";
-import Game from "../../views/Game";
-import Leaderboard from "components/views/Leaderboard";
-import Question from "../../views/Question";
+import Main from "../../views/other/Main";
+import Login from "components/views/other/Login";
+import Register from "components/views/other/Register";
+import Profile from "components/views/other/Profile";
+import ChangeProfile from "../../views/other/ChangeProfile";
+import GameSelection from "components/views/game/GameSelection";
+import JoinGame from "components/views/game/JoinGame";
+import Game from "../../views/game/Game";
+import Leaderboard from "components/views/other/Leaderboard";
+import Question from "../../views/game/Question";
 import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
-import Standings from "../../views/Standings";
-import Winner from "components/views/Winner";
-import GameFormat from "../../views/GameFormat";
-import RapidSelection from "../../views/RapidSelection"
-import RapidGame from "../../views/RapidGame"
-import RapidQuestion from "../../views/RapidQuestion"
+import Standings from "../../views/game/Standings";
+import Winner from "components/views/game/Winner";
+import GameFormat from "../../views/game/GameFormat";
+import RapidSelection from "../../views/game/RapidSelection"
+import RapidGame from "../../views/game/RapidGame"
+import RapidQuestion from "../../views/game/RapidQuestion"
 
 
 const AppRouter = () => {

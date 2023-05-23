@@ -2,12 +2,12 @@ import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 import {useState} from "react";
 import { ThemeProvider } from '@mui/material/styles';
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import {Box, Slider, Typography} from '@mui/material';
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
-import SplitButton from 'styles/mui/SplitButton';
-import "styles/mui/ResponsiveUI.scss";
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
+import SplitButton from 'components/ui/SplitButton';
+import "styles/ResponsiveUI.scss";
 
 const RapidSelection = () => {
   const color = "$accent";

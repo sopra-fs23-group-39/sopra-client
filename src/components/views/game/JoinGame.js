@@ -1,11 +1,10 @@
 import {useHistory} from 'react-router-dom';
-import "styles/views/JoinGame.scss";
 import {useState} from "react";
-import {api, handleError} from "../../helpers/api";
+import {api, handleError} from "../../../helpers/api";
 import { ThemeProvider } from '@mui/material/styles';
-import theme from 'styles/mui/customMui';
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
+import theme from 'components/ui/customMui';
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
 import {Box, FormControl, InputLabel, OutlinedInput, Typography} from '@mui/material';
 
 

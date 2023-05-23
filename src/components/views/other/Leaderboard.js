@@ -1,15 +1,14 @@
 import {useHistory} from 'react-router-dom';
-import "styles/views/Leaderboard.scss";
-import {api, handleError} from "../../helpers/api";
+import {api, handleError} from "../../../helpers/api";
 import React, {useEffect, useState} from "react";
-import Player from "../ui/Player";
-import theme from "../../styles/mui/customMui";
+import Player from "../../ui/Player";
+import theme from "../../ui/customMui";
 import {Button, Box, Typography} from "@mui/material";
 import {ThemeProvider} from "@mui/material/styles";
-import {Spinner} from "../ui/Spinner";
+import {Spinner} from "../../ui/Spinner";
 import ButtonGroup from '@mui/material/ButtonGroup';
-import 'styles/mui/Box.scss';
-import 'styles/mui/Button.scss';
+import 'styles/Box.scss';
+import 'styles/Button.scss';
 
 
 const Leaderboard = () => {

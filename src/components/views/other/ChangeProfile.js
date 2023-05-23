@@ -1,15 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useHistory} from "react-router-dom";
-import {api, handleError} from "../../helpers/api";
-import 'styles/views/ChangeProfile.scss';
-import User from "../../models/User";
+import {api, handleError} from "../../../helpers/api";
+import User from "../../../models/User";
 import {Box, Button, FormControl, InputAdornment, InputLabel, IconButton, OutlinedInput, Typography} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material'
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
-import 'styles/mui/Box.scss';
-import 'styles/mui/Button.scss';
-import PrimaryButton from "../../styles/mui/PrimaryButton";
+import 'styles/Box.scss';
+import 'styles/Button.scss';
+import PrimaryButton from "../../ui/PrimaryButton";
 
 const ChangeProfile = () => {
   const history = useHistory();

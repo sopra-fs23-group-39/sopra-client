@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Button } from '@mui/material';
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 
 export function PrimaryButton ({ label, onClick, disabled }) {

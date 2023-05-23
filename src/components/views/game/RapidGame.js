@@ -1,12 +1,11 @@
 import {useEffect, useState} from 'react'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {useHistory, useParams} from 'react-router-dom';
-import "styles/views/Game.scss";
-import {api, handleError} from "../../helpers/api";
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
-import theme from 'styles/mui/customMui';
-import "styles/mui/ResponsiveUI.scss";
+import {api, handleError} from "../../../helpers/api";
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
+import theme from 'components/ui/customMui';
+import "styles/ResponsiveUI.scss";
 import { Box, Typography } from '@mui/material';
 
 

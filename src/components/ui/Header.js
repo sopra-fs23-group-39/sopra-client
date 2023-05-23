@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "styles/views/Header.scss";
+import "styles/Header.scss";
 import {Box, ThemeProvider} from "@mui/material";
-import theme from "styles/mui/customMui";
+import theme from "components/ui/customMui";
 
 /**
  * This is an example of a Functional and stateless component (View) in React. Functional components are not classes and thus don't handle internal state changes.
@@ -19,7 +19,6 @@ const Header = props => (
         <h1 className="header title">
           <Box sx={{color: theme.palette.primary.main}}>The Movie Monster</Box>
         </h1>
-        
       </Box>
     </div>
   </ThemeProvider>

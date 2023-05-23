@@ -1,13 +1,12 @@
 import {useHistory} from 'react-router-dom';
-import "styles/views/Main.scss";
-import {api, handleError} from "../../helpers/api";
+import {api, handleError} from "../../../helpers/api";
 import {useState} from "react";
 import { Box, Button, Typography } from '@mui/material';
-import theme from 'styles/mui/customMui';
+import theme from 'components/ui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
-import PrimaryButton from 'styles/mui/PrimaryButton';
-import SecondaryButton from 'styles/mui/SecondaryButton';
-import "styles/mui/ResponsiveUI.scss";
+import PrimaryButton from 'components/ui/PrimaryButton';
+import SecondaryButton from 'components/ui/SecondaryButton';
+import "styles/ResponsiveUI.scss";
 
 
 const GameFormat = () => {
