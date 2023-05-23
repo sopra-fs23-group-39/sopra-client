@@ -25,9 +25,10 @@ const Game = () => {
   const [disabled, setDisabled] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const {gameId} = useParams();
-  const websocketURL = process.env.NODE_ENV === 'production'
-      ? process.env.REACT_APP_WEBSOCKET_URL_PROD
-      : process.env.REACT_APP_WEBSOCKET_URL_DEV;
+  const websocketURL = process.env.NODE_ENV === 'development'
+      ? process.env.REACT_APP_WEBSOCKET_URL_DEV
+      : process.env.REACT_APP_WEBSOCKET_URL_PROD;
+  console.log(process.env.NODE_ENV);
 
   const startGame = async () => {
     if (gameStompClient?.connected) {

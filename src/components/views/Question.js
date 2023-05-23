@@ -44,9 +44,9 @@ const Question = () => {
   const [playerState, setPlayerState] = useState(null);
   const [isMuted, setIsMuted] = useState(true);
   const playerRef = useRef(null);
-  const websocketURL = process.env.NODE_ENV === 'production'
-      ? process.env.REACT_APP_WEBSOCKET_URL_PROD
-      : process.env.REACT_APP_WEBSOCKET_URL_DEV;
+  const websocketURL = process.env.NODE_ENV === 'development'
+      ? process.env.REACT_APP_WEBSOCKET_URL_DEV
+      : process.env.REACT_APP_WEBSOCKET_URL_PROD;
 
   const normalise = (value) => ((timerMax-(value))*100)/timerMax;
 
