@@ -338,7 +338,12 @@ const Question = () => {
                     disabled={disabled}
                     onClick={() => handleClick(question.answer1, 'but1')}
                   >
+                  <Typography
+                    color= {buttonClicked ? "black" : theme.palette.primary.light}
+                    align="center"
+                    sx={{px: ['10px', '20px'],}}>
                     {question.answer1}
+                  </Typography>
                   </Button></Grid>
                   <Grid item xs={6}><Button
                     sx={{
@@ -352,41 +357,56 @@ const Question = () => {
                     disabled={disabled}
                     onClick={() => handleClick(question.answer2, 'but2')}
                   >
+                  <Typography
+                      color= {buttonClicked ? "black" : theme.palette.primary.light}
+                      align="center"
+                      sx={{px: ['10px', '20px'],}}>
                     {question.answer2}
+                  </Typography>
                   </Button></Grid>
                 </Grid>
                 <Grid container spacing={2} color="inherit">
                   <Grid item xs={6}>
                     <Button
-                      sx={{
-                        width: "100%",
-                        height: "100%",
-                        color: theme.palette.primary.light,
-                        backgroundColor: buttonColors.but3,
-                        opacity: chosenButtonId.current !== "but3" ? buttonOpacity : 0.75
-                      }}
-                      variant="outlined"
-                      disabled={disabled}
-                      onClick={() => handleClick(question.answer3, 'but3')}
-                    >
-                      {question.answer3}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but3,
+                          opacity: chosenButtonId.current !== "but3" ? buttonOpacity : 0.75
+                        }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer3, 'but3')}
+                      >
+                      <Typography
+                          color= {buttonClicked ? "black" : theme.palette.primary.light}
+                          align="center"
+                          sx={{px: ['10px', '20px'],}}>
+                        {question.answer3}
+                      </Typography>
                     </Button>
                   </Grid>
                   <Grid item xs={6}>
-                    <Button
-                      sx={{
-                        width:"100%",
-                        height:"100%",
-                        color: theme.palette.primary.light,
-                        backgroundColor: buttonColors.but4,
-                        opacity: chosenButtonId.current !== 'but4' ? buttonOpacity : 0.75
-                      }}
-                      variant="outlined"
-                      disabled={disabled}
-                      onClick={() => handleClick(question.answer4, 'but4')}
-                    >
-                      {question.answer4}
-                    </Button>
+                      <Button
+                        sx={{
+                          width:"100%",
+                          height:"100%",
+                          color: theme.palette.primary.light,
+                          backgroundColor: buttonColors.but4,
+                          opacity: chosenButtonId.current !== 'but4' ? buttonOpacity : 0.75
+                        }}
+                        variant="outlined"
+                        disabled={disabled}
+                        onClick={() => handleClick(question.answer4, 'but4')}
+                      >
+                      <Typography
+                          color= {buttonClicked ? "black" : theme.palette.primary.light}
+                          align="center"
+                          sx={{px: ['10px', '20px'],}}>
+                        {question.answer4}
+                      </Typography>
+                      </Button>
                   </Grid>
                 </Grid>
               </div>
