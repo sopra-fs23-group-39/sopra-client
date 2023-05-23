@@ -3,13 +3,13 @@ import {useHistory} from 'react-router-dom';
 import {useState} from "react";
 import { ThemeProvider } from '@mui/material/styles';
 import theme from 'styles/mui/customMui';
-import {Box, Slider } from '@mui/material';
+import {Box, Slider, Typography} from '@mui/material';
 import PrimaryButton from 'styles/mui/PrimaryButton';
 import SecondaryButton from 'styles/mui/SecondaryButton';
 import SplitButton from 'styles/mui/SplitButton';
 import "styles/mui/ResponsiveUI.scss";
 
-const GameSelection = () => {
+const RapidSelection = () => {
   const color = "$accent";
   const history = useHistory();
   const options = ["SHOW", "MOVIE", "ACTOR", "MIXED"]
@@ -17,7 +17,7 @@ const GameSelection = () => {
   const [QuestionAmount, setQuestionAmount] = useState(100)
   const [timerValue, setTimerValue] = useState(5);
   const [disabled, setDisabled] = useState(false);
-  const [gameFormat,setGameFormat] = useState("RAPID");
+  const [gameFormat, setGameFormat] = useState("RAPID");
   const [buttonColors, setButtonColors] = useState({
     but1: color,
     but2: color,
@@ -74,11 +74,11 @@ const GameSelection = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box className="box">
-        <h3 className="center">Game theme:</h3>
+        <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Game theme:</Typography>
         <Box className="row">
           <SplitButton options={options} onSelect={handleSplitButtonChange} selectedIndex={options.indexOf(gameMode)} />
         </Box>
-        <h3>Timer (length of game):</h3>
+        <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Timer (length of game):</Typography>
         <Box className="row">
           <Slider
             className="slider"
@@ -100,4 +100,4 @@ const GameSelection = () => {
   );
 }
 
-export default GameSelection;
+export default RapidSelection;

@@ -87,36 +87,33 @@ const Game = () => {
   if (gameId) {
     content = (
       <Box className="box">
-        <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1.5rem + 2vw)'}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
-          Waiting Room
-        </Typography>
         <Box sx={{display: "flex", flexDirection: "row" }}>
           <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
-            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
-              Game Settings:
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)', marginBottom: 2}}>
+              Game:
             </Typography>
               <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}}>
-                <p>Game ID: <span>{gameId}</span></p>
-                <p>Format: <span>{gameFormat}</span></p>
-                <p>Theme: <span>{gameMode}</span></p>
-                <p>Number of questions: <span>{questionAmount}</span></p>
-                <p>Time per question: <span>{timer}</span> seconds</p>
+                <div>Game ID: <span>{gameId}</span></div>
+                <div>Format: <span>{gameFormat}</span></div>
+                <div>Theme: <span>{gameMode}</span></div>
+                <div>Number of questions: <span>{questionAmount}</span></div>
+                <div>Time per question: <span>{timer}</span> seconds</div>
               </Typography>
           </Box>
-          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%"}}>
-            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}} >
+          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%", textAlign: "left"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)', marginBottom: 2}} >
               Participants:
             </Typography>
               <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
               {playerList ? (
                 <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
-                  <p key={playerList[0].id}><span>Host:</span> {playerList[0].username}</p>
+                  <div key={playerList[0].id}><span>Host:</span> {playerList[0].username}</div>
                   {playerList.slice(1).map((player) => (
-                      <p key={player.id}><span>Player:</span> {player.username}</p>
+                      <div key={player.id}><span>Player:</span> {player.username}</div>
                   ))}
                 </Box>
                 ) : (
-                  <p>Loading player list...</p>
+                  <div>Loading player list...</div>
                 )}
               </Typography>
           </Box>

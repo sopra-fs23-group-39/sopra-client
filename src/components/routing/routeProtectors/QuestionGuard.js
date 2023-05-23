@@ -35,7 +35,7 @@ export const QuestionGuard = props => {
   console.log(players);
 
   useEffect(() => {
-    if (players && players.map(player => player.id).includes(userId)) {
+    if (players?.map(player => player.id)?.includes(userId)) {
       setIsInGame(true);
     }
   }, [players, userId]);

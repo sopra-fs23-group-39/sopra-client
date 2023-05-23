@@ -2,7 +2,6 @@ import React, {useEffect, useState, useRef} from 'react';
 import SockJS from 'sockjs-client';
 import {Stomp} from "@stomp/stompjs";
 import 'styles/views/Question.scss'
-import 'styles/views/Question.scss';
 import {Button, Box, Typography, LinearProgress, Grid} from '@mui/material';
 import 'styles/mui/Box.scss';
 import 'styles/mui/Button.scss';
@@ -33,7 +32,6 @@ const RapidQuestion = () => {
   const [gameDataFetched, setGameDataFetched] = useState(false);
   const [answerStompClient, setAnswerStompClient] = useState(null);
   const chosenButtonId = useRef(null);
-  const [hostId, setHostId] = useState(null);
   const [hostConnected, setHostConnected] = useState(false);
   const [displayTimer, setDisplayTimer] = useState(60);
   const [questionStompClient, setQuestionStompClient] = useState(null);
@@ -46,21 +44,21 @@ const RapidQuestion = () => {
     const questionStompClient = Stomp.over(() => socket);
 
     questionStompClient.connect({}, () => {
-      console.log('WebSocket connection established.');
-      setQuestionStompClient(questionStompClient);
-      // "front address"
-      questionStompClient.subscribe(`/topic/gamerapid/${gameId}/question`, (receivedQuestion) => {
-        if(receivedQuestion.body === "Waiting for players..."){
-          console.log("waiting for players");
-        } else {
-          console.log(receivedQuestion);
-          const parsedQuestion = JSON.parse(receivedQuestion.body);
-          setQuestion(parsedQuestion);
-          console.log(question);
-          setHostConnected(true);
+    console.log('WebSocket connection established.');
+    setQuestionStompClient(questionStompClient);
+    // "front address"
+    questionStompClient.subscribe(`/topic/gamerapid/${gameId}/question`, (receivedQuestion) => {
+      if(receivedQuestion.body === "Waiting for players..."){
+        console.log("waiting for players");
+      } else {
+        console.log(receivedQuestion);
+        const parsedQuestion = JSON.parse(receivedQuestion.body);
+        setQuestion(parsedQuestion);
+        console.log(question);
+        setHostConnected(true);
 
-        }
-      });
+      }
+    });
       // "back address"
       questionStompClient.send(`/app/gamerapid/${gameId}/question`, {}, 'NEWQUESTION');
     });
@@ -85,7 +83,7 @@ const RapidQuestion = () => {
     });
 
     return () => {
-      if (answerStompClient && answerStompClient.connected) {
+      if (answerStompClient?.connected) {
         answerStompClient.disconnect();
       }
     };
@@ -121,7 +119,6 @@ const RapidQuestion = () => {
         setGameMode(response.data.gameMode)
         setTimer(response.data.timer * 1000);
         setOtherTimer(response.data.timer * 1000);
-        setHostId(response.data.hostId);
         console.log(response.data.timer);
         console.log(timer);
         setDisplayTimer(response.data.timer);
@@ -227,7 +224,7 @@ const RapidQuestion = () => {
               color={theme.palette.primary.light}
               sx={{px: ['10px', '20px'],}}
             >
-              QuestionTimer: {displayTimer}
+              {displayTimer}
             <LinearProgress
               variant="determinate"
               color="inherit"

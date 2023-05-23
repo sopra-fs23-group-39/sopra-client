@@ -1,10 +1,10 @@
 import {useHistory, useParams} from 'react-router-dom';
-import { useEffect, useState, useRef } from "react";
+import {useEffect, useState, useRef} from "react";
 import {api, handleError} from 'helpers/api';
 import 'styles/views/Standings.scss'
 import theme from 'styles/mui/customMui';
-import { ThemeProvider} from '@mui/material/styles';
-import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import {ThemeProvider} from '@mui/material/styles';
+import {Box, Typography} from '@mui/material';
 import "styles/mui/ResponsiveUI.scss";
 
 
@@ -37,8 +37,6 @@ function Standings() {
       try {
         const response = await api.get(`/game/${gameId}/totalRanking`);
         setTotalRanking(response.data);
-        /*console.log("Fetched totalRanking:");
-        console.log(response.data);*/
       } catch (error) {
         alert(`Something went wrong while fetching the total ranking: \n${handleError(error)}`);
       }
@@ -87,36 +85,29 @@ function Standings() {
            backgroundColor: 'transparent',
         }}}
       >
-        <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1rem + 2vw)', paddingBottom:"5%"}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
-          Standings
-        </Typography>
         <Box sx={{display: "flex", flexDirection: "row" }}>
           <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
-            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)'}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2}}>
               This round's ranking:
             </Typography>
-            <List sx={{display: "flex", flexDirection:"column"}}>
-              {currentRanking.map((player) => (
-                <ListItem key={player.id} sx={{ fontSize: 'calc(0.3rem + 1vw)' }}>
-                  <Typography component="span" color={theme.palette.primary.light}>
-                    {player.username} - {player.currentPoints}
-                  </Typography>
-                </ListItem>
-              ))}
-            </List>
+            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+              <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
+                {currentRanking.map((player) => (
+                  <div key={player.id}>{player.username}: <span>{player.currentPoints}</span></div>
+                ))}
+              </Box>
+            </Typography>
           </Box>
-          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%"}}>
-            <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)'}} >
+          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%", textAlign: "left"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2}} >
               Total ranking:
             </Typography>
-            <Typography variant="body1" component="ol" color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
-              {totalRanking.map((player) => (
-                <ListItem key={player.id}>
-                  <ListItemText>
-                    {player.username} - {player.totalPointsCurrentGame}
-                  </ListItemText>
-                </ListItem>
-              ))}
+            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+              <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
+                {totalRanking.map((player) => (
+                  <div key={player.id}>{player.username}: <span>{player.totalPointsCurrentGame}</span></div>
+                ))}
+              </Box>
             </Typography>
           </Box>
         </Box>

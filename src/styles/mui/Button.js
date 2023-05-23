@@ -25,39 +25,4 @@ export function PrimaryButton ({ label, onClick }) {
   );
 }
 
-/*<Button
-            sx={{
-              margin: 1,
-              color: theme.palette.primary.text
-            }}
-            width="100%"
-            onClick={() => doLogin()}
-            variant='contained'
-          >
-            Login
-          </Button>*/
-  
-/*export const SecondaryButton = ({ label, onClick, sx }) => {
-  
-    return (
-      <Button
-        sx={{
-          margin: 1,
-          color: theme.palette.primary.main,
-          borderColor: theme.palette.primary.main,
-          '&:hover': {
-            backgroundColor: theme.palette.primary.light,
-          },
-          ...sx // merge any custom styles passed to the component
-        }}
-        variant="outlined"
-        maxWidth="100%"
-        onClick={onClick}
-        size='small'
-      >
-        {label}
-      </Button>
-    );
-};  */
-
 export default PrimaryButton;

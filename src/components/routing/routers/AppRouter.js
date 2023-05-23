@@ -1,44 +1,36 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {MainGuard} from "components/routing/routeProtectors/MainGuard";
-import MainRouter from "components/routing/routers/MainRouter";
 import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
+import Main from "../../views/Main";
 import Login from "components/views/Login";
 import Register from "components/views/Register";
 import Profile from "components/views/Profile";
 import ChangeProfile from "../../views/ChangeProfile";
 import GameSelection from "components/views/GameSelection";
 import JoinGame from "components/views/JoinGame";
-import {GameSelectionGuard} from "components/routing/routeProtectors/GameSelectionGuard";
 import Game from "../../views/Game";
-import {JoinGameGuard} from "components/routing/routeProtectors/JoinGameGuard";
-import {LeaderboardGuard} from "components/routing/routeProtectors/LeaderboardGuard";
 import Leaderboard from "components/views/Leaderboard";
 import Question from "../../views/Question";
 import {ChangeProfileGuard} from "../routeProtectors/ChangeProfileGuard";
 import {QuestionGuard} from "../routeProtectors/QuestionGuard";
 import Standings from "../../views/Standings";
 import Winner from "components/views/Winner";
-import {GameFormatGuard} from "../routeProtectors/GameFormatGuard";
 import GameFormat from "../../views/GameFormat";
 import RapidSelection from "../../views/RapidSelection"
 import RapidGame from "../../views/RapidGame"
 import RapidQuestion from "../../views/RapidQuestion"
-/**
- * Main router of your application.
- * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
- * and another Router that matches the route "/game".
- * The main difference between these two routes is the following:
- * /login renders another component without any sub-route
- * /game renders a Router that contains other sub-routes that render in turn other react components
- * Documentation about routing in React: https://reacttraining.com/react-router/web/guides/quick-start
- */
+
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/main">
+        <Route exact path="/">
+          <Redirect to="/main"/>
+        </Route>
+        <Route exact path="/main">
           <MainGuard>
-            <MainRouter base="/main"/>
+            <Main />
           </MainGuard>
         </Route>
         <Route exact path="/login">
@@ -51,9 +43,6 @@ const AppRouter = () => {
             <Register />
           </LoginGuard>
         </Route>
-        <Route exact path="/">
-          <Redirect to="/main"/>
-        </Route>
         <Route exact path="/profile/:id">
           <MainGuard>
             <Profile />
@@ -65,24 +54,24 @@ const AppRouter = () => {
           </ChangeProfileGuard>
         )} />
         <Route exact path="/join">
-          <JoinGameGuard>
+          <MainGuard>
             <JoinGame />
-          </JoinGameGuard>
+          </MainGuard>
         </Route>
         <Route exact path="/leaderboard">
-          <LeaderboardGuard>
+          <MainGuard>
             <Leaderboard />
-          </LeaderboardGuard>
+          </MainGuard>
         </Route>
         <Route exact path="/game_format">
-          <GameFormatGuard>
+          <MainGuard>
             <GameFormat />
-          </GameFormatGuard>
+          </MainGuard>
         </Route>
         <Route exact path="/game_selection">
-          <GameSelectionGuard>
+          <MainGuard>
             <GameSelection />
-          </GameSelectionGuard>
+          </MainGuard>
         </Route>
         <Route exact path="/game/:gameId" render={(props) => (
           <QuestionGuard {...props}>
@@ -105,9 +94,9 @@ const AppRouter = () => {
           </QuestionGuard>
         )} />>
         <Route exact path='/rapid_selection'>
-          <GameSelectionGuard>
+          <MainGuard>
             <RapidSelection />
-          </GameSelectionGuard>
+          </MainGuard>
         </Route>
         <Route exact path='/gamerapid/:gameId' render={(props) => (
           <QuestionGuard {...props}>
@@ -119,6 +108,7 @@ const AppRouter = () => {
             <RapidQuestion />
           </QuestionGuard>
           )} />
+        <Redirect to="/main" />
       </Switch>
     </BrowserRouter>
   );

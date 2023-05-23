@@ -54,7 +54,7 @@ const JoinGame = () => {
               onChange={(event) => setToJoinId(event.target.value)}
               margin="dense"
               onKeyDown = {(event) => {
-                if(!/[0-9]/.test(event.key) && event.target.value === '') {
+                if(!/\d/.test(event.key) && event.target.value === '') {
                   event.preventDefault();
                 }
               }}

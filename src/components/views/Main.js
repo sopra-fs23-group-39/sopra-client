@@ -2,7 +2,6 @@ import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {useHistory} from 'react-router-dom';
 import "styles/views/Main.scss";
-import React from 'react';
 import {useSelector} from "react-redux";
 import {Box} from '@mui/material';
 import PrimaryButton from 'styles/mui/PrimaryButton';
@@ -36,7 +35,7 @@ const Main = () => {
       alert(`Something went wrong while getting the user id: \n${handleError(error)}`);
     }
     console.log(gameStompClient);
-    if (gameStompClient && gameStompClient.connected){
+    if (gameStompClient?.connected){
       const playerId = localStorage.getItem('id');
       gameStompClient.send(`/app/game/${gameId}`, {}, `DISCONNECT ${playerId}`);
       gameStompClient.disconnect();

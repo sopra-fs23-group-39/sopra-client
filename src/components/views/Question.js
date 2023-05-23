@@ -36,13 +36,10 @@ const Question = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [gameDataFetched, setGameDataFetched] = useState(false);
   const [answerStompClient, setAnswerStompClient] = useState(null);
-  //const [chosenButtonId, setChosenButtonId] = useState(null);
   const chosenButtonId = useRef(null);
-  const [hostId, setHostId] = useState(null);
   const [hostConnected, setHostConnected] = useState(false);
   const [displayTimer, setDisplayTimer] = useState(60);
   const [timerMax, setTimerMax] = useState(60);
-
   const [playerState, setPlayerState] = useState(null);
   const [isMuted, setIsMuted] = useState(true);
   const playerRef = useRef(null);
@@ -131,7 +128,7 @@ const Question = () => {
     });
 
     return () => {
-      if (answerStompClient && answerStompClient.connected) {
+      if (answerStompClient?.connected) {
         answerStompClient.disconnect();
       }
     };
@@ -139,7 +136,6 @@ const Question = () => {
 
   function handleClick(chosenAnswer, buttonId) {
     setButtonClicked(true);
-    //setChosenButtonId(buttonId);
     chosenButtonId.current = buttonId;
     const header = {'content-type': 'application/json'};
     const answerToSend = JSON.stringify({
@@ -173,7 +169,6 @@ const Question = () => {
         setGameMode(response.data.gameMode)
         setTimer(response.data.timer * 1000 );
         setOtherTimer(response.data.timer * 1000);
-        setHostId(response.data.hostId);
         setTimerMax(response.data.timer);
         console.log(response.data.timer);
         console.log(timer);
@@ -309,7 +304,7 @@ const Question = () => {
               color={theme.palette.primary.light}
               sx={{px: ['10px', '20px'],}}
             >
-              QuestionTimer: {displayTimer}
+              {displayTimer}
               <LinearProgress
                 variant="determinate"
                 color="inherit"

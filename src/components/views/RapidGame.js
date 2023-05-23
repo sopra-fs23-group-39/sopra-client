@@ -14,7 +14,6 @@ const RapidGame = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
   const [gameMode, setGameMode] = useState(null);
-  const [questionAmount, setAmountOfQuestions] = useState(null);
   const [timer, setTimer] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [gameFormat, setGameFormat] = useState(null);
@@ -34,7 +33,6 @@ const RapidGame = () => {
         const response = await api.get(`/game/${gameId}/settings`);
         console.log(response.data)
         setGameMode(response.data.gameMode)
-        setAmountOfQuestions(response.data.questionAmount)
         setTimer(response.data.timer)
         setGameFormat(response.data.gameFormat)
       } catch (error) {
@@ -52,19 +50,16 @@ const RapidGame = () => {
     if (gameId) {
       content = (
         <Box className="box">
-          <Typography sx={{display: "flex", flexDirection:"column", fontSize: 'calc(1.5rem + 2vw)'}} variant="h3" align="center" gutterBottom color={theme.palette.primary.light}>
-            Waiting Room
-          </Typography>
-          <Box sx={{display: "flex", flexDirection: "row" }}>
+          <Box sx={{display: "flex", flexDirection: "row"}}>
             <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
-              <Typography variant='h5' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
-                Game Settings:
+              <Typography variant='h6' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)'}}>
+                Game:
               </Typography>
                 <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}}>
-                  <p>Game ID: <span>{gameId}</span></p>
-                  <p>Format: <span>{gameFormat}</span></p>
-                  <p>Theme: <span>{gameMode}</span></p>
-                  <p>GameTime: <span>{timer}</span> seconds</p>
+                  <div>Game ID: <span>{gameId}</span></div>
+                  <div>Format: <span>{gameFormat}</span></div>
+                  <div>Theme: <span>{gameMode}</span></div>
+                  <div>Total game time: <span>{timer}</span> seconds</div>
                 </Typography>
             </Box>
           </Box>
