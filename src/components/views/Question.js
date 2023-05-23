@@ -15,7 +15,8 @@ import YouTube from "react-youtube";
 const Question = () => {
 
   const color = "$accent";
-  const color2 = "yellow";
+  const color2 = "#FFFB3B"
+  // const color2 = "#FFF176";
   const [question, setQuestion] = useState({});
   const [gameMode, setGameMode] = useState(null);
   const [disabled, setDisabled] = useState(false);
@@ -26,7 +27,7 @@ const Question = () => {
     but3: color,
     but4: color
   });
-  const[buttonOpacity, setButtonOpacity]=useState(1);
+  const[buttonOpacity, setButtonOpacity] = useState(1);
   const {gameId} = useParams();
   const history = useHistory();
   const timeoutRef = useRef(null);
@@ -320,14 +321,19 @@ const Question = () => {
                 value={normalise(displayTimer)}
               />
             </Typography>
+            <div style={{position: 'relative'}}>
             {imageDisplay}
             {gameMode === 'TRAILER' ? (
-              <div>
-                <button onClick={handleMuteUnmuteClick}>
+              <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute',
+                bottom: '0', left: '0', right: '0' }}>
+                <Button onClick={handleMuteUnmuteClick}
+                        variant="outlined"
+                >
                   {isMuted ? 'Unmute' : 'Mute'}
-                </button>
-                </div>
+                </Button>
+              </div>
               ) : null}
+          </div>
               <div className="dashboard button-container">
                 <Grid container spacing={2} color="inherit">
                   <Grid item xs={6}><Button
