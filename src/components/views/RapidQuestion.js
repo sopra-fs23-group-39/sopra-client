@@ -36,11 +36,17 @@ const RapidQuestion = () => {
   const [displayTimer, setDisplayTimer] = useState(60);
   const [questionStompClient, setQuestionStompClient] = useState(null);
   const [timerMax, setTimerMax] = useState(50);
+  const websocketURL = process.env.NODE_ENV === 'production'
+      ? process.env.REACT_APP_WEBSOCKET_URL_PROD
+      : process.env.REACT_APP_WEBSOCKET_URL_DEV;
 
 
   useEffect(() => {
     //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/question`);
-    const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
+    // const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/question`);
+    const socket = new SockJS(`${websocketURL}/gamerapid/${gameId}/question`);
+    console.log(`${websocketURL}/game/${gameId}/question`)
+
     const questionStompClient = Stomp.over(() => socket);
 
     questionStompClient.connect({}, () => {
@@ -72,9 +78,9 @@ const RapidQuestion = () => {
   }, []);  // [] is needed here so that useEffect is called when the component is mounted (not after)
 
   useEffect(() => {
-    //const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
+    const socket = new SockJS(`http://localhost:8080/gamerapid/${gameId}/answer`);
 
-    const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
+    //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/gamerapid/${gameId}/answer`);
     const client = Stomp.over(() => socket);
 
     client.connect({}, () => {
