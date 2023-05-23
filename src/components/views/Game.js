@@ -28,7 +28,6 @@ const Game = () => {
   const websocketURL = process.env.NODE_ENV === 'development'
       ? process.env.REACT_APP_WEBSOCKET_URL_DEV
       : process.env.REACT_APP_WEBSOCKET_URL_PROD;
-  console.log(process.env.NODE_ENV);
 
   const startGame = async () => {
     if (gameStompClient?.connected) {
@@ -63,7 +62,6 @@ const Game = () => {
 
     //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}`);
     const socket = new SockJS(`${websocketURL}/game/${gameId}`);
-    console.log(`${websocketURL}/game/${gameId}`);
 
     const gameStompClient = Stomp.over(() => socket);
 

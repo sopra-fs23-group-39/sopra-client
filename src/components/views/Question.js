@@ -92,7 +92,6 @@ const Question = () => {
     //const socket = new SockJS(`http://localhost:8080/game/${gameId}/question`);
     //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/question`);
     const socket = new SockJS(`${websocketURL}/game/${gameId}/question`);
-    console.log(`${websocketURL}/game/${gameId}/question`)
 
     let questionStompClient = Stomp.over(() => socket);
 
@@ -129,7 +128,6 @@ const Question = () => {
     //const socket = new SockJS(`http://sopra-fs23-group-39-server.oa.r.appspot.com/game/${gameId}/answer`);
     const socket = new SockJS(`${websocketURL}/game/${gameId}/answer`);
 
-    console.log(`${websocketURL}/game/${gameId}/answer`);
     const client = Stomp.over(() => socket);
 
     client.connect({}, () => {
