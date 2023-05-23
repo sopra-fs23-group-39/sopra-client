@@ -2,7 +2,7 @@ import {useHistory} from 'react-router-dom';
 import "styles/views/Main.scss";
 import {api, handleError} from "../../helpers/api";
 import {useState} from "react";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import theme from 'styles/mui/customMui';
 import { ThemeProvider} from '@mui/material/styles';
 import PrimaryButton from 'styles/mui/PrimaryButton';
@@ -45,8 +45,8 @@ const GameFormat = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box className="box" sx={{ textAlign: 'center'}}>
-        <h3 style={{textAlign: "center", marginTop: 40}}>Select a Game Mode:</h3>
-        <Box className="row"/*sx={{ mb: ['4%', '10%'] }}*/>
+        <Typography color={theme.palette.primary.light} sx={{textAlign: "center", marginTop: 2, marginBottom: 2, fontSize: "calc(1vw + 0.9vh)"}}>Select a Game Mode:</Typography>
+        <Box className="row">
           <PrimaryButton label="custom" onClick={() => history.push("/game_selection")}/>
           <PrimaryButton label="blitz" onClick={() => selectGameFormat("BLITZ")}/>
           <PrimaryButton label="rapid" onClick={() => selectGameFormat("RAPID")}/>

@@ -53,6 +53,11 @@ const JoinGame = () => {
               value={toJoinId}
               onChange={(event) => setToJoinId(event.target.value)}
               margin="dense"
+              onKeyDown = {(event) => {
+                if(!/[0-9]/.test(event.key) && event.target.value === '') {
+                  event.preventDefault();
+                }
+              }}
               sx={{
                 '& fieldset': {
                   borderColor: theme.palette.primary.light,
@@ -67,13 +72,6 @@ const JoinGame = () => {
           <SecondaryButton label="back" onClick={() => history.push("/main")}/>
       </Box>
     </ThemeProvider>
-
-  // onKeyDown = {(event) => {
-  //   if(!/[0-9]/.test(event.key) && event.target.value === '') {
-  //     event.preventDefault();
-  //   }
-  // }}
-
   );
 }
 
