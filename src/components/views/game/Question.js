@@ -192,6 +192,7 @@ const Question = () => {
   },[gameId]);
 
   useEffect(()=>{
+    console.log("Inside the use effect");
     if(!gameDataFetched){
       return;
     }
@@ -209,9 +210,9 @@ const Question = () => {
       console.log(timer);
       setDisabled(true);
       console.log(disabled)
-      console.log("were we here?")
+      console.log("inside use effect");
       console.log(chosenButtonId);
-      if(chosenButtonId == null) {
+      if(chosenButtonId.current == null) {
         setButtonColors({
           but1: color2,
           but2: color2,
@@ -231,7 +232,7 @@ const Question = () => {
       setButtonOpacity(0.5);
       setDisplayTimer(5);
       setTimerMax(4);
-    }, timer);
+    }, [timer]);
 
     return () => {
       clearTimeout(timeoutRef.current);
