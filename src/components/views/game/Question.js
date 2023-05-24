@@ -263,6 +263,10 @@ const Question = () => {
     history.push(`/main`);
   })
 
+  window.addEventListener('popstate', (event) => {
+    history.push(`/main`);
+  })
+
   let imageDisplay = null;
 
   if (gameMode === "ACTOR" || gameMode === "MIXED") {

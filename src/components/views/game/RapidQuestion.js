@@ -210,6 +210,13 @@ const RapidQuestion = () => {
     );
   }
 
+  window.addEventListener('beforeunload', (event) => {
+    history.push(`/main`);
+  })
+  window.addEventListener('popstate', (event) => {
+    history.push(`/main`);
+  })
+
   return (
     <div>
       <ThemeProvider theme={theme}>
