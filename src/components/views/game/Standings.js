@@ -66,6 +66,10 @@ function Standings() {
   window.addEventListener('beforeunload', (event) => {
     history.push(`/main`);
   })
+  window.addEventListener('popstate', (event) => {
+    history.push(`/main`);
+  })
+
 
   return (
     <ThemeProvider theme={theme}>
