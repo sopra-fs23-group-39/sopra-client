@@ -7,7 +7,7 @@ The Movie Monster is a movie trivia game offering multiple game modes to users w
 Written in JavaScript, using React.
   
 Built with:  
-- [React](https://spring.io/projects/spring-boot](https://react.dev/)
+- [React](https://react.dev/)
 - [Axios](https://axios-http.com/)
 - [MUI](https://mui.com/)
 - [STOMP](https://stomp-js.github.io/stomp-websocket/)
