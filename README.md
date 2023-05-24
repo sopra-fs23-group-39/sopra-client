@@ -1,46 +1,62 @@
-# SoPra FS23 - Client Template with build pack
+# The Movie Monster
 
-## Getting started
+The Movie Monster is a movie trivia game offering multiple game modes to users wishing to play a movie quiz game. The modes include various prompts, like still frames from movies and tv shows, images of actors and trailer snippets. Additionally, the user can either create a custom game or choose from two preset game modes. The game is able to be played in multiplayer or alone and offers ranked leaderboards.
 
-Read and go through these Tutorials. It will make your life easier:)
+## Technologies used  
 
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
-
-Next, there are two other technologies that you should look at:
-
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
-
-## Prerequisites and Installation
-For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
-
-```npm install```
-
-Run this command before you start your application for the first time. Next, you can start the app with:
-
-```npm run dev```
-
-Now you can open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-Notice that the page will reload if you make any edits. You will also see any lint errors in the console (use Google Chrome).
-
-### Testing
-Testing is optional, and you can run the tests with `npm run test`.
-This launches the test runner in an interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> For macOS user running into a 'fsevents' error: https://github.com/jest-community/vscode-jest/issues/423
-
-### Build
-Finally, `npm run build` builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance: the build is minified, and the filenames include hashes.<br>
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Written in JavaScript, using React.
+  
+Built with:  
+- [React](https://spring.io/projects/spring-boot](https://react.dev/)
+- [Axios](https://axios-http.com/)
+- [MUI](https://mui.com/)
+- [STOMP](https://stomp-js.github.io/stomp-websocket/)
+- [SockJS](https://github.com/sockjs/sockjs-client)
+- [react-youtube](https://www.npmjs.com/package/react-youtube)
+- [ReduxJS](https://redux.js.org/)
 
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+
+
+## High-level components
+
+- Main page component: [Main](src/components/views/other/Main.js). This component allows the user to navigate to all other component views, such as the leaderboard, their profile, game creation, join game page and so on.
+- Game selection and Game page: [GameSelection](src/components/views/game/GameSelection.js), [Game](src/components/views/game/Game.js). These two components are there to create a game and start it. It lets players choose parameters such as the number and type of questions. The Game view is a waiting room, where the host can wait for other players to join or start the game. 
+- Question pages: [Question](src/components/views/game/Question.js), [RapidQuestion](src/components/views/game/RapidQuestion.js). These views form the main game loop. They serve questions to the players and handles the answering.
+- Standing and Winner pages: [Standings](src/components/views/game/Standings.js), [Winner](src/components/views/game/Winner.js). The Standings page shows the rankings of users after every question of a multiplayer match. The winner page is responsible for showing who won the game and routing people back to the main page.
+
+## Launch & Deployment
+  
+To build and run the project locally within your IDE (we recommend IntelliJ IDEA), import the project, then follow these steps using [npm](https://www.npmjs.com/):
+
+```bash
+# installing dependencies:
+npm install
+
+# local development build:
+npm run dev
+
+# production build:
+npm run build
+```
+    
+Deployment uses GitHub workflows to deploy the project to google cloud. See `main.yaml`. Set up your google cloud project and create a service account with the editor role, download the keys and use github's secret manager to manage them. When done correctly, the code should be automatically deployed when pushing or merging with the main branch.
+
+## Roadmap
+
+Future features to implement include a centrally synchronized question timer, more game modes, including different ways to answer (like a text box, instead of predetermined buttons), a friend's list and more.
+  
+
+## Authors & Acknowledgement  
+
+### Authors  
+- [Natalia Shakirova](https://github.com/orgs/sopra-fs23-group-39/people/NattiShakira)
+- [Yannick Salzmann](https://github.com/orgs/sopra-fs23-group-39/people/yasalz)
+- [Damjan Kuzmanovic](https://github.com/orgs/sopra-fs23-group-39/people/dkuzma1)
+- [Florence Hügi](https://github.com/orgs/sopra-fs23-group-39/people/florencehuegi)
+- [Markus Niemack](https://github.com/orgs/sopra-fs23-group-39/people/NieMark)  
+Additionally, we would like to thank our teaching assistants [Sheena Lang](https://github.com/SheenaGit) and [Roy Rutishauser](https://github.com/royru) for helping with this project.
+
+## License
+
+[GNU GPLv3]([https://choosealicense.com/licenses/mit/](https://choosealicense.com/licenses/gpl-3.0/))
