@@ -64,7 +64,7 @@ const GameFormat = () => {
             </div>
             <h3>Rapid:</h3>
             <div>
-              Single Player mode. One Player has to guess as fast as possible in a limited amount of time.
+              Single Player mode. One Player has to guess as many questions as possible in a limited amount of time. Wrong answers give negative points.
             </div>
             <h3>WARNING:</h3>
             <div>
