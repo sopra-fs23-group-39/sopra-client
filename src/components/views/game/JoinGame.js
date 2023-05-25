@@ -18,7 +18,9 @@ const JoinGame = () => {
       if(response.data.isStarted === false){
         if(response.data.players.find(player => player.id == localStorage.getItem('id'))){
           alert(`You can't join a game that you're already in.`)
-        } else {
+        }else if(response.data.gameFormat === "RAPID"){
+            alert(`Rapid is a single player game mode only`)
+        }else {
           await api.put(`/game/${toJoinId}`, requestBody);
           history.push(`/game/${toJoinId}`);
         }
