@@ -44,7 +44,7 @@ const GameFormat = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box className="box" sx={{ textAlign: 'center'}}>
-        <Typography color={theme.palette.primary.light} sx={{textAlign: "center", marginTop: 2, marginBottom: 2, fontSize: "calc(1vw + 0.9vh)"}}>Select a Game Mode:</Typography>
+        <Typography color={theme.palette.primary.light} sx={{textAlign: "center", marginTop: 2, marginBottom: 2, fontSize: "2rem"}}>Select a Game Mode:</Typography>
         <Box className="row">
           <PrimaryButton label="custom" onClick={() => history.push("/game_selection")}/>
           <PrimaryButton label="blitz" onClick={() => selectGameFormat("BLITZ")}/>
@@ -60,11 +60,11 @@ const GameFormat = () => {
             </div>
             <h3>Blitz:</h3>
             <div>
-              One or more players play with a preset amount of questions and a timer ( 5 questions and 5 seconds per question ).
+              One or more players play with a preset amount of questions and a timer.
             </div>
             <h3>Rapid:</h3>
             <div>
-              Single Player mode. One Player has to guess as many questions as possible in a limited amount of time. Wrong answers give negative points. Final negative score is possible.
+              Single Player mode. One Player has to guess as fast as possible in a limited amount of time.
             </div>
             <h3>WARNING:</h3>
             <div>

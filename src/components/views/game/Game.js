@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'; //api,
+import React, {useEffect, useState} from 'react'; //api,
 import {Spinner} from 'components/ui/Spinner';
 import {useHistory, useParams} from 'react-router-dom';
 import {Stomp} from "@stomp/stompjs";
@@ -11,6 +11,8 @@ import SecondaryButton from 'components/ui/SecondaryButton';
 import theme from 'components/ui/customMui';
 import "styles/ResponsiveUI.scss";
 import { Box, Typography } from '@mui/material';
+import customChip from "../../ui/CustomChip";
+import CustomChip from "../../ui/CustomChip";
 
 const Game = () => {
   const dispatch = useDispatch();
@@ -90,27 +92,162 @@ const Game = () => {
   if (gameId) {
     content = (
       <Box className="box">
-        <Box sx={{display: "flex", flexDirection: "row" }}>
-          <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
-            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)', marginBottom: 2}}>
+        <Box className="outer" sx={{display: "flex", flexDirection: "row", justifyContent: 'center', width:'100%', marginBottom:"1%" }}>
+          <Box sx={{display: "flex", flexDirection: "column", textAlign: "left", width: "30%", pr:"2.5%"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: '2rem', marginBottom: 2}}>
               Game:
             </Typography>
-              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}}>
-                <div>Game ID: <span>{gameId}</span></div>
-                <div>Format: <span>{gameFormat}</span></div>
-                <div>Theme: <span>{gameMode}</span></div>
-                <div>Number of questions: <span>{questionAmount}</span></div>
-                <div>Time per question: <span>{timer}</span> seconds</div>
+              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: '1.1rem'}}>
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'left',
+                    }}
+                >
+                  <div>
+                    Game ID:
+                  </div>
+                  <div>
+                    <CustomChip
+                        label={gameId}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '100px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+                        }}
+                    />
+                  </div>
+                </div>
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '10px'
+                    }}
+                >
+                  <div>
+                    Format:
+                  </div>
+                  <div>
+                    <CustomChip
+                        label={gameFormat}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '100px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+                        }}
+                    />
+                  </div>
+                </div>
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '10px'
+                    }}
+                >
+                  <div>
+                    Theme:
+                  </div>
+                  <div>
+                    <CustomChip
+                        label={gameMode}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '100px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+                        }}
+                    />
+                  </div>
+                </div>
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '10px'
+                    }}
+                >
+                  <div>
+                    Number of questions:
+                  </div>
+                  <div>
+                    <CustomChip
+                        label={questionAmount}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '100px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+                        }}
+                    />
+                  </div>
+                </div>
+                <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '10px'
+                    }}
+                >
+                  <div>
+                    Seconds per question:
+                  </div>
+                  <div>
+                    <CustomChip
+                        label={timer}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '100px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+                        }}
+                    />
+                  </div>
+                </div>
               </Typography>
           </Box>
-          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%", textAlign: "left"}}>
-            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.4rem + 2vw)', marginBottom: 2}} >
+            <Box sx={{display: "flex", flexDirection: "column", textAlign: "left", mindWidth:"4%" ,width:"4%"}}></Box>
+          <Box sx={{display: "flex", flexDirection: "column", textAlign: "left", width: "30%", pl:"2.5%"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: '2rem', marginBottom: 2}} >
               Participants:
             </Typography>
-              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+              <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: '1.1rem'}} >
               {playerList ? (
                 <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
-                  <div key={playerList[0].id}><span>Host:</span> {playerList[0].username}</div>
+                  <div key={playerList[0].id} style={{display: "flex", justifyContent: 'space-between'}}><span>Host:</span> {playerList[0].username}</div>
                   {playerList.slice(1).map((player) => (
                       <div key={player.id}><span>Player:</span> {player.username}</div>
                   ))}

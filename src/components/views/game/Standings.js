@@ -5,6 +5,7 @@ import theme from 'components/ui/customMui';
 import {ThemeProvider} from '@mui/material/styles';
 import {Box, Typography} from '@mui/material';
 import "styles/ResponsiveUI.scss";
+import CustomChip from "../../ui/CustomChip";
 
 
 function Standings() {
@@ -88,27 +89,73 @@ function Standings() {
            backgroundColor: 'transparent',
         }}}
       >
-        <Box sx={{display: "flex", flexDirection: "row" }}>
-          <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left"}}>
-            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2}}>
+        <Box sx={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+          <Box sx={{display: "flex", flexDirection: "column", marginRight: "5%", textAlign: "left", marginLeft: "-15%"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2, textAlign:'left'}}>
               This round's ranking:
             </Typography>
-            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)', textAlign: 'left'}} >
               <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
                 {currentRanking.map((player) => (
-                  <div key={player.id}>{player.username}: <span>{player.currentPoints}</span></div>
+                  <div key={player.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'left',
+                      }}
+                  >{player.username}:
+                    <span>
+                        <CustomChip
+                          label={player.currentPoints}
+                          color={theme.palette.primary.light}
+                          sx={{
+                            borderColor: theme.palette.primary.light,
+                            width: '60px',
+                            color: theme.palette.primary.light,
+                            borderRadius: '4px',
+                            borderWidth: '1px',
+                            fontSize: '1rem',
+                            py: '0px',
+                            px: '0px',
+
+                          }}
+                      />
+                    </span></div>
                 ))}
               </Box>
             </Typography>
           </Box>
-          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%", textAlign: "left"}}>
-            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2}} >
-              Total ranking:
+          <Box sx={{display: "flex", flexDirection: "column", marginLeft:"5%", textAlign: "left", marginRight:"-15%"}}>
+            <Typography variant='h7' color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 2vw)', marginBottom: 2, textAlign:'left'}} >
+              Total Game ranking:
             </Typography>
-            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)'}} >
+            <Typography color={theme.palette.primary.light} sx={{display: "flex", flexDirection:"column", fontSize: 'calc(0.3rem + 1vw)', textAlign:'left'}} >
               <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
                 {totalRanking.map((player) => (
-                  <div key={player.id}>{player.username}: <span>{player.totalPointsCurrentGame}</span></div>
+                  <div key={player.id}
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'left',
+                    }}
+                >{player.username}:
+                  <span>
+                      <CustomChip
+                        label={player.totalPointsCurrentGame}
+                        color={theme.palette.primary.light}
+                        sx={{
+                          borderColor: theme.palette.primary.light,
+                          width: '60px',
+                          color: theme.palette.primary.light,
+                          borderRadius: '4px',
+                          borderWidth: '1px',
+                          fontSize: '1rem',
+                          py: '0px',
+                          px: '0px',
+
+                        }}
+                    />
+                  </span></div>
                 ))}
               </Box>
             </Typography>

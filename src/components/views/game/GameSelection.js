@@ -55,11 +55,11 @@ const GameSelection = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box className="box">
-        <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Game theme:</Typography>
+        <Typography color={theme.palette.primary.light} sx={{fontSize: "2rem"}} className="center">Game theme:</Typography>
         <Box className="row">
           <SplitButton options={options} onSelect={handleSplitButtonChange} selectedIndex={options.indexOf(gameMode)} />
         </Box>
-        <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Number of questions:</Typography>
+        <Typography color={theme.palette.primary.light} sx={{fontSize: "2rem"}} className="center">Number of questions:</Typography>
         <Box className="row">
           <Slider
             className="slider"
@@ -73,7 +73,7 @@ const GameSelection = () => {
             onChange={handleSliderChange}
           />
         </Box>
-        <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}} className="center">Timer (seconds per question):</Typography>
+        <Typography color={theme.palette.primary.light} sx={{fontSize: "2rem"}} className="center">Timer (seconds per question):</Typography>
         <Box className="row">
           <Slider
             className="slider"
