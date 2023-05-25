@@ -12,6 +12,7 @@ export const QuestionGuard = props => {
   const [isLoading, setIsLoading] = useState(true);
   const storage = window.localStorage;
   console.log(storage);
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchData() {
@@ -22,9 +23,10 @@ export const QuestionGuard = props => {
         setIsLoading(false);
 
       } catch (error) {
-        console.error(`Something went wrong while fetching the game players: \n${handleError(error)}`);
+        console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
         console.error(error);
-        alert(`Something went wrong while fetching the game players: \n${handleError(error)}`);
+        history.push("/main");
+        alert(`Something went wrong while fetching the game: \n${handleError(error)}`);
       }
     }
 
@@ -43,7 +45,7 @@ export const QuestionGuard = props => {
   console.log(isInGame);
   
   if (!userId) {
-    return <Redirect to="/main" />;
+    return <Redirect to="/login" />;
   }
 
   if (isLoading) {
