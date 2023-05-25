@@ -41,6 +41,10 @@ export const QuestionGuard = props => {
   }, [players, userId]);
 
   console.log(isInGame);
+  
+  if (!userId) {
+    return <Redirect to="/main" />;
+  }
 
   if (isLoading) {
     return <div></div>;
