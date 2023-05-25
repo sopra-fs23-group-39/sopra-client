@@ -45,8 +45,7 @@ const ChangeProfile = () => {
       const requestBody = JSON.stringify({...user});
       await api.put(`/users/${params.id}`, requestBody);
       console.log(requestBody)
-      // history.push("/profile/" + user.id)
-      alert("Your credentials were updated!");
+      alert("If you entered your new username and/or password, they were updated. If not, your credentials stay the same.");
     } catch (error) {
       alert(`Your credentials were not changed: \n${handleError(error)}`);
     }
