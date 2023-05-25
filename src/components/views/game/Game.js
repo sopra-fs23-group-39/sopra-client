@@ -249,7 +249,7 @@ const Game = () => {
                 <Box color={theme.palette.primary.light} sx={{display:"flex", flexDirection: "column"}}>
                   <div key={playerList[0].id} style={{display: "flex", justifyContent: 'space-between'}}><span>Host:</span> {playerList[0].username}</div>
                   {playerList.slice(1).map((player) => (
-                      <div key={player.id}><span>Player:</span> {player.username}</div>
+                      <div key={player.id} style={{display: "flex", justifyContent: 'space-between'}}><span>Player:</span> {player.username}</div>
                   ))}
                 </Box>
                 ) : (
