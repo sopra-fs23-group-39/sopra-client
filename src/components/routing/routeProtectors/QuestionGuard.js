@@ -26,7 +26,6 @@ export const QuestionGuard = props => {
         console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
         console.error(error);
         history.push("/main");
-        alert(`Something went wrong while fetching the game: \n${handleError(error)}`);
       }
     }
 
