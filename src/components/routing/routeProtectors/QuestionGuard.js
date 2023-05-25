@@ -1,4 +1,4 @@
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import {api, handleError} from "../../../helpers/api";
 import {useEffect, useState} from "react";
