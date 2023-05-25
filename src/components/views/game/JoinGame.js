@@ -37,7 +37,7 @@ const JoinGame = () => {
     <ThemeProvider theme={theme}>
       <Box className="box">
         <Box>
-          <Typography color={theme.palette.primary.light} sx={{fontSize: "calc(1vw + 0.8vh)"}}>
+          <Typography color={theme.palette.primary.light} sx={{fontSize: "2rem"}}>
             To join a game, please enter its ID:
           </Typography>
         </Box>
