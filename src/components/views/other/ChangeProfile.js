@@ -33,7 +33,7 @@ const ChangeProfile = () => {
       } catch (error) {
         console.error(`Something went wrong while fetching the user: \n${handleError(error)}`);
         console.error("Details:", error);
-        alert("Something went wrong while fetching the user! See the console for details.");
+        alert("Something went wrong while fetching the user!");
       }
     }
 
@@ -45,9 +45,10 @@ const ChangeProfile = () => {
       const requestBody = JSON.stringify({...user});
       await api.put(`/users/${params.id}`, requestBody);
       console.log(requestBody)
-      history.push("/profile/" + user.id)
+      // history.push("/profile/" + user.id)
+      alert("Your credentials were updated!");
     } catch (error) {
-      alert(`Username and Password are not allowed to be empty: \n${handleError(error)}`);
+      alert(`Your credentials were not changed: \n${handleError(error)}`);
     }
   };
 
@@ -58,6 +59,7 @@ const ChangeProfile = () => {
       ...prevUser,
       [name]: value
     }));
+
   }
 
   function handlePasswordChanged(event) {
@@ -123,13 +125,14 @@ const ChangeProfile = () => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
+                  sx={{ color: 'primary.light' }}
                 >
                   {showPassword ? <VisibilityOff/> : <Visibility/>}
                 </IconButton>
               </InputAdornment>
             }
             margin='dense'
-            label="Password"
+            label="Change Password"
             onKeyPress={(event) => {
               if (event.key === " ") {
                 event.preventDefault();
