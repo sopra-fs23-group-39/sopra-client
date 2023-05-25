@@ -60,11 +60,11 @@ const GameFormat = () => {
             </div>
             <h3>Blitz:</h3>
             <div>
-              One or more players play with a preset amount of questions and a timer.
+              One or more players play with a preset amount of questions and a timer ( 5 questions and 5 seconds per question ).
             </div>
             <h3>Rapid:</h3>
             <div>
-              Single Player mode. One Player has to guess as many questions as possible in a limited amount of time. Wrong answers give negative points.
+              Single Player mode. One Player has to guess as many questions as possible in a limited amount of time. Wrong answers give negative points. Final negative score is possible.
             </div>
             <h3>WARNING:</h3>
             <div>
